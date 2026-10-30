@@ -938,6 +938,7 @@ function save(){
         code,
         name:cleanName(r.name)||cleanName(r.shortName),
         category:r.category,type:r.category,
+        offShelf:!!r.offShelf,
         seriesId:series.some(x=>x.id===r.seriesId)?r.seriesId:DEFAULT_SERIES,
         liability:r.liability||'',
         condAvg:r.category==='welfare'?(r.condAvg==='avg6'?'avg6':'avg3'):undefined,
