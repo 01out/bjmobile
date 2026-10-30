@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html data-page-node-id="vv3pXSoIoSZIypAskUI9EP" lang="zh-CN"><head data-page-node-id="USiZOumBNYJU7roLLEJRnh">
-<script data-page-node-id="5qX8Oe4CeBtezSb0IPSg6L" src="/page/page_comm/inject.js"></script>
+<script data-page-node-id="7VfMe5EisX2kNgZRXzhIJI" src="/page/page_comm/inject.js"></script>
 <meta data-page-node-id="B51aMDrhYH3GDf2qTFWHlF" charset="UTF-8">
 <meta data-page-node-id="UE6DfepFX2Kdxi151W69nQ" content="width=device-width,initial-scale=1" name="viewport">
 <title data-page-node-id="fSUj3IoXn2ZWZASzeTnVCP" data-pnid-children="EhaR1gRBT25HJoHCccUgiO">资费业务管理</title>
 <style data-page-node-id="KHfKySMO3cBdlGeNWogGut" data-pnid-children="T8ipzL98GKwkj89q7N14T7">
 *{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#20242a;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px}
-.wrap{max-width:860px;margin:auto;padding:40px 16px 56px}
+.wrap{max-width:1200px;margin:auto;padding:40px 16px 56px}
 header{margin-bottom:14px}
 .back{display:inline-block;font-size:11px;color:#6b7480;text-decoration:none;margin-bottom:10px}
 .back:hover{color:#1677ff}
@@ -54,13 +54,13 @@ button{height:40px;border:0;border-radius:9px;background:#1677ff;color:#fff;font
 button:disabled{opacity:.55;cursor:wait}
 #addBtn{flex:0 0 auto}
 .table-wrap{margin-top:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;min-width:600px}
-th{font-size:11px;font-weight:500;color:#8b929c;text-align:left;padding:9px 10px;background:#fafbfc;border-bottom:1px solid #edf0f2;white-space:nowrap}
-td{padding:10px;border-bottom:1px solid #edf0f2;font-size:13px;vertical-align:middle}
+table{width:100%;border-collapse:collapse;min-width:1000px;table-layout:fixed}
+th{font-size:11px;font-weight:500;color:#8b929c;text-align:left;padding:6px 10px;background:#fafbfc;border-bottom:1px solid #edf0f2;white-space:nowrap}
+td{padding:13.5px 10px;border-bottom:1px solid #edf0f2;font-size:13px;vertical-align:middle}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover td{background:#fafbfc}
 .nm-line{display:flex;align-items:center;gap:6px;min-width:0}
-.nm{font-weight:600;color:#20242a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.nm{font-weight:600;color:#20242a;overflow:hidden;white-space:normal;word-break:break-all;line-height:1.5;min-width:0}
 .badge{flex:0 0 auto}
 .chip{display:inline-block;font-size:11px;color:#4d6fa8;background:#eef4ff;border:1px solid #dbe7ff;border-radius:999px;padding:2px 9px;white-space:nowrap}
 .chip.welfare{color:#a3730a;background:#fdf6e7;border-color:#f3e3bd}
@@ -73,13 +73,13 @@ tbody tr:hover td{background:#fafbfc}
 .date-range input{flex:1 1 0;min-width:0;padding:0 9px;font-size:13px}
 .date-range span{flex:0 0 auto;font-size:12px;color:#9aa1aa}
 .liab{color:#8b929c}
-.liab-txt{max-width:220px;white-space:normal;word-break:break-word;line-height:1.55}
+.liab-txt{white-space:normal;word-break:break-word;line-height:1.5;font-size:12px}
 .other-date{font-size:11px;color:#9aa1aa;line-height:1.5;margin-bottom:3px;white-space:normal;word-break:break-word}
 .badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 7px;border-radius:999px;border:1px solid;white-space:nowrap}
 .badge.on{color:#2f8f5b;background:#eefaf3;border-color:#cdecdb}
 .badge.off{color:#8b929c;background:#f5f6f8;border-color:#e6eaef}
 .badge-mob{display:none}
-.ops{white-space:nowrap}
+.ops{white-space:nowrap;font-size:0}
 .mini{height:28px;font-size:11px;padding:0 10px;background:#f2f5f9;color:#4a5361;font-weight:500}
 .mini.danger{background:#fef2f2;color:#d9363e}
 .empty{color:#9aa1aa;font-size:12px;text-align:center;padding:30px 0}
@@ -89,12 +89,15 @@ tbody tr:hover td{background:#fafbfc}
 #denyView .deny-box{padding:40px 24px}
 #denyView .deny-d{font-size:12px;color:#8b929c;line-height:1.8}
 #denyView svg{color:#c3ccd6}
-body.no-identity>header,body.no-identity>section{display:none}
+/* 无身份时只留 denyView（.wrap 内直接子元素：header / section / 页脚 p 一律隐藏） */
+body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.wrap>p{display:none}
 .modal{position:fixed;inset:0;background:#1b233152;display:flex;align-items:flex-end;justify-content:center;padding:0;z-index:50}
 .modal.hidden{display:none}
-.sheet{width:100%;max-width:900px;background:#fff;border-radius:18px 18px 0 0;padding:19px 19px calc(19px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;box-shadow:0 -10px 40px #1b233126}
+.sheet{width:100%;max-width:1000px;background:#fff;border-radius:18px 18px 0 0;padding:19px 19px calc(19px + env(safe-area-inset-bottom));max-height:96vh;overflow:auto;box-shadow:0 -10px 40px #1b233126}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sheet-head b{font-size:15px}
+/* 弹窗标题右侧轻提示（灰色小字） */
+.sheet-head .head-notice{flex:1;font-size:10px;color:#9aa1aa;margin-left:8px;line-height:1.5;min-width:0}
 .icon{width:28px;height:28px;border-radius:999px;background:#f2f5f9;color:#5b6470;font-size:17px;line-height:1;padding:0}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:11px;color:#4a5361;margin-bottom:6px}
@@ -105,20 +108,29 @@ body.no-identity>header,body.no-identity>section{display:none}
 .form-err{min-height:16px;font-size:11px;color:#d9363e;margin:2px 0 6px}
 .sheet-foot{display:flex;gap:9px}
 .sheet-foot button{flex:1;height:40px}
+/* 添加业务弹窗：主按钮取消收窄至25%，靠右下角 */
+#modal .sheet-foot{justify-content:flex-end}
+#modal .sheet-foot button{flex:0 0 25%;min-width:88px}
 .ghost{background:#f2f5f9;color:#4a5361}
 .danger{background:#d9363e}
 .cf-msg{font-size:13px;line-height:1.7;color:#4a5361;margin-bottom:16px;word-break:break-word;white-space:pre-line}
-/* 开通状态开关 */
-.switch{position:relative;flex:0 0 auto;width:42px;height:24px;min-width:42px;border-radius:999px;background:#d5dbe3;padding:0;cursor:pointer;transition:background .15s;font-size:0}
-.switch::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #20242a33;transition:left .15s}
+/* 开通状态开关（缩小尺寸，避免遮挡资费列） */
+.switch{position:relative;flex:0 0 auto;width:32px;height:18px;min-width:32px;border-radius:999px;background:#d5dbe3;padding:0;cursor:pointer;transition:background .15s;font-size:0}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #20242a33;transition:left .15s}
 .switch.on{background:#1677ff}
-.switch.on::after{left:20px}
-.code-line{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:11px;color:#8b929c;min-width:0}
+.switch.on::after{left:16px}
+/* 开通状态列与资费列间距加大20px */
+.st-cell{padding-left:30px}
+.code-line{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:11px;color:#8b929c;min-width:0}
 .code-line code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#8b929c;background:none;border:0;padding:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
+.off-badge{display:inline-block;font-size:10px;color:#6b7480;background:#f2f4f7;border:1px solid #dbe0e7;border-radius:999px;padding:1px 8px;white-space:nowrap}
+/* 添加业务弹窗：上架状态标签（在架=绿 / 已下架=红，与类别蓝黄、系列紫灰区分） */
+.sh-badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:999px;border:1px solid;white-space:nowrap}
+.sh-badge.on{color:#2f8f5b;background:#eefaf3;border-color:#cdecdb}
+.sh-badge.off{color:#d9363e;background:#fef2f2;border-color:#f7c8cb}
 .copy-btn{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:0;border-radius:5px;background:transparent;color:#9aa1aa;cursor:pointer;padding:0}
 .copy-btn:hover{background:#eef4ff;color:#1677ff}
 .copy-btn.ok{color:#2f8f5b}
-.pick-notice{font-size:12px;color:#8a6d1f;background:#fdf6e3;border:1px solid #f0e2b6;border-radius:10px;padding:8px 12px;margin-bottom:14px;text-align:center}
 .pick-search{display:flex;gap:8px;align-items:stretch}
 .pick-search .search-field{flex:1;min-width:0;margin:0}
 .pick-search-btn{flex:0 0 auto;border:0;border-radius:10px;background:#1677ff;color:#fff;font-size:13px;font-weight:600;padding:0 18px;cursor:pointer}
@@ -130,8 +142,11 @@ body.no-identity>header,body.no-identity>section{display:none}
 .pick-item:hover{border-color:#b9d2ff}
 .pick-item.sel{border-color:#1677ff;background:#f4f9ff;box-shadow:0 2px 10px #1677ff45}
 .pick-check{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;margin:0;padding:0}
-.pick-hint{font-size:11px;line-height:1.6;color:#8b929c;background:#f7f9fc;border:1px dashed #dfe6f0;border-radius:8px;padding:7px 10px;margin:0 0 10px}
-.pick-hint b{color:#1677ff;font-weight:600}
+/* 添加弹窗筛选块：资费系列模块（矩形容器+阴影）+ 类别下拉（搜索框左侧，复用主列表下拉样式含箭头） */
+.pick-search select{flex:0 0 auto;width:112px}
+.pick-series-block{margin:0 0 12px;border:1px solid #e6ecf3;background:#fafbfc;border-radius:12px;padding:12px 13px;box-shadow:0 2px 10px #20242a17}
+.pick-series-head b{font-size:13px;font-weight:600;color:#20242a}
+.pick-series-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px}
 .pc-head{display:flex;align-items:flex-start;gap:7px;min-width:0}
 .pc-avatar{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#eef4ff;color:#4d6fa8;font-size:10px;font-weight:700;line-height:1.3;letter-spacing:-.2px;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;word-break:keep-all;overflow:hidden;padding:2px}
 .pc-title{flex:1;min-width:0}
@@ -177,13 +192,13 @@ body.no-identity>header,body.no-identity>section{display:none}
   table{min-width:0;display:block}
   thead{display:none}
   tbody{display:block}
-  tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:7px 8px;padding:13px 2px;border-bottom:1px solid #edf0f2}
+  tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:7px 8px;padding:20.5px 2px;border-bottom:1px solid #edf0f2}
   tbody tr:last-child{border-bottom:0}
   tbody tr:hover td{background:none}
   td{border:0;padding:0;display:block}
   tbody td:nth-child(1){flex:1 1 100%;order:1}
   tbody td:nth-child(2){flex:1 1 auto;order:2}
-  tbody td:nth-child(4){flex:0 0 auto;order:2;margin-left:auto;align-self:center}
+  tbody td:nth-child(4){flex:0 0 auto;order:2;margin-left:auto;align-self:center;padding-left:0}
   tbody td:nth-child(3){flex:1 1 100%;order:3}
   tbody td:nth-child(5){flex:1 1 100%;order:4}
   tbody td:nth-child(6){flex:1 1 100%;order:5;text-align:right;margin-top:1px}
@@ -197,25 +212,25 @@ body.no-identity>header,body.no-identity>section{display:none}
   .pager{justify-content:center}
 }
 </style>
-<style data-page-node-id="jofDYdFe3NV3A3vp1vJrUO" data-pnid-children="VQONq7odVub87ocvEF7hM9" id="__dm_no_drag_style__">* { -webkit-user-drag: none !important; }</style><style data-page-node-id="fBepyskDm0Q1RZ04k98KeE" data-pnid-children="sdVYDER1nhYWVMfE5V1flr" id="__dm_bindable_badge_style__">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
+<style data-page-node-id="TSOQ8a95jyonjCBdTD6H1r" data-pnid-children="MOHYSCfO6G7bElh7lqpHkQ" id="__dm_no_drag_style__">* { -webkit-user-drag: none !important; }</style><style data-page-node-id="BBpiD5HnntBZOyj1hxhfBm" data-pnid-children="WJPioCQN7lGwVqsK11xyqi" id="__dm_bindable_badge_style__">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
 <body data-page-node-id="ZYSITZ3JuFZj7U2sl1sLIW" class="no-identity">
 <div data-page-node-id="PsRLiZS14nEpe5CB9KCHxC" class="wrap">
   <header data-page-node-id="hZcVMOqKNNjkYKP35DIyiG">
-    <a data-page-node-id="L119v9vgtCzSowapPUtiDc" class="back" href="index.html?auto=1"><!--pnid:i3Zqa70tzLgFD2pHrhjjtA-->‹ 返回消费规划器</a>
-    <h1 data-page-node-id="RNHcPS45iDqJBEwGdtB0oJ"><!--pnid:B3tFefpgFyxkfx9womUOOr-->资费业务管理</h1>
-    <div data-page-node-id="ZVuofgckfg7H77LDl8rlaT" class="sub"><!--pnid:ROwPDVO8lTPVTi2TXLUzC3-->业务数据保存在本地浏览器，按手机号分开保存；当前号码：<b data-page-node-id="6lWj4VxIvWjbeEVNSKhET8" id="curPhoneTag"><!--pnid:b5m3nvcLwwl9q9cUSCNXsH-->—</b></div>
+    <a data-page-node-id="L119v9vgtCzSowapPUtiDc" class="back" href="index.html?auto=1"><!--pnid:pGckfqAnIdomsz3qsTnLgn-->‹ 返回消费规划器</a>
+    <h1 data-page-node-id="RNHcPS45iDqJBEwGdtB0oJ"><!--pnid:htRdfeVcz4Ee2G8OIkHpMf-->资费业务管理</h1>
+    <div data-page-node-id="ZVuofgckfg7H77LDl8rlaT" class="sub"><!--pnid:JMFZGkNKOmYS2r30LI345X-->业务数据保存在本地浏览器，按手机号分开保存；当前号码：<b data-page-node-id="6lWj4VxIvWjbeEVNSKhET8" id="curPhoneTag"><!--pnid:TKNuXAhGN5Cbapo3xPscTm-->—</b></div>
   </header>
 
   <div data-page-node-id="IrWGVHh0wOV6tgCgaqRRko" id="denyView" style="display:flex">
     <div data-page-node-id="fxNWY0v1UtcpxQwdWhAkQP" class="deny-box">
       <svg data-page-node-id="ps60BvD2UG0DUfaZbZCv0t" aria-hidden="true" fill="none" height="44" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="44"><rect data-page-node-id="GP7hB7TtzsSUtnOLLgYSZt" height="11" rx="2" width="18" x="3" y="11"></rect><path data-page-node-id="6E8BOmzwhAX2BPouUTsWCn" d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-      <div data-page-node-id="FmlvgGvpvpdjIdnslOm9wN" class="deny-d"><!--pnid:diL6LrAuRW6VBjiJMdOyBU-->请回到首页查询你的手机号后，再来管理该号码的业务。</div>
-      <div data-page-node-id="Gu6snbsvuSDT3orH6Ue8jj" style="margin-top:16px"><a data-page-node-id="Sjrsl0x5Bo8saCenFhH6WN" class="back" href="index.html?auto=1" style="font-size:13px; color:#1677ff"><!--pnid:WCPSlT0HHXtnwvO6MTyXmz-->‹ 返回消费规划器</a></div>
+      <div data-page-node-id="FmlvgGvpvpdjIdnslOm9wN" class="deny-d"><!--pnid:lO88aqod9XPuD0wXQeXMVR-->请回到首页查询你的手机号后，再来管理该号码的业务。</div>
+      <div data-page-node-id="Gu6snbsvuSDT3orH6Ue8jj" style="margin-top:16px"><a data-page-node-id="Sjrsl0x5Bo8saCenFhH6WN" class="back" href="index.html?auto=1" style="font-size:13px; color:#1677ff"><!--pnid:IULlJ6qMju2ysLQBsE0Mgv-->‹ 返回消费规划器</a></div>
     </div>
   </div>
 
   <section data-page-node-id="sMNrAxh8pAWQ7SY2VO5lEQ" class="card series-card">
-    <div data-page-node-id="Dx82igOsb5Q84vNLpJTSoE" class="series-head"><b data-page-node-id="MCdG4RhCaExQ4BS83iuy38"><!--pnid:E7BmtavL4YDvzx7qJ8K3Be-->资费系列</b><span data-page-node-id="BKPDOOwC5DmyqcOzYSGeYT"><!--pnid:SvaAaosSSJFMxC7U13NIfT-->点击标签筛选业务；同一自定义系列业务互斥，默认系列业务自行判断</span></div>
+    <div data-page-node-id="Dx82igOsb5Q84vNLpJTSoE" class="series-head"><b data-page-node-id="MCdG4RhCaExQ4BS83iuy38"><!--pnid:N3pTRXVmaIuvef7xJbF07n-->资费系列</b><span data-page-node-id="BKPDOOwC5DmyqcOzYSGeYT"><!--pnid:KkzTHYdFVaZExNSv870jE9-->点击标签筛选业务；同一自定义系列业务互斥，默认系列业务自行判断</span></div>
     <div data-page-node-id="W9scOt8BJOSO8Bpt9x7rBT" class="tags" id="seriesTags"></div>
   </section>
 
@@ -223,38 +238,38 @@ body.no-identity>header,body.no-identity>section{display:none}
     <div data-page-node-id="2C8RCWAKPi1rDnHLoJwURi" class="toolbar">
       <div data-page-node-id="QpssE4vUFpwuNRsis2me1z" class="filters">
         <select data-page-node-id="OsUtFEgAeobbdm3LGpSnsy" aria-label="按类别筛选" id="fCatFilter">
-          <option data-page-node-id="lNZUY4J1x7RU80Hejm81oS" value><!--pnid:bemX2ckYkjomko61ILChOj-->全部类别</option>
-          <option data-page-node-id="oRaHh34zgf4QGs81eZ3dQO" value="consume"><!--pnid:uGNmvCdzIUmfd30fZi0QEg-->消费凑单类</option>
-          <option data-page-node-id="qNMBvyAfo9ZcHV7ntVAuMD" value="welfare"><!--pnid:DgUAxEbKL9zZZhWzeG1Xd4-->条件福利类</option>
+          <option data-page-node-id="lNZUY4J1x7RU80Hejm81oS" value><!--pnid:OCLZduJT3pV0WsYApt258g-->全部类别</option>
+          <option data-page-node-id="oRaHh34zgf4QGs81eZ3dQO" value="consume"><!--pnid:M4srjIfP7MQW55jwPWpNdT-->消费凑单类</option>
+          <option data-page-node-id="qNMBvyAfo9ZcHV7ntVAuMD" value="welfare"><!--pnid:U3nzfK31LlEDCPap1zgVlM-->条件福利类</option>
         </select>
         <select data-page-node-id="FROJvsZ4P2UQa2GcLJWJjb" aria-label="按开通状态筛选" id="fStatusFilter">
-          <option data-page-node-id="rWJWtbJPqULF5KoFGXs6Ua" value><!--pnid:KnyqaZwunCHmWAVu9DtJoL-->全部状态</option>
-          <option data-page-node-id="V4hCG50pn8BPq8ParVUGLl" value="on"><!--pnid:9Qxk5p3kYqlwV4WaLtHfNR-->已开通</option>
-          <option data-page-node-id="Q9heRyXN1JrocppfI52yiU" value="off"><!--pnid:VNFqn9vIOIE4iAzw9erJMb-->未开通</option>
+          <option data-page-node-id="rWJWtbJPqULF5KoFGXs6Ua" value><!--pnid:qrlF8PqwMXOoD3o10pEsQL-->全部状态</option>
+          <option data-page-node-id="V4hCG50pn8BPq8ParVUGLl" value="on"><!--pnid:nEuPhcAe5R8O4nF7cQINoG-->已开通</option>
+          <option data-page-node-id="Q9heRyXN1JrocppfI52yiU" value="off"><!--pnid:kBVlMpkP3p2qS1hmAkMZo4-->未开通</option>
         </select>
       </div>
       <div data-page-node-id="pIQTS4j7lQBXUnOaNZDDKy" class="search-field f-search">
         <input data-page-node-id="Z90pLkpOWKYUhIdrkHW1vH" id="kw" placeholder="搜索业务名称">
-        <button data-page-node-id="CN2iMxGtlxDk5RaYMnbALf" aria-label="清空搜索" class="clear-btn" id="kwClear" tabindex="-1" type="button"><!--pnid:yhk4Cdo1fLxwDFp2TPXqSG-->×</button>
+        <button data-page-node-id="CN2iMxGtlxDk5RaYMnbALf" aria-label="清空搜索" class="clear-btn" id="kwClear" tabindex="-1" type="button"><!--pnid:RJfOXoRNbBl0EDnThOzYNZ-->×</button>
       </div>
       <div data-page-node-id="01cdrOqa4WrXf0ja7vera9" class="io-group">
-        <button data-page-node-id="GW6rr7ZpuhiOiDbyJDHZTy" class="io-btn" id="exportBtn" title="导出全部业务为 Excel（.xlsx）" type="button"><!--pnid:8zD7FujAcdKvqimk8V5meU-->导出.xlsx</button>
-        <button data-page-node-id="s8GVtVlue4QaOOCsfjXtvX" class="io-btn" id="importBtn" title="从 Excel 导入业务（仅支持 .xlsx）" type="button"><!--pnid:XzedbswT0SSyxkr4C2I3cU-->导入.xlsx</button>
+        <button data-page-node-id="GW6rr7ZpuhiOiDbyJDHZTy" class="io-btn" id="exportBtn" title="导出全部业务为 Excel（.xlsx）" type="button"><!--pnid:2XT5aCugg03J6O6ictDaO6-->导出.xlsx</button>
+        <button data-page-node-id="s8GVtVlue4QaOOCsfjXtvX" class="io-btn" id="importBtn" title="从 Excel 导入业务（仅支持 .xlsx）" type="button"><!--pnid:iDDwWh5HV0JMHnPUZrDxtE-->导入.xlsx</button>
         <input data-page-node-id="2p68OfrRvs83T67Ww4MNMj" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="hidden" id="importFile" type="file">
       </div>
-      <button data-page-node-id="WuG1DYnna2jFvnsL29YkKo" id="addBtn"><!--pnid:MPtRcnas5MLUYkDvX1NOht-->+ 添加业务</button>
+      <button data-page-node-id="WuG1DYnna2jFvnsL29YkKo" id="addBtn"><!--pnid:XgymQctPTK2KC0GKq0LzFT-->+ 添加业务</button>
     </div>
 
     <div data-page-node-id="ptLYi5VjrIA7AmWdlcEmJf" class="table-wrap">
       <table data-page-node-id="VLK2fMEbOGn8G69J9vwEeh">
         <thead data-page-node-id="Hulsu1xxbuYD90ffBhvjLM">
           <tr data-page-node-id="PVjd8SQRHIQASKG8tr9cwA">
-            <th data-page-node-id="qOHPFDYA2xGGtS6DrALU9D" style="width:25%"><!--pnid:AvRXVoUW4ashvsWBLn7t7C-->业务名称/编码</th>
-            <th data-page-node-id="TtmoPcgDMRwnEP8PiF9DES" style="width:18%"><!--pnid:mYzKh7SEWZ1vl1Sxt6N71O-->类别/系列</th>
-            <th data-page-node-id="PNAKzPrxmmehM7naqeFVdb" style="width:15%"><!--pnid:DQ18q4aIJlab2BKlnGYK4B-->资费/羊毛</th>
-            <th data-page-node-id="sHo4PPXPdyShdFXIyRiHvn" style="width:11%"><!--pnid:ksUAZYdH2zDSwU5DZXCWpd-->开通状态</th>
-            <th data-page-node-id="iTYiaIgRaYoaDBR5POpyNe" style="width:20%"><!--pnid:z7vei8IM4gJN0W2P6cGafP-->其他</th>
-            <th data-page-node-id="xYOxHuodHpBkYlDLPEGlsD" style="width:13%"><!--pnid:nVDGAPtegNTKKcaF08rcHp-->操作</th>
+            <th data-page-node-id="qOHPFDYA2xGGtS6DrALU9D" style="width:19%"><!--pnid:z49KGrtRLnr1ck37ekj6cg-->业务名称/编码</th>
+            <th data-page-node-id="TtmoPcgDMRwnEP8PiF9DES" style="width:12%"><!--pnid:gFKDEhrGzmzF17arPsQbS8-->类别/系列/上架状态</th>
+            <th data-page-node-id="PNAKzPrxmmehM7naqeFVdb" style="width:12%"><!--pnid:aO3U0w2izlhMNwOK6KLrbi-->资费/羊毛</th>
+            <th data-page-node-id="sHo4PPXPdyShdFXIyRiHvn" style="width:7.5%"><!--pnid:eziUOU3izyab7vshJvgp2x-->开通状态</th>
+            <th data-page-node-id="iTYiaIgRaYoaDBR5POpyNe" style="width:34%"><!--pnid:uJLFagzkzVD6yNCJhv61Co-->其他</th>
+            <th data-page-node-id="xYOxHuodHpBkYlDLPEGlsD" style="width:16%"><!--pnid:kzdnEavVFeblH9p1ZJAxTo-->操作</th>
           </tr>
         </thead>
         <tbody data-page-node-id="auRlmHnUBvR7XxMD7yMlTc" id="tbody"></tbody>
@@ -263,102 +278,108 @@ body.no-identity>header,body.no-identity>section{display:none}
     <div data-page-node-id="Cl2GYwkG7oqPWxrkmV8WDi" class="pager hidden" id="pager"></div>
   </section>
 
-  <p data-page-node-id="OGuPz4V2EkLRDEG5X7qMIR" class="foot"><!--pnid:qSlmjkoDVUa0VKzX7dXI1E-->数据保存在本地浏览器，清理浏览器数据后会一并清除。</p>
+  <p data-page-node-id="OGuPz4V2EkLRDEG5X7qMIR" class="foot"><!--pnid:bbQReZaYN7z1Q9je9YMDBe-->数据保存在本地浏览器，清理浏览器数据后会一并清除。</p>
 </div>
 
 <div data-page-node-id="i4cW3ixlLCpyrnnHHeKi8B" class="modal hidden" id="modal">
   <div data-page-node-id="Aon2NoiloTF4n8DI5ZPYhd" aria-modal="true" class="sheet" role="dialog">
-    <div data-page-node-id="YdpOHOgeDiEQ2IDmtdMroo" class="sheet-head"><b data-page-node-id="EDuX5lSkOFGrv9Qn3ee5tp" id="formTitle"><!--pnid:uz4drvC0s5O1Zo4kWOu2z3-->添加业务</b><button data-page-node-id="69AVH5ZH7azuikmHu2ayD0" aria-label="关闭" class="icon" id="closeBtn"><!--pnid:bsFpMAhHjoduaeyUPzJCrU-->×</button></div>
-    <div data-page-node-id="Z6r2Ha0zkMReKs3Dt5dMNd" class="pick-notice hidden" id="pickNotice"><!--pnid:g2m5usxhBuTmDbK2SyDTTK-->个人收集，仅供学习，以官网为准</div>
-    <!--pnid:upC48CF9lz5vkiqH7rsxpt--><!-- 添加业务：勾选规则批量添加 -->
+    <div data-page-node-id="YdpOHOgeDiEQ2IDmtdMroo" class="sheet-head"><b data-page-node-id="EDuX5lSkOFGrv9Qn3ee5tp" id="formTitle"><!--pnid:HrkPai80EJDWC0sB4CpaYu-->添加业务</b><span data-page-node-id="Z6r2Ha0zkMReKs3Dt5dMNd" class="head-notice hidden" id="pickNotice"><!--pnid:adLqCrioXGKKQs3AVpwwJD-->个人收集，仅供学习，以官网为准</span><button data-page-node-id="69AVH5ZH7azuikmHu2ayD0" aria-label="关闭" class="icon" id="closeBtn"><!--pnid:E8RhUNkWkRbpAo67mQLMvD-->×</button></div>
+    <!--pnid:PGGLTPcQXp0scOgn5wHkzr--><!-- 添加业务：勾选规则批量添加 -->
     <div data-page-node-id="055qM68fmga3nlJ6FZWNKL" class="hidden" id="pickArea">
       <div data-page-node-id="NzcqjU6ppY6H47RzkeE0d5" class="field">
-        <label data-page-node-id="cQX9jjCA3ZXw1aqzcU8L2L"><!--pnid:G97F4MP9f3pyj7f2i7aQIq-->搜索业务</label>
         <div data-page-node-id="v5BlWKQVC52jv405CHwTZT" class="pick-search">
+          <select data-page-node-id="YIojFJilo967nSgVfnSlpf" aria-label="按资费类别筛选" id="pickCatFilter">
+            <option data-page-node-id="o5oBSLk0NOOvk1UDcIUM9s" value><!--pnid:IRcIA2D0rlrJ7gVDsrkVOc-->全部类别</option>
+            <option data-page-node-id="VfRYCVUldiFPf5S7KTQUPG" value="consume"><!--pnid:ILEsG73aSEUYIe6m4RcV7t-->凑单消费类</option>
+            <option data-page-node-id="X7jduDyuiflz8fPRni5ZuD" value="welfare"><!--pnid:Se6miBfKQWrs5tZX0LCAxA-->条件福利类</option>
+          </select>
           <div data-page-node-id="T1BH9X76mbZP2jtCGRKulc" class="search-field">
             <input data-page-node-id="rMde7QdvNbc0bbIsk4Z41F" autocomplete="off" id="pickKw" placeholder="输入业务名称或业务编码">
-            <button data-page-node-id="OPhBrcy7S5tkalKeW9Vs2F" aria-label="清空搜索" class="clear-btn" id="pickClear" tabindex="-1" type="button"><!--pnid:WeYAqCj5dJkbME7cvH6u0l-->×</button>
+            <button data-page-node-id="OPhBrcy7S5tkalKeW9Vs2F" aria-label="清空搜索" class="clear-btn" id="pickClear" tabindex="-1" type="button"><!--pnid:Hcmt7wn43l1HZIDazVGy6g-->×</button>
           </div>
-          <button data-page-node-id="l82GxGqcM5c0qzeFxBzmcs" class="pick-search-btn" id="pickSearchBtn" type="button"><!--pnid:h9aNRbz06vqtAx6oZQnWbP-->查询</button>
+          <button data-page-node-id="l82GxGqcM5c0qzeFxBzmcs" class="pick-search-btn" id="pickSearchBtn" type="button"><!--pnid:nqDajb1fZu74nr4hOadAY7-->查询</button>
         </div>
       </div>
-      <div data-page-node-id="8mDmTDM6A7lmDtwdAqTT7G" class="pick-hint" id="pickHint"><!--pnid:WLdq0TUtioOniRKmGTgNrP-->点击卡片右下角<b data-page-node-id="THlmaUCVEjmWmfGc4ohHYL"><!--pnid:xGbVVHXOmx6fBDLus74Mlc-->「跳转官网」</b><!--pnid:ITWh78C4Xwx3BVhszifikP-->会自动复制该业务编码并打开资费公示专区，在官网搜索框粘贴编码即可查看该业务详情</div>
+      <div data-page-node-id="tYs8q9c3OqAcHSXoTH0nAQ" class="pick-series-block" id="pickSeriesBlock">
+        <div data-page-node-id="i8qfWFicp2z31TffS4vRRa" class="pick-series-head"><b data-page-node-id="x7ywunG3vLjII19ii3JHGz"><!--pnid:pFVeuNlytAH5VyG4k8vftX-->资费系列</b></div>
+        <div data-page-node-id="6JOGKGkhZkrfaI13mkCXCb" class="pick-series-tags" id="pickSeriesTags"></div>
+      </div>
       <div data-page-node-id="bU2anPWo0hbTP9bVZ3pT83" class="pick-grid" id="pickList"></div>
       <div data-page-node-id="jMK2tKqUPgy7ws60l9pdQy" class="pager hidden" id="pickPager"></div>
     </div>
-    <!--pnid:bpQEXOILGh2BhiTn4b7YRQ--><!-- 编辑时：只读信息 -->
+    <!--pnid:DIbnCyVhwKkHynaE3i70U0--><!-- 编辑时：只读信息 -->
     <div data-page-node-id="1SVlr9dKcP4kAm2da1UOFZ" class="picked hidden" id="pickedInfo"></div>
-    <!--pnid:BN67a9VvTs9RyVHp2RHdJc--><!-- 编辑时：可编辑字段 -->
+    <!--pnid:latfS9cEaTa5w0c1kGDtGv--><!-- 编辑时：可编辑字段 -->
     <div data-page-node-id="MbLXpk4byz9mnKf5dw4GzU" class="hidden" id="editArea">
       <div data-page-node-id="hriCAs6xfSJ1j1wwfhOSeo" class="field">
-        <label data-page-node-id="r022yRCemOyVhuIil1njGI" id="priceLabel"><!--pnid:kimlHNIrTnlxnjoBzbVh22-->资费价格（元）<i data-page-node-id="8sJ0TU6oImnsdwOoWOUbPR"><!--pnid:lk4Yxbkz7gOVdBMHxZGVMr-->*</i></label>
+        <label data-page-node-id="r022yRCemOyVhuIil1njGI" id="priceLabel"><!--pnid:8YN3U1Kq1Cykr9172pn7cp-->资费价格（元）<i data-page-node-id="8sJ0TU6oImnsdwOoWOUbPR"><!--pnid:XwQyOlr4MTgIJ0dDjyeg2f-->*</i></label>
         <input data-page-node-id="XWU0HxGD7EDcJi58qhQzzX" id="fPrice" inputmode="decimal" placeholder="如：10.00">
       </div>
       <div data-page-node-id="IZ3GbhcGZuYmN4eWFW8f5u" class="field">
-        <label data-page-node-id="hfLM6jktehN5yXtCQbjfJD"><!--pnid:o1vVuL9Vy3wkQSVpShQ6fg-->羊毛（元）<i data-page-node-id="MMScN2wFSTq1v0SaOz8ZhW"><!--pnid:fXmWq0HNrBGluGKxw3w8DL-->*</i></label>
+        <label data-page-node-id="hfLM6jktehN5yXtCQbjfJD"><!--pnid:lTlGOn2KBYjIDBBS72pbKF-->羊毛（元）<i data-page-node-id="MMScN2wFSTq1v0SaOz8ZhW"><!--pnid:4M6IxC9qNqW1ny11c8BY6B-->*</i></label>
         <input data-page-node-id="wFshlVfYkmhFhZprGuknQi" id="fWool" inputmode="decimal" placeholder="如：5.00">
       </div>
       <div data-page-node-id="hGCvfG9NE0N6mfrJCiCnSx" class="field">
-        <label data-page-node-id="DymiT48o3zb64JOiOXMTj3"><!--pnid:GtuNo2rfjKgo4cHVY38iJf-->起止日期</label>
+        <label data-page-node-id="DymiT48o3zb64JOiOXMTj3"><!--pnid:rkytVYBGRI5keRJo2ziFXM-->起止日期</label>
         <div data-page-node-id="7azwnTlafWLK6v7B2cz7uQ" class="date-range">
           <input data-page-node-id="QLqyr0FyHZCZBEaORMWCjP" aria-label="开始日期" id="fStart" type="date">
-          <span data-page-node-id="4QaELzGMirsASbm8Ri68b1"><!--pnid:16FLv0bUV9570l67yv84Te-->至</span>
+          <span data-page-node-id="4QaELzGMirsASbm8Ri68b1"><!--pnid:7iKDCjVAeIDYG4DogmD4v3-->至</span>
           <input data-page-node-id="3XHEsXyzpz46VmPGDkiUpZ" aria-label="结束日期" id="fEnd" type="date">
         </div>
       </div>
       <div data-page-node-id="A3MrDhZe1HWbBHu58f723k" class="field">
-        <label data-page-node-id="mf5OlbkrZfBFWnBIHwccu7"><!--pnid:6Ins3KFrNp0y2PitdmstfZ-->开通状态</label>
+        <label data-page-node-id="mf5OlbkrZfBFWnBIHwccu7"><!--pnid:sC7gQMT9nr2hnJEGQjXLr7-->开通状态</label>
         <div data-page-node-id="16gMCMk5LyK0HUMP3RoB6b" class="radios">
-          <label data-page-node-id="muYwwIPtmdThaDzvUNuwhe"><input data-page-node-id="0zkcTja9k19mwfUKZH8Z3b" name="fStatus" type="radio" value="on"><!--pnid:GNdHgJT4vWFLa9nrQWVAC5-->已开通</label>
-          <label data-page-node-id="8cxo2hUqXfV1FV4gNA7seY"><input data-page-node-id="d6t7vVl8IGFdtaMpCzyyqz" checked name="fStatus" type="radio" value="off"><!--pnid:gPprxCSgPpYWhAIfddMQIx-->未开通</label>
+          <label data-page-node-id="muYwwIPtmdThaDzvUNuwhe"><input data-page-node-id="0zkcTja9k19mwfUKZH8Z3b" name="fStatus" type="radio" value="on"><!--pnid:BRCrWdlzG3i1Aj8xTTu3CZ-->已开通</label>
+          <label data-page-node-id="8cxo2hUqXfV1FV4gNA7seY"><input data-page-node-id="d6t7vVl8IGFdtaMpCzyyqz" checked name="fStatus" type="radio" value="off"><!--pnid:nS7GjR694qcXPvIZqJpXOP-->未开通</label>
         </div>
       </div>
     </div>
     <div data-page-node-id="QQrChR0foch1BPAoCql4Zi" class="form-err" id="formErr"></div>
     <div data-page-node-id="bokM5bsB6Vvm2Zm55SrfpJ" class="sheet-foot">
-      <button data-page-node-id="4iq5aHjoqIo8LbWve2Knia" class="ghost" id="cancelBtn"><!--pnid:gGCcNasGemIkRq0K3RDwDc-->取消</button>
-      <button data-page-node-id="XZj14xPrh5qfJNy7RErhy5" id="saveBtn"><!--pnid:cciNeAeVTpuHyNrzlVx3bp-->保存</button>
+      <button data-page-node-id="4iq5aHjoqIo8LbWve2Knia" class="ghost" id="cancelBtn"><!--pnid:vHhbtrvg21fQRkI98uLnyE-->取消</button>
+      <button data-page-node-id="XZj14xPrh5qfJNy7RErhy5" id="saveBtn"><!--pnid:PAAouTlnAkf3rQCftqMGN1-->保存</button>
     </div>
   </div>
 </div>
 
-<!--pnid:BQB5UmA3Kn3O4mdoy86JLb--><!-- 起止日期快捷设置 -->
+<!--pnid:2H63yMUhmC0oIzCUpfjVqp--><!-- 起止日期快捷设置 -->
 <div data-page-node-id="PGNlC1ZrsOlEzfX8zDvW6F" class="modal hidden" id="dateModal">
   <div data-page-node-id="YgHROBlQBDzpGn59guTu4a" aria-modal="true" class="sheet" role="dialog">
-    <div data-page-node-id="5pgAMLLeR437IMDkf6iFmo" class="sheet-head"><b data-page-node-id="ZTvaiBnLiGIsCGsuu4SFwj"><!--pnid:3Vfry6nZ87SKXy5w4y46fd-->设置起止日期</b><button data-page-node-id="WowGlsjyqRokDIwHCYIJzw" aria-label="关闭" class="icon" id="dateCloseBtn"><!--pnid:T6LG9xa2W3Y1kSW3KGksay-->×</button></div>
+    <div data-page-node-id="5pgAMLLeR437IMDkf6iFmo" class="sheet-head"><b data-page-node-id="ZTvaiBnLiGIsCGsuu4SFwj"><!--pnid:QidXozEIRBWW1ROltaCx77-->设置起止日期</b><button data-page-node-id="WowGlsjyqRokDIwHCYIJzw" aria-label="关闭" class="icon" id="dateCloseBtn"><!--pnid:ayTWgRz995Dz3TBeZOmizF-->×</button></div>
     <div data-page-node-id="RI7AL3W2yFUqSJdWqXh4Xx" class="pk-date-name" id="dateName"></div>
     <div data-page-node-id="KspmuAHUjyFhvkssb5BV7k" class="field">
-      <label data-page-node-id="dpcsINh4plkXOYJhBNB1VH"><!--pnid:zIcSnrxO33pQtR0ckmapL8-->起止日期</label>
+      <label data-page-node-id="dpcsINh4plkXOYJhBNB1VH"><!--pnid:duxQc6d2yV4TJOFRPbFi1Y-->起止日期</label>
       <div data-page-node-id="FdIG7s9atVbaZ0JwwF3Wxu" class="date-range">
         <input data-page-node-id="L0LtVhDW6S9JqaL5cOepqe" aria-label="开始日期" id="dStart" type="date">
-        <span data-page-node-id="UUCczcDT0tco0rbYRlxXg8"><!--pnid:VpSmIom5g5minzfXtJlU4S-->至</span>
+        <span data-page-node-id="UUCczcDT0tco0rbYRlxXg8"><!--pnid:5hugLCy57pjrijXXpjpVXj-->至</span>
         <input data-page-node-id="9iI3ZG0iXTwEoHzk40OJ6z" aria-label="结束日期" id="dEnd" type="date">
       </div>
     </div>
     <div data-page-node-id="JczGEBTwFkmbZvCDLl1zAZ" class="form-err" id="dateErr"></div>
     <div data-page-node-id="FVsPjhl1R2KTFPG5O6Hlys" class="sheet-foot">
-      <button data-page-node-id="FOKcq7aHnSAatVevVImT3y" class="ghost" id="dateCancelBtn"><!--pnid:PrMPjzyGQDD5kL78YcxYaM-->取消</button>
-      <button data-page-node-id="NF9DoE5uB1AdGDy0H6CIs3" id="dateSaveBtn"><!--pnid:Ho50mGz6tvheF9Ys5pkSzw-->保存</button>
+      <button data-page-node-id="FOKcq7aHnSAatVevVImT3y" class="ghost" id="dateCancelBtn"><!--pnid:iY7hBs3lDdOdsoJzuR6Ypp-->取消</button>
+      <button data-page-node-id="NF9DoE5uB1AdGDy0H6CIs3" id="dateSaveBtn"><!--pnid:ukVGiVi8N7BZRGW2ZLMyW7-->保存</button>
     </div>
   </div>
 </div>
 
 <div data-page-node-id="9vMoRFMlOnVwxHFD3ndKnQ" class="modal hidden" id="confirmModal">
   <div data-page-node-id="JGs6F2NkZaqwo7KioX3hZ4" aria-modal="true" class="sheet" role="alertdialog">
-    <div data-page-node-id="zYjv4raxAsVemuBZIebyLn" class="sheet-head"><b data-page-node-id="pcKtpl7ZOfmgY24brDexcP" id="cfTitle"><!--pnid:ucLVZ5qwH8ypA7qkBtNuVx-->删除确认</b></div>
+    <div data-page-node-id="zYjv4raxAsVemuBZIebyLn" class="sheet-head"><b data-page-node-id="pcKtpl7ZOfmgY24brDexcP" id="cfTitle"><!--pnid:Xdl5arEsLL7Hrq9RXNqf84-->删除确认</b></div>
     <div data-page-node-id="z67MHli6dQq4fwnfZ6gojF" class="cf-msg" id="cfMsg"></div>
     <div data-page-node-id="7Q5WcDBGMoa86NS1xED9Gy" class="sheet-foot">
-      <button data-page-node-id="yZwVIPh50rRjkXzFBFgban" class="ghost" id="cfCancel"><!--pnid:c1cBB0umNSNFggHOXg0vHR-->取消</button>
-      <button data-page-node-id="wfTva0OnxyMKdApcAzzwOB" class="danger" id="cfOk"><!--pnid:TljDt5GPCnS9sM12KhYnlI-->删除</button>
+      <button data-page-node-id="yZwVIPh50rRjkXzFBFgban" class="ghost" id="cfCancel"><!--pnid:oR3qTSiSxbHFOHy2QYh5DE-->取消</button>
+      <button data-page-node-id="wfTva0OnxyMKdApcAzzwOB" class="danger" id="cfOk"><!--pnid:Lou0fKgiBx47giHLPoRksz-->删除</button>
     </div>
   </div>
 </div>
 
 <div data-page-node-id="Zms2SAmA1hfiHqbi8McMZf" class="modal hidden" id="infoModal">
   <div data-page-node-id="CD2tRffJY0YuWGn1yllDgZ" aria-modal="true" class="sheet" role="dialog">
-    <div data-page-node-id="SZk6QYhRof2117aKZIc4jO" class="sheet-head"><b data-page-node-id="Aet6tBjEThjifENrgt0aYJ" id="infoTitle"><!--pnid:U9OOxz92wlKHWxffpUeLUg-->提示</b><button data-page-node-id="PSruOlOjuiXdcxhXTfUn2k" aria-label="关闭" class="icon" id="infoClose"><!--pnid:raqACJ2ljzL7PZOTtIJXAm-->×</button></div>
+    <div data-page-node-id="SZk6QYhRof2117aKZIc4jO" class="sheet-head"><b data-page-node-id="Aet6tBjEThjifENrgt0aYJ" id="infoTitle"><!--pnid:bLSxMOlnFL2dgvIHba9q0g-->提示</b><button data-page-node-id="PSruOlOjuiXdcxhXTfUn2k" aria-label="关闭" class="icon" id="infoClose"><!--pnid:NOddfq4eVuztXElgmIAGgq-->×</button></div>
     <div data-page-node-id="LSTzTVVK0GtJM3SVX05mbn" class="cf-msg" id="infoMsg"></div>
-    <div data-page-node-id="D2Ri2yRfKDFCcI3jfjSYau" class="sheet-foot"><button data-page-node-id="Q92bYW7DePhMqqPqzjtjrk" id="infoOk"><!--pnid:lyUhrqAV0JmqHQliGrdeLj-->知道了</button></div>
+    <div data-page-node-id="D2Ri2yRfKDFCcI3jfjSYau" class="sheet-foot"><button data-page-node-id="Q92bYW7DePhMqqPqzjtjrk" id="infoOk"><!--pnid:L7otsv4eE5PXnWqnchU8mV-->知道了</button></div>
   </div>
 </div>
 
@@ -412,6 +433,8 @@ let ruleMap=new Map(); // 业务编码 -> 规则
 let pickedCode=null;   // 编辑弹窗当前关联的业务编码
 let pickedSet=new Set(); // 添加弹窗勾选的业务编码集合
 let claimKw='';        // 已应用的搜索关键字（点查询才更新）
+let pickCatFilter='';  // 添加弹窗类别筛选（''|consume|welfare）
+let pickSeriesFilter=''; // 添加弹窗系列筛选（''|seriesId）
 const PAGE_SIZE=20;    // 列表分页：每页 20 条
 const PICK_PAGE_SIZE=18; // 添加弹窗：3 列 × 6 行
 let pageBiz=1;         // 主列表当前页
@@ -468,8 +491,9 @@ function load(){
     if(!x.code)return;
     const r=ruleMap.get(x.code);
     if(!r)return;
-    // 规则表为真源：名称、类别、系列、违约责任、消费条件实时同步
+    // 规则表为真源：名称、类别、系列、违约责任、消费条件、上架状态实时同步
     x.name=cleanName(r.name)||x.name;
+    x.offShelf=!!r.offShelf;
     if(r.category==='consume'||r.category==='welfare')x.category=r.category,x.type=r.category;
     if(series.some(s=>s.id===r.seriesId))x.seriesId=r.seriesId;
     x.liability=r.liability||'';
@@ -670,8 +694,9 @@ function render(){
       <td>
         <div class="nm-line"><span class="nm" title="${escapeHtml(x.name)}">${escapeHtml(x.name)}</span></div>
         ${x.code?`<div class="code-line"><code title="${escapeHtml(x.code)}">${escapeHtml(x.code)}</code><button class="copy-btn" data-act="copy" data-code="${escapeHtml(x.code)}" title="复制业务编码" aria-label="复制业务编码"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>`:''}
+        ${x.offShelf?'<div class="off-line" style="margin-top:3px"><span class="off-badge">已下架</span></div>':''}
       </td>
-      <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span></div></td>
+      <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span><span class="sh-badge ${x.offShelf?'off':'on'}">${x.offShelf?'已下架':'上架中'}</span></div></td>
       <td class="price">${welfare?'<small>低消</small>':''}${priceText(x.price)}<span class="sep">-</span><span class="wool">${priceText(x.wool!=null?x.wool:0)}</span></td>
       <td class="st-cell"><button class="switch${x.active?' on':''}" data-act="toggleSt" role="switch" aria-checked="${x.active?'true':'false'}" aria-label="开通状态"${(x.startDate||x.endDate)?' title="范围内自动开通，到期自动关闭；手动关闭后保持关闭"':''}></button></td>
       <td class="other"><div class="other-date">${escapeHtml(dateRangeText(x))}</div><div class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</div></td>
@@ -707,12 +732,25 @@ function syncSaveBtn(){
   $('saveBtn').textContent=n?`添加所选（${n}）`:'添加所选';
   $('saveBtn').disabled=!n;
 }
+// 添加弹窗：资费系列标签与 rules 页模块一致（全量系列 + 规则计数），不随弹窗可添加业务变化，仅用于快速筛选
+function renderPickSeries(){
+  const counts={};
+  ruleMap.forEach(r=>{const k=r.seriesId||DEFAULT_SERIES;counts[k]=(counts[k]||0)+1});
+  $('pickSeriesTags').innerHTML=series.map(s=>
+    `<span class="stag${pickSeriesFilter===s.id?' active':''}" data-sid="${s.id}">${escapeHtml(s.name)}(${counts[s.id]||0})</span>`
+  ).join('');
+}
 function renderPickList(){
-  const list=unclaimedRules();
+  let list=unclaimedRules();
+  renderPickSeries();
+  if(pickCatFilter)list=list.filter(r=>r.category===pickCatFilter);
+  if(pickSeriesFilter)list=list.filter(r=>(r.seriesId||DEFAULT_SERIES)===pickSeriesFilter);
   if(!list.length){
     $('pickList').innerHTML=claimKw
       ?'<div class="pick-empty">没有匹配「'+escapeHtml(claimKw)+'」的业务，请到资费规则页确认后重试</div>'
-      :'<div class="pick-empty">业务都已经添加过了，如有新业务请使用导入功能</div>';
+      :(pickCatFilter||pickSeriesFilter)
+        ?'<div class="pick-empty">当前筛选条件下没有可添加的业务</div>'
+        :'<div class="pick-empty">业务都已经添加过了，如有新业务请使用导入功能</div>';
     renderPager($('pickPager'),0,1,null,PICK_PAGE_SIZE);
     // 空列表也要同步按钮状态：打开弹窗时 pickedSet 已重置，若不同步会残留上次的「添加所选（N）」
     syncSaveBtn();
@@ -734,7 +772,7 @@ function renderPickList(){
         <span class="pc-title"><b class="pc-name" title="${escapeHtml(cleanName(r.name))}">${escapeHtml(cleanName(r.name))}</b><span class="pc-code" title="${escapeHtml(code)}">${escapeHtml(code)}</span></span>
         <button type="button" class="copy-btn pc-copy" data-act="copy" data-code="${escapeHtml(code)}" title="复制业务编码" aria-label="复制业务编码"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
       </div>
-      <div class="pc-tags"><span class="chip ${r.category}">${CAT_NAME[r.category]||''}</span><span class="stag stag-mini${(r.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(r.seriesId))}">${escapeHtml(seriesName(r.seriesId))}</span></div>
+      <div class="pc-tags"><span class="chip ${r.category}">${CAT_NAME[r.category]||''}</span><span class="stag stag-mini${(r.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(r.seriesId))}">${escapeHtml(seriesName(r.seriesId))}</span><span class="sh-badge ${r.offShelf?'off':'on'}">${r.offShelf?'已下架':'已上架'}</span></div>
       <div class="pc-foot"><span class="pc-price">${welfare?'<small>低消</small>':''}${r.price!=null?priceText(r.price):'—'}</span>${link}</div>
     </label>`;
   }).join('');
@@ -795,6 +833,8 @@ function openForm(item){
     pickedSet=new Set();
     claimKw='';
     pickPage=1;
+    pickCatFilter='';pickSeriesFilter='';
+    $('pickCatFilter').value='';
     $('pickKw').value='';
     renderPickList();
   }
@@ -990,6 +1030,15 @@ function applyPickSearch(){
 }
 $('pickSearchBtn').addEventListener('click',applyPickSearch);
 $('pickKw').addEventListener('keydown',e=>{if(e.key==='Enter')applyPickSearch()});
+// 添加弹窗筛选：系列标签点击切换（再点取消，与 rules 页一致）；类别下拉切换
+$('pickSeriesTags').addEventListener('click',e=>{
+  const tag=e.target.closest('.stag[data-sid]');
+  if(!tag)return;
+  pickSeriesFilter=pickSeriesFilter===tag.dataset.sid?'':tag.dataset.sid;
+  pickPage=1;
+  renderPickList();
+});
+$('pickCatFilter').addEventListener('change',e=>{pickCatFilter=e.target.value;pickPage=1;renderPickList()});
 $('pickClear').addEventListener('click',()=>{
   $('pickKw').value='';
   claimKw='';

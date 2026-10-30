@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html data-page-node-id="h7q1tEy8MaRB0vcV8AE96Z" lang="zh-CN">
 <head data-page-node-id="ZmzJTvyGdFK92aYMExKQgt">
-<script data-page-node-id="VL6riqrTBiybd5ds93oIUY" src="/page/page_comm/inject.js"></script>
+<script data-page-node-id="osO0olWy5WFV7kiinP7K7X" src="/page/page_comm/inject.js"></script>
 <meta data-page-node-id="evshars17mtXUzP49g473Z" charset="UTF-8">
 <meta data-page-node-id="ZDo9Tz4BiXvXHDepPYrbms" content="width=device-width,initial-scale=1" name="viewport">
 <title data-page-node-id="NnQWiQqAWpaZfHWhGHBdk2" data-pnid-children="8uqAzfNx4xPmqmhl27vZkc">资费规则管理</title>
 <style data-page-node-id="UWBp33MrAUWjCsUC9w6tT5" data-pnid-children="cxukouIi4zNb6FMxUXt02f">
 *{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#20242a;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px}
-.wrap{max-width:860px;margin:auto;padding:40px 16px 56px}
+.wrap{max-width:1200px;margin:auto;padding:40px 16px 56px}
 header{margin-bottom:14px}
 .back{display:inline-block;font-size:11px;color:#6b7480;text-decoration:none;margin-bottom:10px}
 .back:hover{color:#1677ff}
@@ -59,20 +59,24 @@ button:disabled{opacity:.55;cursor:wait}
 .price-cell{font-weight:600;white-space:nowrap}
 .price-cell small{font-weight:400;font-size:10px;color:#9aa1aa;margin-right:2px}
 table{width:100%;border-collapse:collapse;min-width:600px}
-th{font-size:11px;font-weight:500;color:#8b929c;text-align:left;padding:9px 10px;background:#fafbfc;border-bottom:1px solid #edf0f2;white-space:nowrap}
-td{padding:10px;border-bottom:1px solid #edf0f2;font-size:13px;vertical-align:middle}
+th{font-size:11px;font-weight:500;color:#8b929c;text-align:left;padding:6px 10px;background:#fafbfc;border-bottom:1px solid #edf0f2;white-space:nowrap}
+td{padding:13.5px 10px;border-bottom:1px solid #edf0f2;font-size:13px;vertical-align:middle}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover td{background:#fafbfc}
 .nm-line{display:flex;align-items:center;gap:6px;min-width:0}
 .nm{font-weight:600;color:#20242a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .chip{display:inline-block;font-size:11px;color:#4d6fa8;background:#eef4ff;border:1px solid #dbe7ff;border-radius:999px;padding:2px 9px;white-space:nowrap}
 .chip.welfare{color:#a3730a;background:#fdf6e7;border-color:#f3e3bd}
-.code-line{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:11px;color:#8b929c;min-width:0}
+.code-line{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:11px;color:#8b929c;min-width:0}
 .code-line code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#8b929c;background:none;border:0;padding:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
 .copy-btn{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:0;border-radius:5px;background:transparent;color:#9aa1aa;cursor:pointer;padding:0}
 .copy-btn:hover{background:#eef4ff;color:#1677ff}
 .copy-btn.ok{color:#2f8f5b}
-.liab-txt{max-width:220px;white-space:normal;word-break:break-word;line-height:1.55;color:#8b929c}
+.liab-txt{white-space:normal;word-break:break-word;line-height:1.5;color:#8b929c;font-size:12px}
+.shelf-badge{display:inline-block;font-size:11px;border-radius:999px;padding:2px 9px;white-space:nowrap;cursor:pointer;user-select:none;-webkit-user-select:none}
+.shelf-badge.on{color:#1f8a3b;background:#e9f7ee;border:1px solid #c4e7cf}
+.shelf-badge.off{color:#6b7480;background:#f2f4f7;border:1px solid #dbe0e7}
+.nm.off{text-decoration:line-through;color:#5b6470}
 .ops{white-space:nowrap}
 .mini{height:28px;font-size:11px;padding:0 10px;background:#f2f5f9;color:#4a5361;font-weight:500}
 .mini.danger{background:#fef2f2;color:#d9363e}
@@ -125,7 +129,7 @@ tbody tr:hover td{background:#fafbfc}
   table{min-width:0;display:block}
   thead{display:none}
   tbody{display:block}
-  tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:7px 8px;padding:13px 2px;border-bottom:1px solid #edf0f2}
+  tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:7px 8px;padding:20.5px 2px;border-bottom:1px solid #edf0f2}
   tbody tr:last-child{border-bottom:0}
   tbody tr:hover td{background:none}
   td{border:0;padding:0;display:block}
@@ -161,9 +165,6 @@ tbody tr:hover td{background:#fafbfc}
           <option data-page-node-id="xihY2ZTbltOpq2C6dUbc70" value="consume"><!--pnid:J8W1MZeGqeb0LjdrlkDXD6-->凑单消费类</option>
           <option data-page-node-id="sfYQcSoGF5cvKygsjYNio8" value="welfare"><!--pnid:wsi6vS1UVBtnwEYFPbSJym-->条件福利类</option>
         </select>
-        <select data-page-node-id="j4GIYY88B68mxqNnZugUyt" aria-label="按系列筛选" id="fSeriesFilter">
-          <option data-page-node-id="p9fXAIGU60okzHm3G1T5ve" value><!--pnid:TgIEL22FAIC6XAjmw6TAwA-->全部系列</option>
-        </select>
         <select data-page-node-id="ZUbkx1PrGskM93ECReppLu" aria-label="按来源筛选" id="fSrcFilter">
           <option data-page-node-id="FugZcZJopL8ZEZ7JnCuxf1" value><!--pnid:v6MruJdpgqsIJQHqKKcE8F-->全部来源</option>
           <option data-page-node-id="c9dKw5Ri5AUKP2miPAA1cJ" value="std"><!--pnid:QVkuWBldbQndOHRdYmMuCG-->标准规则</option>
@@ -186,12 +187,12 @@ tbody tr:hover td{background:#fafbfc}
       <table data-page-node-id="oorQY4lcBTNgUcM6xAY9PC">
         <thead data-page-node-id="42jY5ZCr0fnBPu1BccVVkl">
           <tr data-page-node-id="Mhq9FOFIh1HehP8oP7xjio">
-            <th data-page-node-id="QOMkZOMwsqLf2h1SOMNqYj" style="width:22%"><!--pnid:VrC4fkSHTND6UsEQZ8H3jo-->资费简称</th>
-            <th data-page-node-id="X3FF16IqYtDKubgGBMbdGf" style="width:24%"><!--pnid:T9CsSxtKk6y0NPC3Fugsh4-->资费名称</th>
-            <th data-page-node-id="sLGFn84sei29OgsKXePjYb" style="width:18%"><!--pnid:04KJ3fMoW7qeCk4O9cT9QZ-->类别 / 系列</th>
-            <th data-page-node-id="jPmiJo4Jx7rDwMTCjI9Mwr" style="width:12%"><!--pnid:S1oftYVNf0YstyzVFPhoep-->资费价格</th>
-            <th data-page-node-id="cgyiwLeVac2EsvFGgLdcMB" style="width:16%"><!--pnid:NvcocGkf3bJlcLiXlFP5cF-->违约责任</th>
-            <th data-page-node-id="HxkZPBYoI24wdoRHl9VbHV" style="width:8%"><!--pnid:eo6GK99Cfmkz1B3dliu6bB-->操作</th>
+            <th data-page-node-id="QOMkZOMwsqLf2h1SOMNqYj" style="width:24%"><!--pnid:VrC4fkSHTND6UsEQZ8H3jo-->资费简称</th>
+            <th data-page-node-id="sLGFn84sei29OgsKXePjYb" style="width:16%"><!--pnid:04KJ3fMoW7qeCk4O9cT9QZ-->类别 / 系列</th>
+            <th data-page-node-id="jPmiJo4Jx7rDwMTCjI9Mwr" style="width:11%"><!--pnid:S1oftYVNf0YstyzVFPhoep-->资费价格</th>
+            <th data-page-node-id="X3FF16IqYtDKubgGBMbdGf" style="width:10%"><!--pnid:T9CsSxtKk6y0NPC3Fugsh4-->上架状态</th>
+            <th data-page-node-id="cgyiwLeVac2EsvFGgLdcMB" style="width:29%"><!--pnid:NvcocGkf3bJlcLiXlFP5cF-->违约责任</th>
+            <th data-page-node-id="HxkZPBYoI24wdoRHl9VbHV" style="width:10%"><!--pnid:eo6GK99Cfmkz1B3dliu6bB-->操作</th>
           </tr>
         </thead>
         <tbody data-page-node-id="wbYDqfvqFs4JhdCgMpgPjY" id="tbody"></tbody>
@@ -226,6 +227,13 @@ tbody tr:hover td{background:#fafbfc}
     <div data-page-node-id="ni1NCobcuEIYR5XNHAfSSe" class="field">
       <label data-page-node-id="nmiAwX0c7gBr0gkzWjimDy"><!--pnid:h4nY1elTWqyOrZzYzr5M7p-->业务编码 <i data-page-node-id="LKii9lXbWKY8CAGWnZi4JU"><!--pnid:A4QdgqRRRCk1jq97qaGKmV-->*</i></label>
       <input data-page-node-id="iQAMS0Brc1asFzqlizyqdD" id="fCode" maxlength="40" placeholder="来源于官网，与认领业务关联的唯一键">
+    </div>
+    <div data-page-node-id="ylvU7rGGkL3dNmQsEDRw3w" class="field">
+      <label data-page-node-id="EtLrgvKjnJLJPyLTAyvfrG"><!--pnid:PUxthrzv0byvsehaCuuKgA-->上架状态</label>
+      <div data-page-node-id="sNLgV6WOnhR9AEYpJ8Nzz7" class="radios">
+        <label data-page-node-id="liaPYtTB6rvUZoICOV1aHg"><input data-page-node-id="QSZCtk4fLgDjOsjI5pJyPb" name="fShelf" type="radio" value="on"><!--pnid:vDr4TCQgaMMTAQySkb57OD-->上架中</label>
+        <label data-page-node-id="1oCJfQAPX06tnpBEqdKTvq"><input data-page-node-id="2Uy94L9u2Fs9c54gFok3AJ" name="fShelf" type="radio" value="off"><!--pnid:0C5X22qvifgT2zweG5VAOr-->已下架</label>
+      </div>
     </div>
     <div data-page-node-id="W0ItftjMelMaMUsosAuop7" class="field">
       <label data-page-node-id="GZwnkdN6Dl5RenchGyOVUx"><!--pnid:XKXhmNtnZjXO66XjGBzJQs-->资费系列 <i data-page-node-id="JorAUoUX53HvkSlqKv2nZi"><!--pnid:ArnLZojajgXtdJ73LutcZ9-->*</i></label>
@@ -421,9 +429,6 @@ function syncSeriesSelect(){
   const sel=$('fSeries'),cur=sel.value;
   sel.innerHTML=series.map(s=>`<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
   sel.value=series.some(s=>s.id===cur)?cur:DEFAULT_SERIES;
-  const f=$('fSeriesFilter'),fv=f.value;
-  f.innerHTML='<option value="">全部系列</option>'+series.map(s=>`<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
-  f.value=series.some(s=>s.id===fv)?fv:'';
 }
 function renderSeries(){
   const counts={};
@@ -539,12 +544,12 @@ function render(){
   const rows=list.slice((pageRule-1)*PAGE_SIZE,pageRule*PAGE_SIZE);
   $('tbody').innerHTML=rows.map(x=>`<tr data-id="${x.id}">
     <td>
-      <div class="nm-line"><span class="nm" title="${escapeHtml(x.shortName)}">${escapeHtml(x.shortName)}</span></div>
+      <div class="nm-line"><span class="nm${x.offShelf?' off':''}" title="${escapeHtml(x.name)}">${escapeHtml(x.shortName)}</span></div>
       <div class="code-line"><code title="${escapeHtml(x.code)}">${escapeHtml(x.code)}</code><button class="copy-btn" data-act="copy" data-code="${escapeHtml(x.code)}" title="复制业务编码" aria-label="复制业务编码"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>
     </td>
-    <td>${escapeHtml(x.name)}</td>
     <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span>${x.external?'<span class="ext-badge" title="用户添加业务时自动创建">用户添加</span>':''}</div></td>
     <td class="price-cell">${x.price!=null?((x.category==='welfare'?'<small>最低</small>':'')+'¥'+Number(x.price).toFixed(2)):'—'}</td>
+    <td><span class="shelf-badge ${x.offShelf?'off':'on'}" data-act="shelf" title="点击切换上架 / 下架">${x.offShelf?'已下架':'上架中'}</span></td>
     <td class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</td>
     <td class="ops">
       <button class="mini" data-act="edit">编辑</button>
@@ -575,6 +580,14 @@ $('tbody').addEventListener('click',e=>{
   const tr=btn.closest('tr[data-id]'),id=tr?tr.dataset.id:null;
   const item=rules.find(x=>x.id===id);
   if(!item)return;
+  if(btn.dataset.act==='shelf'){
+    // 点击列表中的上架状态徽标直接切换上架 / 下架
+    item.offShelf=!item.offShelf;
+    item.updatedAt=Date.now();
+    persist();render();
+    toast(item.offShelf?'已下架「'+item.shortName+'」':'已上架「'+item.shortName+'」');
+    return;
+  }
   if(btn.dataset.act==='edit')openForm(item);
   else if(btn.dataset.act==='del'){
     const n=claimedCount(item.code);
@@ -595,6 +608,8 @@ function openForm(item){
   $('fShort').value=item?item.shortName:'';
   $('fName').value=item?item.name:'';
   $('fCode').value=item?item.code:'';
+  const shelf=item?(item.offShelf?'off':'on'):'on';
+  document.querySelectorAll('input[name="fShelf"]').forEach(r=>r.checked=r.value===shelf);
   syncSeriesSelect();
   if(item)$('fSeries').value=item.seriesId||DEFAULT_SERIES;
   const cat=item?item.category:'consume';
@@ -640,7 +655,7 @@ function validate(){
   const price=Number(priceRaw);
   if(!Number.isFinite(price)||price<0)return '消费金额不能为负数';
   if(price>99999)return '消费金额过大';
-  const data={shortName,name,code,seriesId,category:cat,price,liability:$('fLiability').value.trim()};
+  const data={shortName,name,code,seriesId,category:cat,price,liability:$('fLiability').value.trim(),offShelf:document.querySelector('input[name="fShelf"]:checked').value==='off'};
   if(cat==='welfare'){
     const c=document.querySelector('input[name="fCond"]:checked');
     data.condAvg=c&&c.value==='avg6'?'avg6':'avg3';
@@ -672,7 +687,6 @@ kwEl.addEventListener('input',()=>{syncKwClear();pageRule=1;render()});
 kwClear.addEventListener('click',()=>{kwEl.value='';syncKwClear();pageRule=1;render();kwEl.focus()});
 syncKwClear();
 $('fCatFilter').addEventListener('change',e=>{catFilter=e.target.value;pageRule=1;render()});
-$('fSeriesFilter').addEventListener('change',e=>{seriesFilter=e.target.value;pageRule=1;renderSeries();render()});
 $('fSrcFilter').addEventListener('change',e=>{srcFilter=e.target.value;pageRule=1;render()});
 
 /* ============ xlsx 导入导出（规则字段） ============ */
@@ -684,6 +698,7 @@ const XLSX_COLS=[
   {key:'category',head:'资费类别',width:14,type:'s'},
   {key:'condAvg',head:'消费条件',width:16,type:'s'},
   {key:'price',head:'消费金额/最低消费',width:16,type:'n'},
+  {key:'shelf',head:'上架状态',width:10,type:'s'},
   {key:'liability',head:'违约责任',width:34,type:'s'}
 ];
 const XLSX_SHEET='资费规则';
@@ -741,6 +756,7 @@ function xlsxRows(){
     if(c.key==='category')return CAT_NAME[x.category]||'';
     if(c.key==='condAvg')return x.category==='welfare'?(x.condAvg==='avg6'?'近6月平均消费':'近3月平均消费'):'';
     if(c.key==='price')return x.price!=null?Number(x.price):'';
+    if(c.key==='shelf')return x.offShelf?'已下架':'上架中';
     if(c.key==='liability')return x.liability||'';
     return '';
   })));
@@ -898,6 +914,7 @@ const IMPORT_ALIASES={
   category:['资费类别','类别','业务类别'],
   condAvg:['消费条件'],
   price:['消费金额/最低消费','消费金额','最低消费'],
+  shelf:['上架状态','状态'],
   liability:['违约责任','违约']
 };
 function normHead(s){
@@ -943,7 +960,9 @@ function parseImportRows(rows){
     let price=null;
     const priceRaw=get('price');
     if(priceRaw!==''&&/^\d+(\.\d{1,2})?$/.test(priceRaw))price=Number(priceRaw);
-    records.push({shortName:shortName||name,name:name||shortName,code,seriesName:cleanName(get('series')),category,condAvg,price,liability:get('liability')});
+    const shelfRaw=get('shelf');
+    const offShelf=/下架/.test(shelfRaw)?true:(/上架/.test(shelfRaw)?false:null);
+    records.push({shortName:shortName||name,name:name||shortName,code,seriesName:cleanName(get('series')),category,condAvg,price,liability:get('liability'),offShelf});
   }
   return {records,errors};
 }
@@ -987,6 +1006,7 @@ function applyImport(records,plan){
       sid=s?s.id:DEFAULT_SERIES;
     }
     const data={shortName:r.shortName,name:r.name,code:r.code,category:r.category,seriesId:sid,liability:r.liability,updatedAt:now};
+    if(r.offShelf!=null)data.offShelf=r.offShelf;
     if(r.category==='welfare'&&r.condAvg)data.condAvg=r.condAvg;
     if(r.price!=null)data.price=r.price;
     const exist=rules.find(x=>x.code===r.code);
