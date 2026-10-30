@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html data-page-node-id="07SfTTUY32SO3Wlzzg6HZE" lang="zh-CN">
+<head data-page-node-id="xEJ7R7vXOdCihPhQCkLThJ">
+<script data-page-node-id="Be29n9MCq0NS1qOJQNoxJp" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="AwOeYD6qT3bMZuSGsoInuO" charset="UTF-8">
+<meta data-page-node-id="L0LX0lp1UVd71b0D8BLYS4" content="width=device-width,initial-scale=1" name="viewport">
+<title data-page-node-id="meeRWrSn8gv3wHAAyVd1VB" data-pnid-children="9jWAIQFoCuiAtIUvLOXpGD">北京移动消费规划器</title>
+<style data-page-node-id="n0gTTQV6ZnfWVuEmHzgUcx" data-pnid-children="0UvoluJMOsTjRSOjEAIna1">
+*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#20242a;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:760px;margin:auto;padding:40px 16px 56px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}h1{font-size:27px;margin:0 0 7px}.sub{font-size:14px;color:#8b929c}
+.entry{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:#1677ff;background:#eef4ff;border:1px solid #d9e7ff;border-radius:999px;padding:8px 13px;text-decoration:none;white-space:nowrap;margin-top:4px}
+.entry:hover{background:#e3edff}
+.card{background:#fff;border:1px solid #e9edf1;border-radius:17px;padding:21px;margin-top:14px;box-shadow:0 4px 18px #20242a08}
+.label{font-size:13px;color:#8b929c;margin-bottom:9px}
+.search{display:flex;gap:9px}.search-field{position:relative;flex:1;min-width:0}input{height:45px;border:1px solid #dfe3e8;border-radius:10px;padding:0 13px;font-size:16px;outline:none;width:100%;background:#fff}input:focus{border-color:#1677ff;box-shadow:0 0 0 3px #1677ff12}
+.search-field input{padding-right:38px}
+.clear-btn{display:none;position:absolute;right:9px;top:50%;transform:translateY(-50%);width:20px;height:20px;padding:0;border:0;border-radius:999px;background:#c3ccd6;color:#fff;font-size:14px;font-weight:400;line-height:20px;text-align:center;cursor:pointer;align-items:center;justify-content:center}
+.clear-btn.show{display:flex}
+.clear-btn:hover{background:#a7b2be}
+button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;font-weight:600;padding:0 20px;cursor:pointer;white-space:nowrap}button:disabled{opacity:.55;cursor:wait}
+.status{font-size:13px;color:#8b929c;min-height:18px;margin-top:9px}.error{color:#d9363e}.ok{color:#2f8f5b}
+.history{display:none;margin-top:15px}.history-title{font-size:12px;color:#8b929c;margin-bottom:7px}.history-list{display:flex;flex-wrap:wrap;gap:7px}.history-item{font-size:13px;background:#f7f8fa;border:1px solid #e9edf1;padding:7px 10px;border-radius:8px;cursor:pointer}
+.hidden{display:none}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f7f8fa;border-radius:12px;padding:15px}.stat-k{font-size:12px;color:#8b929c}.stat-v{font-size:28px;font-weight:700;margin-top:5px}.unit{font-size:12px;font-weight:400;margin-left:3px}
+.table{margin-top:15px}.row{display:grid;grid-template-columns:1fr 1fr;padding:11px 2px;border-bottom:1px solid #edf0f2;font-size:14px}.row:last-child{border-bottom:0}.right{text-align:right}.muted{color:#9aa1aa}
+.plan-month{background:#fff;border:1px solid #e6ecf3;border-radius:14px;padding:13px 14px 11px;margin-top:10px;box-shadow:0 2px 10px #20242a0f,0 1px 2px #20242a08}
+.plan-month:first-child{margin-top:5px}
+.plan-row{display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:center;padding:0}
+.plan-head{display:grid;grid-template-columns:76px 1fr;gap:10px;margin:2px 0 1px;padding:0 15px}
+.plan-head .ph{font-size:13px;font-weight:400;color:#20242a;padding-left:10px;white-space:nowrap}
+.plan-head .plan-fields{gap:8px}
+.month{font-size:13px;font-weight:600;white-space:nowrap}.month small{display:inline-block;font-weight:400;color:#9aa1aa;margin-left:4px;font-size:11px;vertical-align:1px}
+.plan-fields{display:grid;grid-template-columns:1fr 1fr 1fr 74px;gap:8px;min-width:0}
+/* 字段包装层：桌面端标签隐藏（用共享表头），移动端显示各自的标签 */
+.pf{min-width:0}
+.pf .pf-l{display:none}
+.ph.p-wool{text-align:center}
+.wool-cell{height:40px;border:1px dashed #dfe3e8;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#4a5361;background:#fafbfc;min-width:0;padding:0 4px;white-space:nowrap}
+/* 当月消费输入框内的菜单按钮（切换未开通凑单业务列表） */
+.cons-wrap{position:relative;min-width:0}
+.cons-wrap .p-cons{padding-right:37px}
+.cons-menu{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:27px;height:27px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:7px;background:transparent;color:#9aa1aa;cursor:pointer;padding:0;font-weight:400}
+.cons-menu:hover{background:#f2f5f9;color:#1677ff}
+.cons-menu.on{background:#eef4ff;color:#1677ff}
+.cons-menu svg{display:block}
+/* 当月已开通消费凑单类业务标签 */
+.cons-tags{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:7px}
+.ctag{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:999px;background:#eef4ff;border:1px solid #dbe7ff;color:#4d6fa8;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.ctag .del{display:none;align-items:center;justify-content:center;width:18px;height:18px;margin-right:-5px;border:0;border-radius:999px;background:#fff;color:#d9363e;cursor:pointer;padding:0}
+.ctag .del:hover{background:#fef2f2}
+.ctag.show-del .del{display:inline-flex}
+/* 未开通凑单业务下拉（当月消费输入框聚焦时） */
+.cons-dd{grid-column:2;display:flex;flex-direction:column;gap:3px;margin-top:4px;background:#fff;border:1px solid #dfe3e8;border-radius:10px;padding:5px;box-shadow:0 6px 18px #20242a14}
+.cons-dd.hidden{display:none}
+.cons-dd .dd-item{font-size:12px;padding:7px 9px;border-radius:7px;cursor:pointer;color:#20242a}
+.cons-dd .dd-item:hover{background:#f2f5f9}
+.cons-dd .dd-item{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cons-dd .dd-item.swap{background:#fffdf6}
+.cons-dd .dd-item.swap:hover{background:#fdf6e7}
+.cons-dd .dd-item .dd-tip{font-size:11px;color:#c08a2e;white-space:nowrap}
+.cons-dd .dd-empty{font-size:12px;color:#9aa1aa;padding:7px 9px}
+.plan-field{height:40px;border:1px solid #dfe3e8;border-radius:9px;padding:0 9px;font-size:13px;width:100%;min-width:0;background:#fff;outline:none}
+.plan-field::placeholder{font-size:11.5px;color:#a8b0ba}
+.plan-field:focus{border-color:#1677ff;box-shadow:0 0 0 3px #1677ff12}
+/* 福利开通提示（与业务管理页数据联动） */
+.wtoggle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:0;background:none;padding:0;margin:0 2px;color:#dd9f2b;cursor:pointer;vertical-align:middle;border-radius:50%}
+.wtoggle:hover{background:#f6e9c8}
+.wtoggle svg{display:block;transition:transform .15s}
+.wtip.open .wtoggle svg{transform:rotate(180deg)}
+.wlist{display:flex;flex-direction:column;gap:6px}
+.wlist .wtip{cursor:pointer;padding-left:26px}
+.wlist .wtip:hover{background:#fbf0d9}
+.wlist .wtip.on{border-color:#dd9f2b;background:#fbf0d9}
+.plan-tips{display:flex;flex-direction:column;gap:6px;padding:8px 0 0}
+.plan-tips:empty{padding:0}
+.wtip{display:flex;align-items:center;gap:8px;background:#fdf6e7;border:1px solid #f3e3bd;border-radius:10px;padding:8px 11px;font-size:12px;line-height:1.65;color:#9a7b2f}
+.wtip .star{flex:0 0 auto;width:18px;height:18px;border-radius:50%;border:1px solid #ecc56e;color:#dd9f2b;font-size:11px;display:inline-flex;align-items:center;justify-content:center}
+.wtip b{color:#8a5a00;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:#6b7480;margin:2px 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.chart-wrap{position:relative}.chart{width:100%}.chart svg{display:block;width:100%;height:auto}
+.chart-tip{position:absolute;left:0;top:0;pointer-events:none;background:#20242a;color:#fff;border-radius:9px;padding:8px 10px;font-size:12px;line-height:1.65;white-space:nowrap;transform:translate(-50%,-100%);box-shadow:0 8px 24px #20242a33;opacity:0;transition:opacity .12s;z-index:5}
+.chart-tip.show{opacity:1}
+.chart-tip b{font-weight:600;display:block;margin-bottom:3px;font-size:12px}
+.chart-tip .tip-row{display:flex;justify-content:space-between;gap:14px}
+.chart-tip i{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px}
+.empty{color:#9aa1aa;font-size:13px;text-align:center;padding:26px 0}
+.note{font-size:12px;line-height:1.65;color:#8b929c;margin-top:12px}
+@media(max-width:560px){
+  .wrap{padding-top:24px}header{flex-direction:column}.entry{margin-top:0}
+  .search{display:block}.search>button{width:100%;margin-top:8px}
+  .search-field{display:block}.search-field .clear-btn{width:20px;height:20px;min-width:20px;margin:0;padding:0;line-height:20px}
+  .plan-month{padding:12px 12px 10px;margin-top:9px}
+  .plan-row{grid-template-columns:1fr;gap:6px;padding:0}
+  /* 移动端：隐藏共享表头，每个字段上方显示各自的标签，一行一个字段 */
+  .plan-head{display:none}
+  .plan-fields{grid-template-columns:1fr;gap:11px}
+  .pf .pf-l{display:block;font-size:13px;color:#20242a;margin-bottom:5px}
+  .cons-tags{grid-column:1}
+  .cons-dd{grid-column:1}
+  .plan-field{font-size:13px}.plan-field::placeholder{font-size:11px}
+  .stat-v{font-size:24px}
+}
+</style>
+</head>
+<body data-page-node-id="WjwD4sBom14n7TA076wiBz">
+<div data-page-node-id="GU2yDWI41VMNO3fooR0dj4" class="wrap">
+  <header data-page-node-id="1zj1lcqItJtzMU6FIUwcNb">
+    <div data-page-node-id="GAOGZoBqV0xl5TCIvj1YXR"><h1 data-page-node-id="ay34tyubhpKHgxVDD9xwY7"><!--pnid:wfKw1kqhpW4mzM7DsT8YFN-->北京移动消费规划器</h1><div data-page-node-id="wHFez9Rx4ifgWFnwFxBOUl" class="sub"><!--pnid:cKyuEFHBk4yQPqQpIPG1t2-->查询历史消费，规划未来消费</div></div>
+    <div data-page-node-id="WGtjZdnyfCb2jGYRWHHXln" style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end">
+      <a data-page-node-id="LUAW0wqhsrhZPLZXpk6nxf" class="entry" href="business.html"><!--pnid:WumMrYa2iWGYrQw0jdXfLe-->资费业务管理 ›</a>
+      <a data-page-node-id="KDK7Q0EKEfKEhmMdIutOOr" class="entry hidden" href="rules.html" id="rulesEntry"><!--pnid:p4GYxvnJeiV3AH3VoP7nzb-->全部资费规则 ›</a>
+    </div>
+  </header>
+
+  <section data-page-node-id="msJmykteKupmqdaa0YrXqf" class="card">
+    <div data-page-node-id="RBDtE2BjHgAYFVQJlT2soB" class="label"><!--pnid:uAIKrYnHyP7GtAWYC5GWAN-->手机号</div>
+    <div data-page-node-id="CDstTKsGJom07Q8ZnG1nOp" class="search">
+      <div data-page-node-id="dl0tzHrN8fDz4NcGVQsVDk" class="search-field">
+        <input data-page-node-id="5EtuO74mVF13sogYYEmz7T" id="mobile" inputmode="numeric" maxlength="11" placeholder="请输入 11 位手机号">
+        <button data-page-node-id="C97t4WHAPTqlHaAIsgqzux" aria-label="清空手机号" class="clear-btn" id="clearBtn" tabindex="-1" type="button"><!--pnid:l6g5fnPHd6TAPndhj60DTa-->×</button>
+      </div>
+      <button data-page-node-id="CZowdSS2peBVgcLg5LzTIc" id="searchBtn"><!--pnid:seWd8RtbXXguwi9qjqWkbP-->查询消费</button>
+    </div>
+    <div data-page-node-id="Sp0OKoWZ8JPyZbBXbPTRuz" class="status" id="status"></div>
+    <div data-page-node-id="MUCeWAICtaWXRLvbMYaNnk" class="history" id="history"><div data-page-node-id="hcw6Oq3vbyUIAqbVzkklto" class="history-title"><!--pnid:DbSPV5svpV7PaeiS7BMcFW-->最近查询</div><div data-page-node-id="QgIFlUDgbMqb08LEHwfWSP" class="history-list" id="historyList"></div></div>
+  </section>
+
+  <section data-page-node-id="QLpcsAoI89t3x2Q8GmZqhF" class="card hidden" id="dataCard">
+    <div data-page-node-id="k3Z6AlOHmE0AcBmxzAEFeo" class="label"><!--pnid:NckpeQQymuAlMwg52cEkgL-->历史消费统计</div>
+    <div data-page-node-id="I48phP1EALUbQ3d0a5H4Cx" class="stats">
+      <div data-page-node-id="5BBnVjG0WzqltpOt1CwVb6" class="stat"><div data-page-node-id="73p5m40FqsOyLgDqlpUPgs" class="stat-k"><!--pnid:v5sl981PDJrhTh1Y44AU4u-->近 3 个月平均</div><div data-page-node-id="yoxE7NTSx5jDUnypCmFOjD" class="stat-v" id="avg3"><!--pnid:ZsNUhA2H1GfYJ4Kv1DvgDW-->—<span data-page-node-id="XguWb5RziIWMmlEPUr8Ssx" class="unit"><!--pnid:PbvvNkoXzv6IE5wF9glrjR-->元/月</span></div></div>
+      <div data-page-node-id="yEMhDo6qiT4EvHpM7nxSZ5" class="stat"><div data-page-node-id="ZU3i0Hh3lHvgTjOFCqjAay" class="stat-k"><!--pnid:GTGMLID9ruYBvsV4kPPPNT-->近 6 个月平均</div><div data-page-node-id="qAl18pvpXapomRLkkXz4jE" class="stat-v" id="avg6"><!--pnid:qZlgK2UTUDYQlKOBpGnP8c-->—<span data-page-node-id="Am4tMcrEd3RqV9RFp9YZxU" class="unit"><!--pnid:nBwZEikrj8l9hxCGhpEvpT-->元/月</span></div></div>
+    </div>
+    <div data-page-node-id="laz4d3btFi9kQ6LiBgouJc" class="table">
+      <div data-page-node-id="nFQD4EuAoDLLEUOlkHsGyo" class="row"><div data-page-node-id="kvl4ltg8u8mCJbiNGfnRGG" class="muted"><!--pnid:DeGxgbmmw6IR83bG8bfrbI-->月份</div><div data-page-node-id="h5QHhFyWXmA7HTMk1UJQZ4" class="right muted"><!--pnid:oFSbFdNRW8m1h37p7F4ebj-->消费</div></div>
+      <div data-page-node-id="laU0txz1XSiJD4nRAqB62G" id="historyTable"></div>
+    </div>
+  </section>
+
+  <section data-page-node-id="OYrdyVmCmk3NbqcLe3pmvT" class="card hidden" id="planCard">
+    <div data-page-node-id="HeRxodhMQwdDccF0cKxeLg" class="label" id="planTitle"><!--pnid:AVDeuJNwUYHb2DuO2EIRaU-->未来 3 个月消费规划</div>
+    <div data-page-node-id="hrfmdGJGZ8XniWgPON7Ih7" class="note" id="planHint" style="margin:0 0 10px; display:none"></div>
+    <div data-page-node-id="0cYyALC9KjWIFwkXpzLGQW" class="plan-head">
+      <div data-page-node-id="Az5xNe27jD009wUNkxdYti"></div>
+      <div data-page-node-id="vlRHmwMLtEhpFJDoqEUmlE" class="plan-fields">
+        <div data-page-node-id="SHvPzMwXBRXXnpBChn0ucR" class="ph p-cons"><!--pnid:bRBzKgZxRcErcqCJ1Rp6A0-->当月消费</div>
+        <div data-page-node-id="BczKlho4NZdltFC0NiDUK2" class="ph"><!--pnid:psFRoqtRzEIedtu5AmgTlV-->下月的近3月均消</div>
+        <div data-page-node-id="onCrgZmVAzAHJoI9oDJLDf" class="ph"><!--pnid:L2Ym6OBhE9kfiNqzm1xoeL-->下月的近6月均消</div>
+        <div data-page-node-id="CdOKaXeAE5OKwN0XKXoNQE" class="ph p-wool"><!--pnid:QUQrZBjPcHOfU6QnZCS41d-->当月羊毛</div>
+      </div>
+    </div>
+    <div data-page-node-id="YJv73ECO7RCKmMSrMZbqTR" id="planInputs"></div>
+  </section>
+
+  <section data-page-node-id="jfQlu1mc9fYkbhdaH4tudd" class="card hidden" id="chartCard">
+    <div data-page-node-id="NvxWE1HUnBi8vfzhT3Piv4" class="label"><!--pnid:9vAE2bBnb56dbnXtjkAPD4-->消费趋势</div>
+    <div data-page-node-id="r5HfFqzLJqn6BYm4C3Le0L" class="legend">
+      <span data-page-node-id="B0ksjY6eRSoE12xz9dFxaI"><i data-page-node-id="4MRnprn0nK21QjrdIKCxjs" style="background:#1677ff"></i><!--pnid:5XBGnzISPaFEzPJDYuCwM2-->每月消费值</span>
+      <span data-page-node-id="TraTiGDVKLAEC0qMOqzFkt"><i data-page-node-id="CajzTbd15H9ftfOQHaSpFn" style="background:#f0a020"></i><!--pnid:cCNW5vVJ7QSYIuvN3MwSXx-->近3月均消</span>
+      <span data-page-node-id="4DhsSK5ubIFz6HzvycueWz"><i data-page-node-id="PH0iA0SzVdvolx5vGZF3mw" style="background:#e5487d"></i><!--pnid:Vk2DSd7rKLzEKqXtF28qC0-->近6月均消</span>
+    </div>
+    <div data-page-node-id="6WS6PbQ5W8TncJq50KD9JL" class="chart-wrap">
+      <div data-page-node-id="FD8JPAdhlWr04oOrnIU7aU" class="chart" id="chart"></div>
+      <div data-page-node-id="1bfmlDmT664MNON0iqlXfb" class="chart-tip" id="chartTip"></div>
+    </div>
+  </section>
+
+  <section data-page-node-id="JOh7PnfrW4Hs4UJ6HAYxu0" class="card">
+    <div data-page-node-id="iZ4qBLk5MqM4FEQS3fpBIq" class="note" style="margin:0"><!--pnid:rWpuD2NDmhhsyS4wPWJ5R7-->数据来源北京移动 ARPU，仅供学习。</div>
+  </section>
+</div>
+
+<script data-page-node-id="XuupzUini55Y5lecfzUmY6" data-pnid-children="qbMQ9LuGlJOBtKHpFzM0D9">
+// 新版查询链路：上游为北京移动业务接口（无 CORS），经 arpu.151365.cc 的代理转发（该代理返回 Access-Control-Allow-Origin: *）
+const UPSTREAM='http://ysmapp.bj.10086.cn/app/channel-web/busiCore/customerValidateAndConsumption.action';
+const PROXY='https://arpu.151365.cc/api/query?url=';
+const API_PARAMS={submitWarePackageId:'A1000529',submitChannel:'app_share',submitCode:'WWFSX001570',submitEmpCode:'WWFSX001570',nbc:'ddf05d72a82e5df6698124e53faf3fb9'};
+function buildQueryUrl(phone){
+  const q=new URLSearchParams({submitPhoneNO:phone,...API_PARAMS});
+  return UPSTREAM+'?'+q.toString();
+}
+const mobileEl=document.getElementById('mobile');
+const statusEl=document.getElementById('status');
+const searchBtn=document.getElementById('searchBtn');
+const clearBtn=document.getElementById('clearBtn');
+const dataCard=document.getElementById('dataCard');
+const planCard=document.getElementById('planCard');
+const chartCard=document.getElementById('chartCard');
+let records=[];
+
+const pad=n=>String(n).padStart(2,'0');
+function monthAdd(ym,n){const [y,m]=ym.split('-').map(Number);const t=y*12+(m-1)+n;return `${Math.floor(t/12)}-${pad(t%12+1)}`}
+function currentMonth(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}`}
+function monthNum(ym){return Number(ym.split('-')[1])}
+function round(v){return Math.round(v)}
+// 月度消费值原样展示，不做四舍五入（仅清理浮点误差，如 100.50000000000001 -> 100.5）
+function numText(v){return v==null?'—':String(Number(Number(v).toPrecision(12)))}
+function money(v){return v==null?'—':`¥${round(v)}`}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+// 手机号输入框：有内容时才显示清空图标
+function syncClearBtn(){clearBtn.classList.toggle('show',mobileEl.value.length>0)}
+mobileEl.addEventListener('input',syncClearBtn);
+clearBtn.addEventListener('click',()=>{
+  mobileEl.value='';
+  syncClearBtn();
+  mobileEl.focus();
+});
+
+function loadRecords(){
+  try{records=JSON.parse(localStorage.getItem('mobile_arpu_history')||'[]')}catch(e){records=[]}
+  renderRecords();
+}
+function saveRecord(phone){
+  records=[phone,...records.filter(x=>x!==phone)].slice(0,5);
+  localStorage.setItem('mobile_arpu_history',JSON.stringify(records));
+  renderRecords();
+}
+function renderRecords(){
+  const box=document.getElementById('history'),list=document.getElementById('historyList');
+  if(!records.length){box.style.display='none';return}
+  box.style.display='block';
+  list.innerHTML=records.map(p=>`<div class="history-item" data-phone="${esc(p)}">${p.slice(0,3)}****${p.slice(-4)}</div>`).join('');
+  list.querySelectorAll('.history-item').forEach(x=>x.onclick=()=>{mobileEl.value=x.dataset.phone;syncClearBtn();search()});
+}
+
+function normalize(raw){
+  if(!raw || typeof raw!=='object') throw new Error('query failed');
+  if(raw.errorCode!=='success') throw new Error('query failed');
+  let ent=raw.entity;
+  if(typeof ent==='string'){try{ent=JSON.parse(ent)}catch(e){}}
+  if(!ent || typeof ent!=='object') throw new Error('query failed');
+  // arpu_1 = 最近一个完整月，依次往前；每月 4 日 0 点前数据尚未更新，月份整体再前移一个月
+  const shift=new Date().getDate()<4?1:0, now=currentMonth(), map={};
+  for(let i=1;i<=6;i++){
+    const v=ent['arpu_'+i];
+    if(v===undefined||v===null||v==='')continue;
+    const n=Number(v);
+    if(Number.isFinite(n)&&n>=0)map[monthAdd(now,-(i+shift))]=n;
+  }
+  if(!Object.keys(map).length) throw new Error('query failed');
+  return map;
+}
+function getMonths(map,start,count){
+  const arr=[];for(let i=0;i<count;i++){const m=monthAdd(start,-i);if(map[m]==null)return null;arr.push(map[m])}return arr;
+}
+function avgFor(map,end,count){
+  const a=getMonths(map,end,count);return a?a.reduce((s,v)=>s+v,0)/count:null;
+}
+// 只保留已经结束（早于当前月）的月份，供统计与滚动计算使用
+function knownMonths(map){
+  const last=monthAdd(currentMonth(),-1),o={};
+  Object.keys(map||{}).forEach(m=>{if(m<=last)o[m]=map[m]});
+  return o;
+}
+// 近 6 个月（截至上月）中缺少的月份
+function missingMonths(map){
+  const last=monthAdd(currentMonth(),-1),miss=[];
+  for(let i=0;i<6;i++){const m=monthAdd(last,-i);if(map[m]==null)miss.push(m)}
+  return miss.sort();
+}
+function showHistorical(map,hist){
+  const now=currentMonth(), last=monthAdd(now,-1);
+  const a3=avgFor(hist,last,3),a6=avgFor(hist,last,6);
+  document.getElementById('avg3').innerHTML=money(a3)+'<span class="unit">元/月</span>';
+  document.getElementById('avg6').innerHTML=money(a6)+'<span class="unit">元/月</span>';
+  const keys=Object.keys(map).sort();
+  document.getElementById('historyTable').innerHTML=keys.length?keys.map(m=>`<div class="row"><div>${m}</div><div class="right">¥${numText(map[m])}</div></div>`).join(''):'<div class="empty">暂无消费数据</div>';
+  dataCard.classList.remove('hidden');
+  const miss=missingMonths(hist),rows=3+miss.length;
+  const hint=miss.length?`近 6 个月（${monthAdd(last,-5)} ~ ${last}）缺少 ${miss.length} 个月的数据（${miss.join('、')}），规划月份已扩展为 3 + ${miss.length} = ${rows} 个月。`:'';
+  buildPlan(hist,rows,hint);
+}
+// 查询失败：无任何可用历史数据，缺少月份数按默认 6 计算
+function showFailedPlan(){
+  document.getElementById('avg3').innerHTML='—<span class="unit">元/月</span>';
+  document.getElementById('avg6').innerHTML='—<span class="unit">元/月</span>';
+  document.getElementById('historyTable').innerHTML='';
+  buildPlan({},9,'本次查询失败，无法读取历史消费数据，缺少月份数按默认 6 计算，规划月份显示 3 + 6 = 9 个月。');
+}
+
+/* ============ 消费规划：每月消费 / 近3月平均 / 近6月平均，三者联动 ============ */
+let plan={map:{},rows:[]};
+
+function buildPlan(map,rows,hint){
+  plan.map=map||{};
+  const now=currentMonth(),months=[];
+  for(let i=0;i<rows;i++)months.push(monthAdd(now,i));
+  plan.rows=months.map(m=>({m,cons:'',a3:'',a6:'',anchor:'cons',calc:{cons:null,a3:null,a6:null},el:null,consAuto:true,counts:initCounts(m)}));
+  document.getElementById('planTitle').textContent=`未来 ${rows} 个月消费规划`;
+  const hintEl=document.getElementById('planHint');
+  if(hint){hintEl.textContent=hint;hintEl.style.display='block'}else{hintEl.textContent='';hintEl.style.display='none'}
+  renderPlanRows();
+  planCard.classList.remove('hidden');
+  chartCard.classList.remove('hidden');
+  recalcPlan();
+}
+
+function renderPlanRows(){
+  document.getElementById('planInputs').innerHTML=plan.rows.map((row,i)=>{
+    const m=row.m, mn=monthNum(m), nxt=monthNum(monthAdd(m,1));
+    return `<div class="plan-month" data-mm="${m}">
+    <div class="plan-row" data-month="${m}">
+      <div class="month">${m}</div>
+      <div class="plan-fields">
+        <div class="pf"><span class="pf-l">当月消费</span>
+          <div class="cons-wrap">
+            <input class="plan-field p-cons" data-kind="cons" type="text" inputmode="text" autocomplete="off" placeholder="${mn}月的消费">
+            <button type="button" class="cons-menu" data-menu="${m}" aria-label="选择消费凑单业务" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+          </div>
+        </div>
+        <div class="pf"><span class="pf-l">近3月平均消费</span><input class="plan-field p-avg" data-kind="a3" type="text" inputmode="decimal" autocomplete="off" placeholder="${nxt}月的近3月平均消费"></div>
+        <div class="pf"><span class="pf-l">近6月平均消费</span><input class="plan-field p-avg" data-kind="a6" type="text" inputmode="decimal" autocomplete="off" placeholder="${nxt}月的近6月平均消费"></div>
+        <div class="pf pf-wool"><span class="pf-l">羊毛</span><div class="wool-cell" data-wool="${m}">—</div></div>
+      </div>
+      <div class="cons-tags" data-ctags="${m}"></div>
+      <div class="cons-dd hidden" data-dd="${m}"></div>
+    </div>
+    <div class="plan-tips" data-tips="${m}"></div>
+    </div>`;
+  }).join('');
+  plan.rows.forEach(row=>{
+    const el=document.querySelector(`.plan-row[data-month="${row.m}"]`);
+    row.el={cons:el.querySelector('[data-kind="cons"]'),a3:el.querySelector('[data-kind="a3"]'),a6:el.querySelector('[data-kind="a6"]')};
+    Object.keys(row.el).forEach(k=>bindPlanInput(row.el[k],row,k));
+  });
+}
+
+// 只保留数字与一个小数点，最多两位小数
+function sanitizeNum(v){
+  let s=String(v==null?'':v).replace(/[^\d.]/g,'');
+  const i=s.indexOf('.');
+  if(i!==-1)s=s.slice(0,i+1)+s.slice(i+1).replace(/\./g,'');
+  const m=s.match(/^\d*(\.\d{0,2})?/);
+  return m?m[0]:'';
+}
+
+function bindPlanInput(inp,row,kind){
+  inp.addEventListener('input',()=>{
+    row.anchor=kind;
+    if(kind==='cons'){
+      row.consAuto=false; // 手动编辑后不再自动显示已开通凑单业务总和
+      row.cons=inp.value;
+      // 纯数字（或空）即时联动；含运算符的表达式等失焦/回车再算
+      if(/^\d*\.?\d*$/.test(inp.value.trim()))recalcPlan();
+    }else{
+      const clean=sanitizeNum(inp.value);
+      if(clean!==inp.value)inp.value=clean;
+      row[kind]=clean;
+      recalcPlan();
+    }
+  });
+  if(kind==='cons'){
+    const apply=()=>{
+      const t=inp.value.trim();
+      if(t===''){row.cons='';recalcPlan();return}
+      const v=evalExpr(t);
+      if(v==null){
+        inp.value=row.calc.cons!=null?fmtNum(row.calc.cons):'';
+      }else{
+        inp.value=fmtNum(v);
+      }
+      row.cons=inp.value;
+      recalcPlan();
+    };
+    inp.addEventListener('blur',apply);
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();apply();inp.blur()}});
+  }
+}
+
+// 计算行内三项：锚定字段保留用户输入，其余两项由滚动平均规则推出
+function recalcPlan(){
+  const val={};
+  Object.keys(plan.map||{}).forEach(k=>val[k]=plan.map[k]);
+
+  syncCounts();
+  // 消费输入框：未被手动编辑过时自动显示该行已开通（按开通次数）凑单业务资费总和（须在计算前赋值）
+  plan.rows.forEach(row=>{
+    if(row.consAuto&&row.el){
+      const s=consRowSum(row);
+      row.el.cons.value=s>0?fmtNum(s):'';
+      row.cons=row.el.cons.value;
+    }
+  });
+
+  plan.rows.forEach(row=>{
+    const m=row.m;
+    const prev=n=>{const arr=[];for(let i=1;i<=n;i++){const v=val[monthAdd(m,-i)];if(v==null)return null;arr.push(v)}return arr};
+    let cons=null;
+    if(row.anchor==='cons'){
+      const n=Number(row.cons);
+      if(row.cons!==''&&Number.isFinite(n)&&n>=0)cons=n;
+    }else if(row.anchor==='a3'){
+      const a=Number(row.a3),p=prev(2);
+      if(row.a3!==''&&Number.isFinite(a)&&p){const c=3*a-p[0]-p[1];if(c>=0)cons=c}
+    }else{
+      const a=Number(row.a6),p=prev(5);
+      if(row.a6!==''&&Number.isFinite(a)&&p){const c=6*a-p.reduce((s,v)=>s+v,0);if(c>=0)cons=c}
+    }
+    if(cons!=null)val[m]=cons;
+
+    const avg=cnt=>{let s=0;for(let i=0;i<cnt;i++){const v=val[monthAdd(m,-i)];if(v==null)return null;s+=v}return s/cnt};
+    let a3=avg(3),a6=avg(6);
+    if(row.anchor==='a3'&&row.a3!==''){const n=Number(row.a3);if(Number.isFinite(n))a3=n}
+    if(row.anchor==='a6'&&row.a6!==''){const n=Number(row.a6);if(Number.isFinite(n))a6=n}
+    row.calc={cons,a3,a6};
+  });
+
+  plan.rows.forEach(row=>{
+    if(row.anchor!=='cons')row.el.cons.value=row.calc.cons!=null?fmtNum(row.calc.cons):'';
+    if(row.anchor!=='a3')row.el.a3.value=row.calc.a3!=null?String(round(row.calc.a3)):'';
+    if(row.anchor!=='a6')row.el.a6.value=row.calc.a6!=null?String(round(row.calc.a6)):'';
+    // 羊毛：该行已开通（按开通次数）业务的羊毛总和
+    const wEl=document.querySelector(`[data-wool="${row.m}"]`);
+    if(wEl)wEl.textContent='¥'+consRowWool(row).toFixed(2);
+  });
+
+  renderConsTags();
+  renderWelfareTips(val);
+  renderChart();
+}
+
+/* ============ 凑单业务快捷操作（各规划行独立，仅规划不改变业务开通状态） ============ */
+function monthOf(s){return s?String(s).slice(0,7):''}
+// 业务在指定年月（YYYY-MM）是否处于有效期内：到期月整月有效，次月起失效
+function bizInMonth(x,ym){
+  if(!x)return false;
+  const s=x.startDate?String(x.startDate):'',e=x.endDate?String(x.endDate):'';
+  if(!s&&!e)return true;
+  const m=ym||todayStr().slice(0,7);
+  if(s&&m<monthOf(s))return false;
+  if(e&&m>monthOf(e))return false;
+  return true;
+}
+let curQuery='';           // 当前查询的手机号（业务数据按号分桶）
+let bizMigrated=false;
+// 一次性迁移：旧维护者号（776…）桶改名到新 owner 号（176…）名下；旧版全局数据归入维护者号码名下
+function migrateBizBuckets(){
+  if(bizMigrated)return;bizMigrated=true;
+  const OWNER='17600799221',OLD_OWNER='77600799221';
+  let all=null;try{all=JSON.parse(localStorage.getItem('arpu_business_v2')||'null')}catch(e){all=null}
+  if(!all||typeof all!=='object'||Array.isArray(all))all={};
+  let dirty=false;
+  if(Array.isArray(all[OLD_OWNER])&&!(Array.isArray(all[OWNER])&&all[OWNER].length)){
+    all[OWNER]=all[OLD_OWNER];dirty=true;   // 176 桶为空才接管，避免覆盖；776 桶保留不删，防数据丢失
+  }
+  if(dirty){try{localStorage.setItem('arpu_business_v2',JSON.stringify(all))}catch(e){}}
+  let old=null;try{old=JSON.parse(localStorage.getItem('arpu_business_v1')||'null')}catch(e){old=null}
+  if(!Array.isArray(old))return;
+  try{localStorage.setItem('arpu_business_v1_backup',JSON.stringify(old))}catch(e){}
+  try{localStorage.removeItem('arpu_business_v1')}catch(e){}
+  if(!old.length)return;
+  const cur=all[OWNER];
+  if(!Array.isArray(cur)||!cur.length){all[OWNER]=old;try{localStorage.setItem('arpu_business_v2',JSON.stringify(all))}catch(e){}}
+}
+function loadBizRaw(){
+  if(!/^\d{11}$/.test(curQuery||''))return [];
+  migrateBizBuckets();
+  let arr=[];
+  try{const m=JSON.parse(localStorage.getItem('arpu_business_v2')||'{}');const b=(m&&typeof m==='object'&&!Array.isArray(m))?m[curQuery]:null;arr=Array.isArray(b)?b:[]}catch(e){arr=[]}
+  // 起止日期自动控制开通状态（仅本页计算用，不写回）；
+  // 手动关闭优先：business 页手动关闭（manualOff）的业务不被日期自动开通覆盖
+  const t=todayStr();
+  return arr.filter(x=>x&&typeof x==='object').map(x=>{
+    const s=x.startDate?String(x.startDate):'',e=x.endDate?String(x.endDate):'';
+    if(!s&&!e)return x;
+    if(x.manualOff)return {...x,active:!!x.active};
+    return {...x,active:(!s||t>=s)&&(!e||monthOf(t)<=monthOf(e))};
+  });
+}
+function todayStr(){
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
+}
+// 今天是否落在业务的有效期内（按月：到期月整月有效、次月失效；未设置视为长期有效）
+function inDateRange(x,t){
+  const s=x&&x.startDate?String(x.startDate):'',e=x&&x.endDate?String(x.endDate):'';
+  if(!s&&!e)return true;
+  const d=t||todayStr();
+  return (!s||d>=s)&&(!e||monthOf(d)<=monthOf(e));
+}
+function bizId(x){return String((x&&(x.id||x.name))||'')}
+// 兼容旧数据：只有 type 没有 category
+function bizCat(x){return x?(x.category||x.type||''):''}
+function bizById(id){return loadBizRaw().find(x=>x&&bizId(x)===id)}
+// 每行开通次数：业务页已开通的凑单业务默认计 1 次（且该行月份须在业务有效期内）；业务页新增开通时补上（本期删除过的保持 0，不被恢复）
+function syncCounts(){
+  plan.rows.forEach(row=>{
+    row.counts=row.counts||{};
+    loadBizRaw().filter(x=>x&&bizCat(x)==='consume'&&x.active&&bizInMonth(x,row.m))
+      .forEach(x=>{const id=bizId(x);if(row.counts[id]==null)row.counts[id]=1});
+  });
+}
+function initCounts(m){
+  const c={};
+  loadBizRaw().filter(x=>x&&bizCat(x)==='consume'&&x.active&&bizInMonth(x,m)).forEach(x=>{c[bizId(x)]=1});
+  return c;
+}
+// 该行已开通凑单业务的资费总和（按开通次数累计；已过有效期的业务不计入该行）
+function consRowSum(row){
+  const biz=loadBizRaw();let s=0;
+  Object.keys(row.counts||{}).forEach(id=>{
+    const n=row.counts[id];if(!n)return;
+    const x=biz.find(b=>bizId(b)===id);
+    if(x&&bizInMonth(x,row.m)&&Number.isFinite(Number(x.price)))s+=Number(x.price)*n;
+  });
+  return s;
+}
+// 该行羊毛总和：已开通的消费凑单类按开通次数累计，已开通的条件福利类各计一次（均按该行月份的有效期过滤）
+function consRowWool(row){
+  const biz=loadBizRaw();let s=0;
+  Object.keys(row.counts||{}).forEach(id=>{
+    const n=row.counts[id];if(!n)return;
+    const x=biz.find(b=>bizId(b)===id);
+    if(x&&bizInMonth(x,row.m)&&Number.isFinite(Number(x.wool)))s+=Number(x.wool)*n;
+  });
+  biz.forEach(x=>{
+    if(!x||!x.active||bizCat(x)!=='welfare'||!bizInMonth(x,row.m))return;
+    const w=Number(x.wool);
+    if(Number.isFinite(w))s+=w;
+  });
+  return s;
+}
+// 各行已开通凑单业务标签（多次开通显示 名称 ×N；该月已过有效期的业务不显示）
+function renderConsTags(){
+  const biz=loadBizRaw();
+  plan.rows.forEach(row=>{
+    const box=document.querySelector(`.cons-tags[data-ctags="${row.m}"]`);
+    if(!box)return;
+    const ids=Object.keys(row.counts||{}).filter(id=>{
+      if(!(row.counts[id]>0))return false;
+      const x=biz.find(b=>bizId(b)===id);
+      return !!x&&bizInMonth(x,row.m);
+    });
+    box.innerHTML=ids.map(id=>{
+      const x=biz.find(b=>bizId(b)===id),n=row.counts[id];
+      const nm=esc(x?x.name||'':id);
+      return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}" title="点击增加一次开通"><span>${nm}${n>1?' ×'+n:''}</span><button class="del" data-del="${esc(id)}" data-m="${row.m}" aria-label="删除" tabindex="-1"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></span>`;
+    }).join('');
+  });
+}
+// 该行已占用的自定义系列（系列 id → 该系列当前选中的业务名）；默认系列不互斥
+function rowSeriesOwned(row){
+  const biz=loadBizRaw(),own={};
+  Object.keys(row.counts||{}).forEach(id=>{
+    if(!(row.counts[id]>0))return;
+    const x=biz.find(b=>bizId(b)===id);
+    if(!x)return;
+    const sid=x.seriesId||'default';
+    if(sid==='default')return;
+    own[sid]=String(x.name||'');
+  });
+  return own;
+}
+// 该行尚未开通（未计数）的凑单业务下拉；同一自定义系列已有业务时其余互斥（默认系列除外）
+function showConsDropdown(row){
+  if(!row||!row.el)return;
+  hideConsDropdown();
+  const dd=document.querySelector(`.cons-dd[data-dd="${row.m}"]`);
+  if(!dd)return;
+  const cands=loadBizRaw().filter(x=>x&&bizCat(x)==='consume'&&bizInMonth(x,row.m)&&!(row.counts&&row.counts[bizId(x)]>0));
+  if(!cands.length){
+    dd.innerHTML='<div class="dd-empty">没有可添加的消费凑单业务</div>';
+    dd.classList.remove('hidden');
+  }else{
+    const owned=rowSeriesOwned(row);
+    dd.innerHTML=cands.map(x=>{
+      const sid=x.seriesId||'default';
+      const conflict=sid==='default'?'':owned[sid];
+      // 同系列互斥业务可直接选，选中即视为业务变更（替换原业务）
+      return `<div class="dd-item${conflict?' swap':''}" data-add="${esc(bizId(x))}" data-m="${row.m}"${conflict?` title="选择后替换同系列原业务「${esc(conflict)}」"`:''}><span>${esc(x.name||'')}</span>${conflict?`<span class="dd-tip">变更自「${esc(conflict)}」</span>`:''}</div>`;
+    }).join('');
+    dd.classList.remove('hidden');
+  }
+  setMenuState(row.m,true);
+}
+function hideConsDropdown(){
+  document.querySelectorAll('.cons-dd').forEach(dd=>dd.classList.add('hidden'));
+  document.querySelectorAll('.cons-menu.on').forEach(b=>{b.classList.remove('on');b.setAttribute('aria-expanded','false')});
+}
+function setMenuState(m,on){
+  const b=document.querySelector(`.cons-menu[data-menu="${m}"]`);
+  if(!b)return;
+  b.classList.toggle('on',on);
+  b.setAttribute('aria-expanded',on?'true':'false');
+}
+// 菜单按钮：切换该行下拉的显示 / 隐藏
+function toggleConsDropdown(row){
+  if(!row)return;
+  const dd=document.querySelector(`.cons-dd[data-dd="${row.m}"]`);
+  if(!dd)return;
+  if(dd.classList.contains('hidden'))showConsDropdown(row);else hideConsDropdown();
+}
+function addConsume(row,id){
+  if(!row)return;
+  const x=bizById(id);
+  if(!x)return;
+  row.counts=row.counts||{};
+  const sid=x.seriesId||'default';
+  const price=Number(x.price)||0;
+  let times=1,removedPrice=0;
+  // 同一自定义系列互斥：视为业务变更，移除该系列原业务后加入新业务（沿用原开通次数）
+  if(sid!=='default'&&(row.counts[id]||0)<=0){
+    const biz=loadBizRaw();
+    let old=0;
+    Object.keys(row.counts).forEach(cid=>{
+      const n=row.counts[cid];if(!n)return;
+      const y=biz.find(b=>bizId(b)===cid);
+      if(!y||(y.seriesId||'default')!==sid)return;
+      old+=n;removedPrice+=(Number(y.price)||0)*n;row.counts[cid]=0;
+    });
+    if(old)times=old;
+  }
+  row.counts[id]=(row.counts[id]||0)+times;
+  if(!row.consAuto){
+    const cur=Number(row.el.cons.value);
+    if(Number.isFinite(cur)){
+      const next=Math.max(0,cur+price*times-removedPrice);
+      row.el.cons.value=fmtNum(next);row.cons=row.el.cons.value;
+    }
+  }
+  hideConsDropdown();recalcPlan();
+}
+function removeConsume(row,id){
+  if(!row||!row.counts)return;
+  const n=row.counts[id]||0;
+  if(n<=0)return;
+  const x=bizById(id);
+  row.counts[id]=n-1;
+  if(!row.consAuto&&x&&Number.isFinite(Number(x.price))){
+    const cur=Number(row.el.cons.value);
+    if(Number.isFinite(cur)){row.el.cons.value=fmtNum(Math.max(0,cur-Number(x.price)));row.cons=row.el.cons.value}
+  }
+  recalcPlan();
+}
+function rowByMonth(m){return plan.rows.find(r=>r.m===m)}
+const planInputsEl=document.getElementById('planInputs');
+// 下拉点选（pointerdown 防止输入框失焦先关闭下拉）
+planInputsEl.addEventListener('pointerdown',e=>{
+  const it=e.target.closest('[data-add]');
+  if(it){e.preventDefault();addConsume(rowByMonth(it.dataset.m),it.dataset.add);return}
+  // 点击标签以外区域收起删除图标
+  if(!e.target.closest('.ctag'))planInputsEl.querySelectorAll('.ctag.show-del').forEach(x=>x.classList.remove('show-del'));
+});
+// 标签长按 500ms 显示删除图标；单击 = 增加一次开通
+let ctTimer=null,ctFired=false;
+planInputsEl.addEventListener('pointerdown',e=>{
+  const tag=e.target.closest('.ctag');
+  if(!tag)return;
+  ctFired=false;clearTimeout(ctTimer);
+  ctTimer=setTimeout(()=>{ctFired=true;tag.classList.add('show-del')},500);
+});
+['pointerup','pointercancel','pointermove'].forEach(ev=>planInputsEl.addEventListener(ev,e=>{
+  clearTimeout(ctTimer);
+  if(ev==='pointermove'&&e.target.closest('.ctag'))return;
+}));
+planInputsEl.addEventListener('click',e=>{
+  const menu=e.target.closest('.cons-menu');
+  if(menu){toggleConsDropdown(rowByMonth(menu.dataset.menu));return}
+  const del=e.target.closest('[data-del]');
+  if(del){removeConsume(rowByMonth(del.dataset.m),del.dataset.del);return}
+  const tag=e.target.closest('.ctag');
+  if(!tag)return;
+  if(ctFired){ctFired=false;return}
+  if(tag.classList.contains('show-del')){tag.classList.remove('show-del');return}
+  addConsume(rowByMonth(tag.dataset.m),tag.dataset.id);
+});
+document.addEventListener('pointerdown',e=>{
+  if(!e.target.closest('.cons-dd')&&!e.target.closest('.cons-wrap'))hideConsDropdown();
+});
+
+/* ============ 福利开通提示：与业务管理页数据联动 ============ */
+// 候选：条件福利类且未开通的业务；按目标月份过滤（该月已过有效期的业务不再提示）；互斥与系列规则一致（同一自定义系列业务互斥）
+function welfareCandidates(ym){
+  let series=[];
+  const t=todayStr();
+  const ymKey=ym||t.slice(0,7);
+  const items=loadBizRaw();
+  try{series=JSON.parse(localStorage.getItem('arpu_series_v1')||'[]')}catch(e){}
+  if(!Array.isArray(series))series=[];
+  return items.filter(x=>x&&bizCat(x)==='welfare'&&!x.active&&bizInMonth(x,ymKey)&&Number.isFinite(Number(x.price))).map(x=>{
+    const sid=x.seriesId||'default';
+    return {
+      id:String(x.id||x.name||''),
+      name:String(x.name||''),
+      price:Number(x.price),
+      avg6:x.condAvg==='avg6', // 消费条件：按近6月平均还是近3月平均（旧数据无该字段按近3月）
+      sid,
+      isDefault:sid==='default',
+      conflicts:sid==='default'?[]:items.filter(y=>y&&y.active&&(y.seriesId||'default')===sid&&bizInMonth(y,ymKey)).map(y=>String(y.name||''))
+    };
+  });
+}
+// 自定义系列当前展示的业务（默认资费最低）与展开状态
+const seriesSel={},wExpanded=new Set();
+let planVal=null;
+function tipText(t,need,arrow){
+  const conflict=t.conflicts.length?`，与已开通的<b>${esc(t.conflicts.join('、'))}</b>互斥`:'';
+  return `该月消费补充 <b>${need.toFixed(2)}</b> 元，下个月即可开通<b>${esc(t.name)}</b>${arrow||''}${conflict}`;
+}
+function renderWelfareTips(val){
+  planVal=val;
+  document.querySelectorAll('.plan-tips').forEach(el=>el.innerHTML='');
+  if(!plan.rows.length)return;
+  if(!Object.keys(plan.map||{}).length)return; // 查询失败无历史数据时不显示
+  const nowM=currentMonth();
+  plan.rows.forEach(row=>{
+    const m=row.m,box=document.querySelector(`.plan-tips[data-tips="${m}"]`);
+    if(!box)return;
+    // 候选按该行月份过滤：业务在该月已过有效期时不再出现开通提示
+    const cands=welfareCandidates(m);
+    if(!cands.length)return;
+    // 系列内业务按资费从低到高排序；自定义系列默认展示资费最低的业务
+    const bySeries={};
+    cands.forEach(c=>{(bySeries[c.sid]=bySeries[c.sid]||[]).push(c)});
+    Object.values(bySeries).forEach(arr=>arr.sort((a,b)=>a.price-b.price||a.name.localeCompare(b.name,'zh')));
+    Object.keys(bySeries).forEach(sid=>{
+      if(sid==='default')return;
+      if(!bySeries[sid].some(c=>c.id===seriesSel[sid]))seriesSel[sid]=bySeries[sid][0].id;
+    });
+    // 平均消费窗口 = m 往前 N 个月（消费条件为近3月 N=3、近6月 N=6）；未填的未来月（>= 当前月）按 0 起算，历史月份缺失则无法计算
+    const gv=k=>{const v=val[k];return v!=null?v:(k>=nowM?0:null)};
+    const calc=c=>{
+      const n=c.avg6?6:3;let sum=0;
+      for(let i=0;i<n;i++){const v=gv(monthAdd(m,-i));if(v==null)return null;sum+=v}
+      return Math.max(0,c.price*n-sum);
+    };
+    const arrow=(sid)=>`<button class="wtoggle" data-w="toggle" data-m="${m}" data-sid="${esc(sid)}" aria-label="更换业务" title="更换业务"><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+    let html='';
+    // 默认系列：每个业务一行，按需补金额升序
+    (bySeries.default||[]).map(c=>({c,need:calc(c)})).filter(t=>t.need!=null)
+      .sort((a,b)=>a.need-b.need||a.c.name.localeCompare(b.c.name,'zh'))
+      .forEach(t=>{html+=`<div class="wtip"><span class="star">☆</span><span>${tipText(t.c,t.need)}</span></div>`});
+    // 自定义系列：每个系列一行（默认展示资费最低业务），点下拉箭头展开该系列全部业务
+    Object.keys(bySeries).filter(sid=>sid!=='default').map(sid=>{
+      const sel=bySeries[sid].find(c=>c.id===seriesSel[sid]);
+      return {sid,sel,need:calc(sel)};
+    }).filter(t=>t.need!=null)
+      .sort((a,b)=>a.need-b.need)
+      .forEach(t=>{
+        const key=m+'|'+t.sid,open=wExpanded.has(key);
+        html+=`<div class="wtip${open?' open':''}"><span class="star">☆</span><span>${tipText(t.sel,t.need,arrow(t.sid))}</span></div>`;
+        if(open){
+          html+='<div class="wlist">'+bySeries[t.sid].map(c=>{
+            const n2=calc(c);
+            return `<div class="wtip${c.id===t.sel.id?' on':''}" data-w="pick" data-m="${m}" data-sid="${esc(t.sid)}" data-id="${esc(c.id)}"><span class="star">☆</span><span>${n2==null?'该月数据不足，暂无法计算「<b>'+esc(c.name)+'</b>」的开通条件':tipText(c,n2)}</span></div>`;
+          }).join('')+'</div>';
+        }
+      });
+    box.innerHTML=html;
+  });
+}
+// 下拉箭头展开/收起、点选系列内业务（选择对该系列所有规划行生效）
+document.getElementById('planInputs').addEventListener('click',e=>{
+  const el=e.target.closest('[data-w]');
+  if(!el)return;
+  const key=el.dataset.m+'|'+el.dataset.sid;
+  if(el.dataset.w==='toggle'){wExpanded.has(key)?wExpanded.delete(key):wExpanded.add(key)}
+  else if(el.dataset.w==='pick'){seriesSel[el.dataset.sid]=el.dataset.id;wExpanded.delete(key)}
+  if(planVal)renderWelfareTips(planVal);
+});
+// 业务数据变化时同步刷新（从业务页返回、其他标签页修改）
+window.addEventListener('pageshow',()=>{if(plan.rows.length)recalcPlan()});
+window.addEventListener('storage',e=>{if((e.key==null||e.key==='arpu_business_v2'||e.key==='arpu_series_v1')&&plan.rows.length)recalcPlan()});
+
+/* ============ 消费趋势折线图 ============ */
+function chartData(){
+  const hist=plan.map||{};
+  const histMonths=Object.keys(hist).sort().slice(-6);
+  const months=[...histMonths,...plan.rows.map(r=>r.m)];
+  const vals={...hist};
+  plan.rows.forEach(r=>{if(r.calc.cons!=null)vals[r.m]=r.calc.cons});
+  const avgFrom=(m,cnt)=>{let s=0;for(let i=0;i<cnt;i++){const v=vals[monthAdd(m,-i)];if(v==null)return null;s+=v}return s/cnt};
+  return months.map(m=>{
+    const row=plan.rows.find(r=>r.m===m);
+    let a3,a6;
+    if(row){a3=row.calc.a3==null?null:round(row.calc.a3);a6=row.calc.a6==null?null:round(row.calc.a6)}
+    else{const v3=avgFrom(m,3),v6=avgFrom(m,6);a3=v3==null?null:round(v3);a6=v6==null?null:round(v6)}
+    return {m,cons:vals[m]!=null?vals[m]:null,a3,a6};
+  });
+}
+
+function renderChart(){
+  const box=document.getElementById('chart');
+  const data=chartData();
+  const all=data.flatMap(d=>[d.cons,d.a3,d.a6]).filter(v=>v!=null);
+  if(!data.length||!all.length){box.innerHTML='<div class="empty">填写消费或平均消费后显示趋势</div>';chartCache=[];chartGeom=null;hideChartTip();return}
+
+  const W=720,H=300,PL=48,PR=16,PT=14,PB=32;
+  const iw=W-PL-PR, ih=H-PT-PB;
+  const maxV=Math.max(...all,1);
+  const tick=Math.max(10,Math.ceil(maxV/5/10)*10);
+  const top=tick*Math.ceil(maxV/tick);
+  const x=i=>PL+(data.length===1?iw/2:i*iw/(data.length-1));
+  const y=v=>PT+ih-(v/top)*ih;
+  const SERIES=[{key:'cons',color:'#1677ff',name:'每月消费值'},{key:'a3',color:'#f0a020',name:'近3月均消'},{key:'a6',color:'#e5487d',name:'近6月均消'}];
+
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="消费趋势折线图">`;
+  for(let i=0;i<=5;i++){
+    const v=top*i/5, yy=y(v);
+    s+=`<line x1="${PL}" y1="${yy}" x2="${W-PR}" y2="${yy}" stroke="#edf0f2" stroke-width="1"/>`;
+    s+=`<text x="${PL-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="#8b929c">${Math.round(v)}</text>`;
+  }
+  const every=data.length>12?2:1;
+  data.forEach((d,i)=>{
+    if(i%every===0||i===data.length-1){
+      s+=`<text x="${x(i)}" y="${H-10}" text-anchor="middle" font-size="11" fill="#8b929c">${monthNum(d.m)}月</text>`;
+    }
+  });
+  const firstPlan=plan.rows.length?data.findIndex(d=>d.m===plan.rows[0].m):-1;
+  if(firstPlan>0){
+    const gap=data.length>1?iw/(data.length-1)/2:0, xs=x(firstPlan)-gap;
+    s+=`<line x1="${xs}" y1="${PT}" x2="${xs}" y2="${PT+ih}" stroke="#c9d1da" stroke-width="1" stroke-dasharray="4 4"/>`;
+    s+=`<text x="${xs+5}" y="${PT+11}" font-size="11" fill="#9aa1aa">规划</text>`;
+  }
+  SERIES.forEach(se=>{
+    let d='',pen=false;
+    data.forEach((p,i)=>{
+      const v=p[se.key];
+      if(v==null){pen=false;return}
+      d+=(pen?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)+' ';
+      pen=true;
+    });
+    if(d)s+=`<path d="${d}" fill="none" stroke="${se.color}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  data.forEach((p,i)=>{
+    SERIES.forEach(se=>{
+      const v=p[se.key];
+      if(v==null)return;
+      s+=`<circle cx="${x(i)}" cy="${y(v)}" r="3.4" fill="#fff" stroke="${se.color}" stroke-width="2"><title>${p.m} ${se.name}：¥${se.key==='cons'?numText(v):v}</title></circle>`;
+    });
+  });
+  s+=`<line id="chartHoverLine" x1="0" y1="${PT}" x2="0" y2="${PT+ih}" stroke="#b9c2cc" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>`;
+  s+='</svg>';
+  box.innerHTML=s;
+  chartCache=data;
+  chartGeom={W,PL,iw};
+}
+
+// 悬停：跟随鼠标显示该月份的三项数值
+let chartCache=[],chartGeom=null;
+const chartTipEl=document.getElementById('chartTip');
+const chartBoxEl=document.getElementById('chart');
+function hideChartTip(){
+  chartTipEl.classList.remove('show');
+  const l=chartBoxEl.querySelector('#chartHoverLine');
+  if(l)l.setAttribute('opacity','0');
+}
+function onChartMove(e){
+  const svg=chartBoxEl.querySelector('svg');
+  if(!svg||!chartCache.length||!chartGeom)return;
+  const r=svg.getBoundingClientRect();
+  if(!r.width)return;
+  const scale=r.width/chartGeom.W, n=chartCache.length;
+  const vx=(e.clientX-r.left)/scale;
+  let idx=Math.round((vx-chartGeom.PL)/chartGeom.iw*(n-1));
+  idx=Math.max(0,Math.min(n-1,idx));
+  const d=chartCache[idx];
+  const x=chartGeom.PL+(n===1?chartGeom.iw/2:idx*chartGeom.iw/(n-1));
+  const line=svg.querySelector('#chartHoverLine');
+  if(line){line.setAttribute('x1',x);line.setAttribute('x2',x);line.setAttribute('opacity','1')}
+  const row=(color,name,v)=>`<div class="tip-row"><span><i style="background:${color}"></i>${name}</span><span>${v==null?'—':'¥'+(name==='每月消费值'?numText(v):v)}</span></div>`;
+  chartTipEl.innerHTML=`<b>${d.m}</b>`+
+    row('#1677ff','每月消费值',d.cons)+
+    row('#f0a020','近3月均消',d.a3)+
+    row('#e5487d','近6月均消',d.a6);
+  const wrap=chartBoxEl.parentElement.getBoundingClientRect();
+  const tw=chartTipEl.offsetWidth, th=chartTipEl.offsetHeight;
+  let left=e.clientX-wrap.left, top=e.clientY-wrap.top-10;
+  left=Math.max(tw/2+4,Math.min(wrap.width-tw/2-4,left));
+  top=Math.max(th+6,top);
+  chartTipEl.style.left=left+'px';
+  chartTipEl.style.top=top+'px';
+  chartTipEl.classList.add('show');
+}
+chartBoxEl.addEventListener('mousemove',onChartMove);
+chartBoxEl.addEventListener('mouseleave',hideChartTip);
+
+// 输入框支持加减乘除表达式（如 59+88），失去焦点或按回车时自动计算并回填结果
+function evalExpr(raw){
+  let s=String(raw==null?'':raw).replace(/[＝]/g,'=').replace(/[＋]/g,'+').replace(/[－]/g,'-').replace(/[×✕]/g,'*').replace(/[÷]/g,'/').replace(/[=]+$/,'').trim();
+  if(!s||!/^[\d+\-*/().\s]+$/.test(s))return null;
+  try{const v=Function('"use strict";return('+s+')')();if(Number.isFinite(v)&&v>=0)return v}catch(e){}
+  return null;
+}
+function fmtNum(v){return String(Math.round(v*100)/100)}
+
+mobileEl.addEventListener('keydown',e=>{if(e.key==='Enter')searchBtn.click()});
+async function search(){
+  const phone=mobileEl.value.trim();
+  if(!/^1[3-9]\d{9}$/.test(phone)){statusEl.className='status error';statusEl.textContent='请输入合法的手机号';return}
+  curQuery=phone;
+  // 身份写入移到 search() 内部：按钮点击/回车/历史记录三条路径统一生效，且仅合法手机号才记录
+  try{localStorage.setItem(KEY_Q,phone)}catch(e){}
+  syncOwnerEntry();
+  searchBtn.disabled=true;statusEl.className='status';statusEl.textContent='正在查询…';
+  dataCard.classList.add('hidden');planCard.classList.add('hidden');chartCard.classList.add('hidden');
+  try{
+    const res=await fetch(PROXY+encodeURIComponent(buildQueryUrl(phone)),{method:'GET',cache:'no-store'});
+    if(!res.ok)throw new Error('query failed');
+    const raw=await res.json();
+    const map=normalize(raw);
+    const hist=knownMonths(map);
+    if(!Object.keys(hist).length)throw new Error('query failed');
+    saveRecord(phone);showHistorical(map,hist);
+    statusEl.className='status ok';statusEl.textContent='查询成功';
+  }catch(e){
+    statusEl.className='status error';statusEl.textContent='查询失败';
+    showFailedPlan();
+  }finally{searchBtn.disabled=false}
+}
+// ===== 维护者入口：查询过安全手机号后显示（无论查询成败）=====
+const OWNER_PHONE='17600799221';
+const KEY_Q='arpu_last_query';
+function syncOwnerEntry(){
+  let q='';try{q=localStorage.getItem(KEY_Q)||''}catch(e){}
+  document.getElementById('rulesEntry').classList.toggle('hidden',q!==OWNER_PHONE);
+}
+searchBtn.onclick=search;
+// 入口守卫：仅输入合法手机号后才允许打开资费业务管理
+document.querySelectorAll('a.entry[href="business.html"]').forEach(a=>a.addEventListener('click',e=>{
+  if(!/^1[3-9]\d{9}$/.test(mobileEl.value.trim())){
+    e.preventDefault();
+    statusEl.className='status error';statusEl.textContent='请输入合法的手机号';
+  }
+}));
+syncOwnerEntry();
+loadRecords();syncClearBtn();
+// 从资费业务/资费规则页返回（链接带 auto=1）：自动回填手机号并自动完成查询消费
+try{
+  if(new URLSearchParams(location.search).get('auto')==='1'){
+    const q=localStorage.getItem(KEY_Q)||'';
+    if(/^1[3-9]\d{9}$/.test(q)){mobileEl.value=q;syncClearBtn();search()}
+  }
+}catch(e){}
+</script>
+</body>
+</html>

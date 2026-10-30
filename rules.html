@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html data-page-node-id="h7q1tEy8MaRB0vcV8AE96Z" lang="zh-CN">
+<head data-page-node-id="ZmzJTvyGdFK92aYMExKQgt">
+<script data-page-node-id="VL6riqrTBiybd5ds93oIUY" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="evshars17mtXUzP49g473Z" charset="UTF-8">
+<meta data-page-node-id="ZDo9Tz4BiXvXHDepPYrbms" content="width=device-width,initial-scale=1" name="viewport">
+<title data-page-node-id="NnQWiQqAWpaZfHWhGHBdk2" data-pnid-children="8uqAzfNx4xPmqmhl27vZkc">资费规则管理</title>
+<style data-page-node-id="UWBp33MrAUWjCsUC9w6tT5" data-pnid-children="cxukouIi4zNb6FMxUXt02f">
+*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#20242a;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px}
+.wrap{max-width:860px;margin:auto;padding:40px 16px 56px}
+header{margin-bottom:14px}
+.back{display:inline-block;font-size:11px;color:#6b7480;text-decoration:none;margin-bottom:10px}
+.back:hover{color:#1677ff}
+h1{font-size:25px;margin:0 0 7px}.sub{font-size:12px;color:#8b929c}
+.card{background:#fff;border:1px solid #e9edf1;border-radius:17px;padding:19px;margin-top:14px;box-shadow:0 4px 18px #20242a08}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.series-card{padding:15px 19px}
+.series-head{display:block;margin-bottom:9px}
+.series-head b{font-size:13px;font-weight:600;display:block;margin-bottom:4px}
+.series-head span{font-size:11px;color:#9aa1aa;display:block;line-height:1.7}
+.tags{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stag{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid #e6dbff;background:#f5f0ff;color:#6a4bc4;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.stag.active{background:#6a4bc4;border-color:#6a4bc4;color:#fff}
+.stag.def{background:#f5f6f8;border-color:#e6eaef;color:#6b7480}
+.stag.add{background:#fff;border-style:dashed;border-color:#dfe3e8;color:#6b7480}
+.stag.add:hover{border-color:#1677ff;color:#1677ff}
+.tag-tools{display:none;gap:4px}
+.stag.show-tools .tag-tools{display:inline-flex}
+.tag-tools i{font-style:normal;width:22px;height:22px;text-align:center;border-radius:999px;background:#fff;border:1px solid #dfe3e8;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0}
+.tag-tools i svg{display:block}
+.tag-tools i:hover{background:#f2f5f9}
+.tag-tools .t-del{color:#d9363e}
+.stag.renaming{gap:6px;padding:3px 6px 3px 10px;background:#fff;border-color:#1677ff;cursor:default}
+.stag.renaming input{width:120px;height:28px;font-size:12px;padding:0 8px;border:1px solid #dfe3e8;border-radius:7px;outline:none;background:#fff}
+.stag .mini{height:26px;font-size:11px;padding:0 9px}
+.stag-mini{padding:2px 9px;font-size:11px;gap:4px;cursor:default}
+.cat-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ext-badge{flex:0 0 auto;font-size:10px;color:#c2492b;background:#fdeee9;border:1px solid #f2c9bb;border-radius:999px;padding:1px 8px}
+.filters{display:flex;gap:8px;flex:0 0 auto}
+.io-group{display:flex;gap:8px;flex:0 0 auto}
+.io-btn{background:#f2f5f9;color:#4a5361;font-weight:500;padding:0 14px}
+.io-btn:hover{background:#e9eef4}
+.filters select{width:112px}
+.f-search{flex:1 1 160px;min-width:140px}
+.search-field{position:relative;min-width:0}
+.search-field input{padding-right:34px}
+.clear-btn{display:none;position:absolute;right:9px;top:50%;transform:translateY(-50%);width:18px;height:18px;padding:0;border:0;border-radius:999px;background:#c3ccd6;color:#fff;font-size:12px;font-weight:400;line-height:18px;text-align:center;cursor:pointer;align-items:center;justify-content:center}
+.clear-btn.show{display:flex}
+.clear-btn:hover{background:#a7b2be}
+input,select,textarea{width:100%;border:1px solid #dfe3e8;border-radius:9px;padding:0 11px;font-size:14px;outline:none;background:#fff;font-family:inherit;color:#20242a}
+select{appearance:none;-webkit-appearance:none;padding-right:40px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238b929c' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+input,select{height:40px}textarea{height:70px;padding:9px 11px;resize:vertical;line-height:1.6;font-size:13px}
+input:focus,select:focus,textarea:focus{border-color:#1677ff;box-shadow:0 0 0 3px #1677ff12}
+input::placeholder,textarea::placeholder{color:#a8b0ba}
+button{height:40px;border:0;border-radius:9px;background:#1677ff;color:#fff;font-weight:600;padding:0 17px;cursor:pointer;white-space:nowrap;font-size:12px}
+button:disabled{opacity:.55;cursor:wait}
+#addBtn{flex:0 0 auto}
+.table-wrap{margin-top:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.price-cell{font-weight:600;white-space:nowrap}
+.price-cell small{font-weight:400;font-size:10px;color:#9aa1aa;margin-right:2px}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th{font-size:11px;font-weight:500;color:#8b929c;text-align:left;padding:9px 10px;background:#fafbfc;border-bottom:1px solid #edf0f2;white-space:nowrap}
+td{padding:10px;border-bottom:1px solid #edf0f2;font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#fafbfc}
+.nm-line{display:flex;align-items:center;gap:6px;min-width:0}
+.nm{font-weight:600;color:#20242a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.chip{display:inline-block;font-size:11px;color:#4d6fa8;background:#eef4ff;border:1px solid #dbe7ff;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.chip.welfare{color:#a3730a;background:#fdf6e7;border-color:#f3e3bd}
+.code-line{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:11px;color:#8b929c;min-width:0}
+.code-line code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#8b929c;background:none;border:0;padding:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
+.copy-btn{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:0;border-radius:5px;background:transparent;color:#9aa1aa;cursor:pointer;padding:0}
+.copy-btn:hover{background:#eef4ff;color:#1677ff}
+.copy-btn.ok{color:#2f8f5b}
+.liab-txt{max-width:220px;white-space:normal;word-break:break-word;line-height:1.55;color:#8b929c}
+.ops{white-space:nowrap}
+.mini{height:28px;font-size:11px;padding:0 10px;background:#f2f5f9;color:#4a5361;font-weight:500}
+.mini.danger{background:#fef2f2;color:#d9363e}
+.empty{color:#9aa1aa;font-size:12px;text-align:center;padding:30px 0}
+.foot{font-size:11px;color:#9aa1aa;text-align:center;margin:16px 0 0}
+/* 分页插件 */
+.pager{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pg-info{font-size:12px;color:#8b929c}
+.pg-btns{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.pg-btn{height:28px;min-width:28px;padding:0 8px;border-radius:7px;background:#f2f5f9;color:#4a5361;font-weight:500;font-size:12px}
+.pg-btn:hover:not(:disabled){background:#e9eef4}
+.pg-btn.active{background:#1677ff;color:#fff}
+.pg-btn:disabled{opacity:.45;cursor:default}
+.pg-dots{font-size:12px;color:#9aa1aa;padding:0 2px}
+.hidden{display:none}
+.modal{position:fixed;inset:0;background:#1b233152;display:flex;align-items:flex-end;justify-content:center;padding:0;z-index:50}
+.modal.hidden{display:none}
+.sheet{width:100%;max-width:520px;background:#fff;border-radius:18px 18px 0 0;padding:19px 19px calc(19px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;box-shadow:0 -10px 40px #1b233126}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sheet-head b{font-size:15px}
+.icon{width:28px;height:28px;border-radius:999px;background:#f2f5f9;color:#5b6470;font-size:17px;line-height:1;padding:0}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;color:#4a5361;margin-bottom:6px}
+.field label i{font-style:normal;color:#d9363e;margin-left:2px}
+.radios{display:flex;gap:18px;font-size:14px;padding-top:4px}
+.radios label{display:inline-flex;align-items:center;gap:6px;margin:0;color:#20242a;font-size:14px}
+.radios input{width:15px;height:15px;accent-color:#1677ff;margin:0}
+.form-err{min-height:16px;font-size:11px;color:#d9363e;margin:2px 0 6px}
+.sheet-foot{display:flex;gap:9px}
+.sheet-foot button{flex:1;height:40px}
+.ghost{background:#f2f5f9;color:#4a5361}
+.danger{background:#d9363e}
+.cf-msg{font-size:13px;line-height:1.7;color:#4a5361;margin-bottom:16px;word-break:break-word;white-space:pre-line}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,8px);max-width:calc(100% - 32px);background:#20242a;color:#fff;font-size:12px;line-height:1.6;padding:9px 14px;border-radius:10px;box-shadow:0 8px 24px #20242a33;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:80;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+/* 无权访问空态 */
+#denyView{display:none;min-height:70vh;align-items:center;justify-content:center;text-align:center}
+#denyView .deny-box{padding:40px 24px}
+#denyView .deny-t{font-size:16px;font-weight:600;margin:14px 0 8px}
+#denyView .deny-d{font-size:12px;color:#8b929c;line-height:1.8}
+#denyView svg{color:#c3ccd6}
+@media(min-width:561px){.modal{align-items:center;padding:20px}.sheet{border-radius:18px}}
+@media(max-width:560px){
+  .wrap{padding-top:24px}
+  .filters{flex:1 1 100%}.filters select{flex:1;width:auto}
+  .f-search{flex:1 1 100%}
+  .io-group{flex:1 1 100%}.io-group .io-btn{flex:1}
+  #addBtn{flex:1 1 100%;width:100%}
+  .table-wrap{overflow-x:visible}
+  table{min-width:0;display:block}
+  thead{display:none}
+  tbody{display:block}
+  tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:7px 8px;padding:13px 2px;border-bottom:1px solid #edf0f2}
+  tbody tr:last-child{border-bottom:0}
+  tbody tr:hover td{background:none}
+  td{border:0;padding:0;display:block}
+  tbody td:nth-child(1){flex:1 1 100%;order:1}
+  tbody td:nth-child(2){flex:1 1 100%;order:2}
+  tbody td:nth-child(3){flex:1 1 auto;order:3}
+  tbody td:nth-child(4){flex:0 0 auto;order:3;margin-left:auto}
+  tbody td:nth-child(5){flex:1 1 100%;order:4}
+  tbody td:nth-child(6){flex:1 1 100%;order:5;text-align:right;margin-top:1px}
+  tbody td.empty{flex:1 1 100%;order:1}
+  .pager{justify-content:center}
+}
+</style>
+</head>
+<body data-page-node-id="DExReQBGvh90azOtzRonPp">
+<div data-page-node-id="UnaBP3kqiY57yO3njLV02y" class="wrap" id="mainView">
+  <header data-page-node-id="Tg69jOq3ntvyovjecvPPWP">
+    <a data-page-node-id="8gcWQqB27jTMXVsE2Dym4w" class="back" href="index.html?auto=1"><!--pnid:w3O3UaiKCGuqh2n8Itd1RN-->‹ 返回消费规划器</a>
+    <h1 data-page-node-id="MEQN0PVp5XyCwteqPUUjJq"><!--pnid:7ZexkolNbhvRYlMFuwxoQ2-->资费规则管理</h1>
+    <div data-page-node-id="80ZHt2BTfSlps5ziT2OOTQ" class="sub"><!--pnid:vRQ68cm78Uy3aJJOaeNh27-->业务表：定义资费简称、官方名称、业务编码与系列；business 页通过业务编码认领并关联本表</div>
+  </header>
+
+  <section data-page-node-id="P47lxy5V7Wds4Dbaiy8v62" class="card series-card">
+    <div data-page-node-id="6QEppznreLQl5c4mpEGlkK" class="series-head"><b data-page-node-id="5DOB9IZj16fRJW61Wm21Z9"><!--pnid:8VHPwYh0BZzhhFZzPLOvCj-->资费系列</b><span data-page-node-id="bO9WUzZnJ4rLdjWZovoxfJ"><!--pnid:ShKhkibPfK4INcVOPYeKGt-->点击标签筛选规则，长按标签可编辑 / 删除（默认系列不可编辑删除）</span></div>
+    <div data-page-node-id="6OdL5Hs48e6ozpiHIaoWr7" class="tags" id="seriesTags"></div>
+  </section>
+
+  <section data-page-node-id="3KjNjaIerX7GsTsnLrLKRp" class="card">
+    <div data-page-node-id="Gqiu3u4sriqgF3nvEHqgB9" class="toolbar">
+      <div data-page-node-id="yHYYAZCtgWdOSGrDVwDJsC" class="filters">
+        <select data-page-node-id="BgnPwg3GI01DHllhwSNcFV" aria-label="按类别筛选" id="fCatFilter">
+          <option data-page-node-id="O1137pSEyGrTvcnTgPRqQN" value><!--pnid:eOFQqWV32P5uuAZit4aviG-->全部类别</option>
+          <option data-page-node-id="xihY2ZTbltOpq2C6dUbc70" value="consume"><!--pnid:J8W1MZeGqeb0LjdrlkDXD6-->凑单消费类</option>
+          <option data-page-node-id="sfYQcSoGF5cvKygsjYNio8" value="welfare"><!--pnid:wsi6vS1UVBtnwEYFPbSJym-->条件福利类</option>
+        </select>
+        <select data-page-node-id="j4GIYY88B68mxqNnZugUyt" aria-label="按系列筛选" id="fSeriesFilter">
+          <option data-page-node-id="p9fXAIGU60okzHm3G1T5ve" value><!--pnid:TgIEL22FAIC6XAjmw6TAwA-->全部系列</option>
+        </select>
+        <select data-page-node-id="ZUbkx1PrGskM93ECReppLu" aria-label="按来源筛选" id="fSrcFilter">
+          <option data-page-node-id="FugZcZJopL8ZEZ7JnCuxf1" value><!--pnid:v6MruJdpgqsIJQHqKKcE8F-->全部来源</option>
+          <option data-page-node-id="c9dKw5Ri5AUKP2miPAA1cJ" value="std"><!--pnid:QVkuWBldbQndOHRdYmMuCG-->标准规则</option>
+          <option data-page-node-id="FS0OSW8NnyoWGpYgWjdpyD" value="ext"><!--pnid:8FdNNDx29CmhLS2RUOOq1Q-->用户添加</option>
+        </select>
+      </div>
+      <div data-page-node-id="AOykjCEMEj2NoJ8gOSFo70" class="search-field f-search">
+        <input data-page-node-id="IZBU5TtQCtgnIySww9fgjq" id="kw" placeholder="搜索简称 / 名称 / 编码">
+        <button data-page-node-id="1lmfpZ4yVk8rT1dNSTWl37" aria-label="清空搜索" class="clear-btn" id="kwClear" tabindex="-1" type="button"><!--pnid:0NZ4NEK3E8bNSsuISbK8BF-->×</button>
+      </div>
+      <div data-page-node-id="3o6oAjlfkM1d4DoCaJ2mCk" class="io-group">
+        <button data-page-node-id="4xc7YLWKgT8ZTmBRxniuYY" class="io-btn" id="exportBtn" title="导出全部规则为 Excel（.xlsx）" type="button"><!--pnid:oeFJoOJkVmMElbDvboz4D0-->导出</button>
+        <button data-page-node-id="YcxT9060gikrIrYLw1y49R" class="io-btn" id="importBtn" title="从 Excel 导入规则（仅支持 .xlsx）" type="button"><!--pnid:JRtBLHejm9rEi6o9FTrhKu-->导入</button>
+        <input data-page-node-id="JbaEKAkxhZw9IShXNrxLg7" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="hidden" id="importFile" type="file">
+      </div>
+      <button data-page-node-id="EzrtUme84WQLvAjoUmcjUa" id="addBtn"><!--pnid:NNpUQly8g0CSP7N99F4yVM-->+ 新增资费</button>
+    </div>
+
+    <div data-page-node-id="WoyWvzh1IZ0QxLrdegh6tl" class="table-wrap">
+      <table data-page-node-id="oorQY4lcBTNgUcM6xAY9PC">
+        <thead data-page-node-id="42jY5ZCr0fnBPu1BccVVkl">
+          <tr data-page-node-id="Mhq9FOFIh1HehP8oP7xjio">
+            <th data-page-node-id="QOMkZOMwsqLf2h1SOMNqYj" style="width:22%"><!--pnid:VrC4fkSHTND6UsEQZ8H3jo-->资费简称</th>
+            <th data-page-node-id="X3FF16IqYtDKubgGBMbdGf" style="width:24%"><!--pnid:T9CsSxtKk6y0NPC3Fugsh4-->资费名称</th>
+            <th data-page-node-id="sLGFn84sei29OgsKXePjYb" style="width:18%"><!--pnid:04KJ3fMoW7qeCk4O9cT9QZ-->类别 / 系列</th>
+            <th data-page-node-id="jPmiJo4Jx7rDwMTCjI9Mwr" style="width:12%"><!--pnid:S1oftYVNf0YstyzVFPhoep-->资费价格</th>
+            <th data-page-node-id="cgyiwLeVac2EsvFGgLdcMB" style="width:16%"><!--pnid:NvcocGkf3bJlcLiXlFP5cF-->违约责任</th>
+            <th data-page-node-id="HxkZPBYoI24wdoRHl9VbHV" style="width:8%"><!--pnid:eo6GK99Cfmkz1B3dliu6bB-->操作</th>
+          </tr>
+        </thead>
+        <tbody data-page-node-id="wbYDqfvqFs4JhdCgMpgPjY" id="tbody"></tbody>
+      </table>
+    </div>
+    <div data-page-node-id="GlX36c59X9DSicXmZ9P3Hn" class="pager hidden" id="pager"></div>
+  </section>
+
+  <p data-page-node-id="kXdVeUSgZ0rV5AtIRLKm6i" class="foot"><!--pnid:HeP0DoFwDehirKAftTqzRe-->业务编码是 business 页认领关联的唯一键，请保持唯一且稳定。</p>
+</div>
+
+<div data-page-node-id="NwtrJ8BEZoFJo366ccFRtD" id="denyView">
+  <div data-page-node-id="wgqTt33gsLNvbtrrqIviYS" class="deny-box">
+    <svg data-page-node-id="nIkcPrjNhuct3Pfl4VTg9J" aria-hidden="true" fill="none" height="44" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="44"><rect data-page-node-id="HWt7Y4YAtmUijp8OvhMkM0" height="11" rx="2" width="18" x="3" y="11"/><path data-page-node-id="iPOvYwc6HvC6QalW2jJyrX" d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <div data-page-node-id="x29ZRQM1uSZXxEInmaW5QG" class="deny-t"><!--pnid:y4kQoiwrv5Weld2mnbPOWL-->无权访问</div>
+    <div data-page-node-id="JPnIK7S7CnbNQ4LFDxUETP" class="deny-d"><!--pnid:CB6rUH2UsTnxwujIPrWS43-->此页面仅限维护者使用。<br data-page-node-id="aJQHTvREjFaQkfCggSbZio"><!--pnid:YtWB0IPnIaBfrgqWVkb8rS-->请先在消费规划器中查询安全手机号，再回到本页。</div>
+    <div data-page-node-id="RSzFHcqxw33t3Hk01itjp7" style="margin-top:16px"><a data-page-node-id="AwhfGIJEN55Sm3I6dfMJ8e" class="back" href="index.html?auto=1" style="font-size:13px; color:#1677ff"><!--pnid:10GgFbNHfrwXsiWj0pZh52-->‹ 返回消费规划器</a></div>
+  </div>
+</div>
+
+<div data-page-node-id="mKgS00quGlAu0kKsmUMwfl" class="modal hidden" id="modal">
+  <div data-page-node-id="0mQCJaPNXE3JuBHOmRm7nP" aria-modal="true" class="sheet" role="dialog">
+    <div data-page-node-id="96gt9RF5YWZYZzbOk4MHLn" class="sheet-head"><b data-page-node-id="k4SGeZSwo5e1C2MUihBx84" id="formTitle"><!--pnid:HxTnnoKMIxLmXFXK0ygSHN-->新增资费</b><button data-page-node-id="EcQIAaMY9aIdH5EA6PYf4B" aria-label="关闭" class="icon" id="closeBtn"><!--pnid:9Wp7aidsXf9NiFPygYGgki-->×</button></div>
+    <div data-page-node-id="GK4kXCU5w7ffV6u4BY76wf" class="field">
+      <label data-page-node-id="OTAT0NjgX6icyq3k8XNvAb"><!--pnid:BK2Atew9f9g43UPcnK0EXw-->资费简称 <i data-page-node-id="IGtwKv4xTB1Cx5NlrcLcwJ"><!--pnid:WNqOJzRMnl2RGTfdbKoBxT-->*</i></label>
+      <input data-page-node-id="D3BggDCaig7XcaUarvi0Hc" id="fShort" maxlength="30" placeholder="自定义简称，如：买二送一">
+    </div>
+    <div data-page-node-id="NOkMUOroR3kuZ3g0sFcwnt" class="field">
+      <label data-page-node-id="XScLl6gjHlZWj1BlCQXRUG"><!--pnid:c5hcwrsqk7A6FOBNppF4IS-->资费名称 <i data-page-node-id="GsvfceRwN6DIjSej5HVOng"><!--pnid:d00hAW8rtZm20g778fWmLa-->*</i></label>
+      <input data-page-node-id="C4OCdqLoxXXznkhrLtT98X" id="fName" maxlength="60" placeholder="业务原名称，来源于官网">
+    </div>
+    <div data-page-node-id="ni1NCobcuEIYR5XNHAfSSe" class="field">
+      <label data-page-node-id="nmiAwX0c7gBr0gkzWjimDy"><!--pnid:h4nY1elTWqyOrZzYzr5M7p-->业务编码 <i data-page-node-id="LKii9lXbWKY8CAGWnZi4JU"><!--pnid:A4QdgqRRRCk1jq97qaGKmV-->*</i></label>
+      <input data-page-node-id="iQAMS0Brc1asFzqlizyqdD" id="fCode" maxlength="40" placeholder="来源于官网，与认领业务关联的唯一键">
+    </div>
+    <div data-page-node-id="W0ItftjMelMaMUsosAuop7" class="field">
+      <label data-page-node-id="GZwnkdN6Dl5RenchGyOVUx"><!--pnid:XKXhmNtnZjXO66XjGBzJQs-->资费系列 <i data-page-node-id="JorAUoUX53HvkSlqKv2nZi"><!--pnid:ArnLZojajgXtdJ73LutcZ9-->*</i></label>
+      <select data-page-node-id="geW2d9m2eCzjJtKJAehgfZ" id="fSeries"></select>
+    </div>
+    <div data-page-node-id="XnVqMiDLyyhpJ0n4uwOtcD" class="field">
+      <label data-page-node-id="u2Fc6F9QunMurbMgtn7CCx"><!--pnid:NHkyLqlnhtkKFwH4T7gZlk-->资费类别 <i data-page-node-id="IUtyfeN5ZConI6kULOdJfG"><!--pnid:0AeIOZ0XC3X7Na3LTyzXG3-->*</i></label>
+      <div data-page-node-id="OZM5FtBo9v63qHXISYBO1r" class="radios">
+        <label data-page-node-id="7eNtmpQEwHJxkoN7s0Z0np"><input data-page-node-id="ZQHRoIF7wRBAYixZukhEOa" name="fCat" type="radio" value="consume"><!--pnid:32HGLun6rRG9ly2e5gSAxE-->凑单消费类</label>
+        <label data-page-node-id="YKTbVx4nX8lXw3aQpAdEpe"><input data-page-node-id="E5gdCv9Y2KSo2eifcq339C" name="fCat" type="radio" value="welfare"><!--pnid:TbKDwZyL6eyBuOqOSIBitg-->条件福利类</label>
+      </div>
+    </div>
+    <div data-page-node-id="yLIxgJlwlKRSar0XcSBWaz" class="field hidden" id="condField">
+      <label data-page-node-id="7091b8XUjehdEogiByJ9Ed"><!--pnid:Endo3boOkbOjJYGJ5XHDHI-->消费条件</label>
+      <div data-page-node-id="uvxiNZAb1ves7a1oiz4YJ7" class="radios">
+        <label data-page-node-id="sxXBhnhoF9ferz8arLbyt5"><input data-page-node-id="RD0nIfQ3zhH9AHUXEJ1Jym" name="fCond" type="radio" value="avg3"><!--pnid:oO0Rqr1lE0xixGvwYkyu8d-->近3月平均消费</label>
+        <label data-page-node-id="bHJ8ntDsmP5XA7eg3NVaES"><input data-page-node-id="7hq70zfkPImYazFeOjZirH" name="fCond" type="radio" value="avg6"><!--pnid:4wE1cvf9wtUYJzx6TNlcH2-->近6月平均消费</label>
+      </div>
+    </div>
+    <div data-page-node-id="rgfe97gW89gQaLLTGol37Y" class="field">
+      <label data-page-node-id="ktEpT4zlKgXSFQOYLTA9RE" id="priceLabel"><!--pnid:PuVmGfZuKXrSWcudxPqpOF-->消费金额 <i data-page-node-id="AjiXsa25hpKTDvbGYVcz45"><!--pnid:tqxlet6OlViFWUpGUP2nRC-->*</i></label>
+      <input data-page-node-id="aYujGkOc5jo8yGlZlf126E" id="fRefPrice" inputmode="decimal" placeholder="如：10.00">
+    </div>
+    <div data-page-node-id="OUnxunpSTdVz77gQvWwBxM" class="field">
+      <label data-page-node-id="rfVYuV3YLy5tVa0jhKEpnx"><!--pnid:JCAMDaXm17uKok42bBLBea-->违约责任</label>
+      <textarea data-page-node-id="liax8tU1LGD8gweK9iNv5h" id="fLiability" maxlength="200" placeholder="选填，如：合约期内取消需支付违约金 30 元"></textarea>
+    </div>
+    <div data-page-node-id="0EVVi4c15pmz61cRXWYzYY" class="form-err" id="formErr"></div>
+    <div data-page-node-id="Afjaapz9q2t2FBVsqhIddI" class="sheet-foot">
+      <button data-page-node-id="aYuoIYs4bngQcRbS0xuu1p" class="ghost" id="cancelBtn"><!--pnid:UqBKWOVDvXk34T2ltfBDrQ-->取消</button>
+      <button data-page-node-id="RT2hZPvgb0vbFeIHeTGFGn" id="saveBtn"><!--pnid:7wiyRQJd6LaIp8czZQja2I-->保存</button>
+    </div>
+  </div>
+</div>
+
+<div data-page-node-id="kSS6RylIgy8yvbescF7gUX" class="modal hidden" id="confirmModal">
+  <div data-page-node-id="mONtLc3iJmkL3ItprZTamY" aria-modal="true" class="sheet" role="alertdialog">
+    <div data-page-node-id="GvqWs4qmGVNaBVjhr9PU2F" class="sheet-head"><b data-page-node-id="kemHP2tCzXtd8HIUcipBOT" id="cfTitle"><!--pnid:rK5i8NWvPGRrEKY9ddeFOt-->删除确认</b></div>
+    <div data-page-node-id="uG7xicn72sYJLsLfhy4k0a" class="cf-msg" id="cfMsg"></div>
+    <div data-page-node-id="odokawIpOI5QIIOFJc72or" class="sheet-foot">
+      <button data-page-node-id="aVsnOmq7VrfBelHCS0Q9F7" class="ghost" id="cfCancel"><!--pnid:TtqvEyrtHd1l7YLbH9hemw-->取消</button>
+      <button data-page-node-id="S5Iq7QuUNamLACougr0Sok" class="danger" id="cfOk"><!--pnid:WUNVQWu03VPq2CUkvm7m0t-->删除</button>
+    </div>
+  </div>
+</div>
+
+<div data-page-node-id="ZqMnIpYYEWg7LrbL5yfvaQ" class="modal hidden" id="infoModal">
+  <div data-page-node-id="rImoGdaE54dWnA2DP7d610" aria-modal="true" class="sheet" role="dialog">
+    <div data-page-node-id="Y5zSwuel9udprXAcCN9JbX" class="sheet-head"><b data-page-node-id="2wrs7nZbELTQs9FpPw0xYI" id="infoTitle"><!--pnid:kM4anIaOQZTaeRG34fa9qu-->提示</b><button data-page-node-id="n6C2SquYoaN3cznOOscBiC" aria-label="关闭" class="icon" id="infoClose"><!--pnid:uzrKmbTBE0Jv5NyOMeCziT-->×</button></div>
+    <div data-page-node-id="MgDdDrgASQk58IoIxpPGxe" class="cf-msg" id="infoMsg"></div>
+    <div data-page-node-id="1VxoXI1yIuRxcblKDDzsp6" class="sheet-foot"><button data-page-node-id="17Ks8w2DDkBY7yrH2AVwLz" id="infoOk"><!--pnid:pHX9yTGtwM5voBqb119NGS-->知道了</button></div>
+  </div>
+</div>
+
+<div data-page-node-id="vAqXphznhZfBMXV605OFiZ" aria-live="polite" class="toast" id="toast" role="status"></div>
+<script data-page-node-id="7v6R11cDvcehoenRCuz8wp" data-pnid-children="FlNdoVJRwmSLySl23uqTLH">
+/* ============ 访问控制：仅维护者手机号查询后可用 ============ */
+const OWNER_PHONE='17600799221';
+const KEY_Q='arpu_last_query';
+const KEY_R='arpu_rules_v1';
+const KEY_S='arpu_series_v1';
+const KEY_BIZ='arpu_business_v1';
+const DEFAULT_SERIES='default';
+const CAT_NAME={consume:'凑单消费类',welfare:'条件福利类'};
+
+const $=id=>document.getElementById(id);
+let rules=[],series=[],editingId=null,seriesFilter='',renamingSeriesId=null,addingSeries=false,catFilter='',srcFilter='';
+const PAGE_SIZE=20;   // 分页：每页 20 条
+let pageRule=1;       // 规则列表当前页
+
+/* ============ 分页插件（最简：共 N 条数据 + 页码） ============ */
+function renderPager(el,total,page,onPage){
+  if(!el)return;
+  if(!total){el.innerHTML='';el.classList.add('hidden');return}
+  el.classList.remove('hidden');
+  const pages=Math.max(1,Math.ceil(total/PAGE_SIZE));
+  if(page>pages)page=pages;
+  let nums=[];
+  if(pages<=7){for(let i=1;i<=pages;i++)nums.push(i)}
+  else{
+    nums.push(1);
+    const lo=Math.max(2,page-1),hi=Math.min(pages-1,page+1);
+    if(lo>2)nums.push('…');
+    for(let i=lo;i<=hi;i++)nums.push(i);
+    if(hi<pages-1)nums.push('…');
+    nums.push(pages);
+  }
+  el.innerHTML=`<span class="pg-info">共 ${total} 条数据</span><span class="pg-btns">`
+    +`<button type="button" class="pg-btn" data-pg="${page-1}"${page<=1?' disabled':''}>‹</button>`
+    +nums.map(n=>n==='…'?'<span class="pg-dots">…</span>':`<button type="button" class="pg-btn num${n===page?' active':''}" data-pg="${n}">${n}</button>`).join('')
+    +`<button type="button" class="pg-btn" data-pg="${page+1}"${page>=pages?' disabled':''}>›</button></span>`;
+  el._onPage=onPage;
+}
+function bindPager(el){
+  if(!el||el._pagerBound)return;
+  el._pagerBound=true;
+  el.addEventListener('click',e=>{
+    const b=e.target.closest('.pg-btn');
+    if(!b||b.disabled||!el._onPage)return;
+    el._onPage(Number(b.dataset.pg));
+  });
+}
+
+function accessDenied(){
+  $('mainView').style.display='none';
+  document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));
+  $('denyView').style.display='flex';
+}
+function checkAccess(){
+  let q='';try{q=localStorage.getItem(KEY_Q)||''}catch(e){}
+  if(q!==OWNER_PHONE){accessDenied();return false}
+  return true;
+}
+
+/* ============ 通用 UI ============ */
+let toastTimer=null;
+function toast(msg){
+  const el=$('toast');if(!el)return;
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
+}
+function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let cfCallback=null;
+function askConfirm(msg,onOk,opts){
+  opts=opts||{};
+  $('cfTitle').textContent=opts.title||'删除确认';
+  $('cfMsg').textContent=msg;
+  $('cfOk').textContent=opts.okText||'删除';
+  $('cfOk').className=opts.okClass!==undefined?opts.okClass:'danger';
+  cfCallback=onOk||null;
+  $('confirmModal').classList.remove('hidden');
+}
+function closeConfirm(){$('confirmModal').classList.add('hidden');cfCallback=null}
+function showInfo(title,msg){
+  $('infoTitle').textContent=title;
+  $('infoMsg').textContent=msg;
+  $('infoModal').classList.remove('hidden');
+}
+function closeInfo(){$('infoModal').classList.add('hidden')}
+$('infoOk').addEventListener('click',closeInfo);
+$('infoClose').addEventListener('click',closeInfo);
+$('infoModal').addEventListener('click',e=>{if(e.target===$('infoModal'))closeInfo()});
+$('cfOk').addEventListener('click',()=>{const cb=cfCallback;closeConfirm();if(cb)cb()});
+$('cfCancel').addEventListener('click',closeConfirm);
+$('confirmModal').addEventListener('click',e=>{if(e.target===$('confirmModal'))closeConfirm()});
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(!$('confirmModal').classList.contains('hidden')){closeConfirm();return}
+  if(!$('infoModal').classList.contains('hidden')){closeInfo();return}
+  if(!$('modal').classList.contains('hidden'))closeForm();
+});
+
+/* ============ 数据读写 ============ */
+function cleanName(s){return String(s==null?'':s).replace(/[\u200B-\u200D\uFEFF]/g,'').trim()}
+function loadSeries(){
+  try{series=JSON.parse(localStorage.getItem(KEY_S)||'null')}catch(e){series=null}
+  if(!Array.isArray(series))series=[];
+  series=series.filter(s=>s&&typeof s==='object'&&s.name&&s.id!==undefined);
+  if(!series.some(s=>s.id===DEFAULT_SERIES))series.unshift({id:DEFAULT_SERIES,name:'默认系列',createdAt:0,updatedAt:0});
+  persistSeries();
+}
+function persistSeries(){try{localStorage.setItem(KEY_S,JSON.stringify(series))}catch(e){alert('本地保存失败：浏览器存储空间可能已满')}}
+function seriesName(id){const s=series.find(x=>x.id===id);return s?s.name:'默认系列'}
+function loadRules(){
+  loadSeries();
+  try{rules=JSON.parse(localStorage.getItem(KEY_R)||'[]')}catch(e){rules=[]}
+  if(!Array.isArray(rules))rules=[];
+  rules=rules.filter(x=>x&&typeof x==='object'&&(x.code||x.shortName||x.name)).map(x=>{
+    const cat=(x.category==='consume'||x.category==='welfare')?x.category:'consume';
+    const sid=series.some(s=>s.id===x.seriesId)?x.seriesId:DEFAULT_SERIES;
+    return {...x,shortName:cleanName(x.shortName)||cleanName(x.name),name:cleanName(x.name),code:cleanName(x.code),category:cat,seriesId:sid,liability:x.liability||''};
+  });
+}
+function persist(){try{localStorage.setItem(KEY_R,JSON.stringify(rules))}catch(e){alert('本地保存失败：浏览器存储空间可能已满')}}
+// 已认领计数（business 页通过业务编码关联；业务数据按手机号分桶，聚合所有号码）
+function allBizItems(){
+  let arr=[];
+  try{
+    const m=JSON.parse(localStorage.getItem('arpu_business_v2')||'{}');
+    if(m&&typeof m==='object'&&!Array.isArray(m))Object.values(m).forEach(b=>{if(Array.isArray(b))arr=arr.concat(b)});
+  }catch(e){}
+  let old=[];try{old=JSON.parse(localStorage.getItem(KEY_BIZ)||'[]')}catch(e){}
+  if(Array.isArray(old))arr=arr.concat(old);
+  return arr;
+}
+function claimedCount(code){
+  return allBizItems().filter(x=>x&&x.code===code).length;
+}
+
+/* ============ 资费系列（完整管理） ============ */
+function syncSeriesSelect(){
+  const sel=$('fSeries'),cur=sel.value;
+  sel.innerHTML=series.map(s=>`<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+  sel.value=series.some(s=>s.id===cur)?cur:DEFAULT_SERIES;
+  const f=$('fSeriesFilter'),fv=f.value;
+  f.innerHTML='<option value="">全部系列</option>'+series.map(s=>`<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+  f.value=series.some(s=>s.id===fv)?fv:'';
+}
+function renderSeries(){
+  const counts={};
+  rules.forEach(x=>{const k=x.seriesId||DEFAULT_SERIES;counts[k]=(counts[k]||0)+1});
+  let html=series.map(s=>{
+    const c=counts[s.id]||0,isDef=s.id===DEFAULT_SERIES;
+    if(renamingSeriesId===s.id){
+      return `<span class="stag renaming" data-sid="${s.id}"><input id="sRename" maxlength="20" value="${escapeHtml(s.name)}"><button class="mini" data-sact="save">确定</button><button class="mini" data-sact="cancel">取消</button></span>`;
+    }
+    const tools=(!isDef&&!renamingSeriesId)?`<span class="tag-tools"><i data-sact="edit" title="编辑">✎</i><i class="t-del" data-sact="del" title="删除"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></i></span>`:'';
+    return `<span class="stag${seriesFilter===s.id?' active':''}${isDef?' def':''}" data-sid="${s.id}">${escapeHtml(s.name)}(${c})${tools}</span>`;
+  }).join('');
+  html+=addingSeries
+    ?`<span class="stag renaming"><input id="sAdd" maxlength="20" placeholder="系列名称"><button class="mini" data-sact="addSave">确定</button><button class="mini" data-sact="cancelAdd">取消</button></span>`
+    :`<span class="stag add" data-sact="add">+ 新增系列</span>`;
+  $('seriesTags').innerHTML=html;
+}
+function handleSeriesAction(btn){
+  const act=btn.dataset.sact;
+  if(act==='add'){
+    addingSeries=true;renamingSeriesId=null;renderSeries();
+    const i=$('sAdd');if(i)i.focus();
+  }else if(act==='addSave'){
+    const v=($('sAdd').value||'').trim();
+    if(!v)return alert('请输入系列名称');
+    if(series.some(s=>s.name===v))return alert('已存在同名系列');
+    const now=Date.now();
+    series.push({id:'s'+now+Math.random().toString(36).slice(2,6),name:v,createdAt:now,updatedAt:now});
+    persistSeries();addingSeries=false;renderSeries();syncSeriesSelect();
+  }else if(act==='cancelAdd'){
+    addingSeries=false;renderSeries();
+  }else if(act==='edit'){
+    const tag=btn.closest('.stag');
+    if(tag&&tag.dataset.sid===DEFAULT_SERIES)return;
+    renamingSeriesId=tag?tag.dataset.sid:null;
+    renderSeries();
+    const i=$('sRename');if(i)i.focus();
+  }else if(act==='save'){
+    const sid=renamingSeriesId,s=series.find(x=>x.id===sid);
+    const v=($('sRename').value||'').trim();
+    if(s&&v){
+      if(series.some(x=>x.id!==sid&&x.name===v))return alert('已存在同名系列');
+      s.name=v;s.updatedAt=Date.now();persistSeries();render();
+    }
+    renamingSeriesId=null;renderSeries();
+  }else if(act==='cancel'){
+    renamingSeriesId=null;renderSeries();
+  }else if(act==='del'){
+    const tag=btn.closest('.stag'),sid=tag?tag.dataset.sid:null;
+    const s=series.find(x=>x.id===sid);
+    if(!s||sid===DEFAULT_SERIES)return;
+    const n=rules.filter(x=>x.seriesId===sid).length;
+    const msg=n?`确定删除系列「${s.name}」？其下 ${n} 条规则将归入「默认系列」。`:`确定删除系列「${s.name}」？`;
+    askConfirm(msg,()=>{
+      rules.forEach(x=>{if(x.seriesId===sid)x.seriesId=DEFAULT_SERIES});
+      persist();
+      series=series.filter(x=>x.id!==sid);
+      persistSeries();
+      if(seriesFilter===sid)seriesFilter='';
+      renderSeries();render();syncSeriesSelect();
+    });
+  }
+}
+let lpTimer=null;
+const tagsEl=$('seriesTags');
+function clearLp(){clearTimeout(lpTimer)}
+tagsEl.addEventListener('pointerdown',e=>{
+  const tag=e.target.closest('.stag[data-sid]');
+  if(!tag||tag.classList.contains('renaming'))return;
+  if(tag.dataset.sid===DEFAULT_SERIES)return;
+  clearLp();
+  const sid=tag.dataset.sid;
+  lpTimer=setTimeout(()=>{
+    tagsEl.querySelectorAll('.stag.show-tools').forEach(x=>x.classList.remove('show-tools'));
+    const t=tagsEl.querySelector(`.stag[data-sid="${sid}"]`);
+    if(t)t.classList.add('show-tools');
+  },500);
+});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>tagsEl.addEventListener(ev,clearLp));
+tagsEl.addEventListener('pointermove',e=>{if(!e.target.closest('.stag[data-sid]'))clearLp()});
+tagsEl.addEventListener('click',e=>{
+  const act=e.target.closest('[data-sact]');
+  if(act){handleSeriesAction(act);return}
+  const tag=e.target.closest('.stag[data-sid]');
+  if(!tag)return;
+  if(renamingSeriesId||addingSeries)return;
+  seriesFilter=seriesFilter===tag.dataset.sid?'':tag.dataset.sid;
+  pageRule=1;
+  renderSeries();render();
+});
+
+/* ============ 列表渲染 ============ */
+function render(){
+  renderSeries();
+  const kw=$('kw').value.trim().toLowerCase();
+  const list=rules.filter(x=>{
+    if(kw&&!(String(x.shortName).toLowerCase().includes(kw)||String(x.name).toLowerCase().includes(kw)||String(x.code).toLowerCase().includes(kw)))return false;
+    if(catFilter&&x.category!==catFilter)return false;
+    if(seriesFilter&&x.seriesId!==seriesFilter)return false;
+    if(srcFilter==='ext'&&!x.external)return false;
+    if(srcFilter==='std'&&x.external)return false;
+    return true;
+  }).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+  if(!list.length){
+    const empty=rules.length?'没有符合筛选条件的规则':'暂无规则，点击「新增资费」开始添加';
+    $('tbody').innerHTML=`<tr><td colspan="6" class="empty">${empty}</td></tr>`;
+    renderPager($('pager'),0,1,null);
+    return;
+  }
+  const pages=Math.max(1,Math.ceil(list.length/PAGE_SIZE));
+  if(pageRule>pages)pageRule=pages;
+  renderPager($('pager'),list.length,pageRule,p=>{pageRule=p;render()});
+  const rows=list.slice((pageRule-1)*PAGE_SIZE,pageRule*PAGE_SIZE);
+  $('tbody').innerHTML=rows.map(x=>`<tr data-id="${x.id}">
+    <td>
+      <div class="nm-line"><span class="nm" title="${escapeHtml(x.shortName)}">${escapeHtml(x.shortName)}</span></div>
+      <div class="code-line"><code title="${escapeHtml(x.code)}">${escapeHtml(x.code)}</code><button class="copy-btn" data-act="copy" data-code="${escapeHtml(x.code)}" title="复制业务编码" aria-label="复制业务编码"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>
+    </td>
+    <td>${escapeHtml(x.name)}</td>
+    <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span>${x.external?'<span class="ext-badge" title="用户添加业务时自动创建">用户添加</span>':''}</div></td>
+    <td class="price-cell">${x.price!=null?((x.category==='welfare'?'<small>最低</small>':'')+'¥'+Number(x.price).toFixed(2)):'—'}</td>
+    <td class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</td>
+    <td class="ops">
+      <button class="mini" data-act="edit">编辑</button>
+      <button class="mini danger" data-act="del">删除</button>
+    </td>
+  </tr>`).join('');
+}
+
+function copyText(t,btn){
+  const done=()=>{btn.classList.add('ok');toast('已复制业务编码');setTimeout(()=>btn.classList.remove('ok'),1200)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done).catch(()=>fallback());
+  }else fallback();
+  function fallback(){
+    const ta=document.createElement('textarea');
+    ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');done()}catch(e){toast('复制失败，请手动复制')}
+    ta.remove();
+  }
+}
+
+$('tbody').addEventListener('click',e=>{
+  const cp=e.target.closest('[data-act="copy"]');
+  if(cp){copyText(cp.dataset.code,cp);return}
+  const btn=e.target.closest('[data-act]');
+  if(!btn)return;
+  const tr=btn.closest('tr[data-id]'),id=tr?tr.dataset.id:null;
+  const item=rules.find(x=>x.id===id);
+  if(!item)return;
+  if(btn.dataset.act==='edit')openForm(item);
+  else if(btn.dataset.act==='del'){
+    const n=claimedCount(item.code);
+    const msg=(n?`该业务编码已被认领 ${n} 次，删除后已认领的业务将保留显示但不再同步本规则。`:'')+'确定删除「'+item.shortName+'」（编码 '+item.code+'）？';
+    askConfirm(msg,()=>{
+      rules=rules.filter(x=>x.id!==id);
+      persist();render();
+      toast('已删除规则');
+    });
+  }
+});
+
+/* ============ 新增 / 编辑弹窗 ============ */
+function openForm(item){
+  editingId=item?item.id:null;
+  $('formTitle').textContent=item?'编辑资费':'新增资费';
+  $('formErr').textContent='';
+  $('fShort').value=item?item.shortName:'';
+  $('fName').value=item?item.name:'';
+  $('fCode').value=item?item.code:'';
+  syncSeriesSelect();
+  if(item)$('fSeries').value=item.seriesId||DEFAULT_SERIES;
+  const cat=item?item.category:'consume';
+  document.querySelector(`input[name="fCat"][value="${cat}"]`).checked=true;
+  const cond=item&&item.condAvg?item.condAvg:'avg3';
+  document.querySelectorAll('input[name="fCond"]').forEach(r=>r.checked=r.value===cond);
+  syncCondField();
+  $('fRefPrice').value=item&&item.price!=null?Number(item.price).toFixed(2):'';
+  syncPriceLabel();
+  $('fLiability').value=item?item.liability:'';
+  $('modal').classList.remove('hidden');
+}
+// 消费条件仅在条件福利类时显示
+function syncCondField(){
+  const cat=document.querySelector('input[name="fCat"]:checked').value;
+  $('condField').classList.toggle('hidden',cat!=='welfare');
+}
+function syncPriceLabel(){
+  const cat=document.querySelector('input[name="fCat"]:checked').value;
+  $('priceLabel').innerHTML=`${cat==='welfare'?'最低消费':'消费金额'} <i>*</i>`;
+  $('fRefPrice').placeholder=cat==='welfare'?'请输入最低消费，如10.00':'如：10.00';
+}
+document.querySelectorAll('input[name="fCat"]').forEach(r=>r.addEventListener('change',()=>{syncCondField();syncPriceLabel()}));
+function closeForm(){$('modal').classList.add('hidden');editingId=null}
+$('addBtn').addEventListener('click',()=>openForm(null));
+$('closeBtn').addEventListener('click',closeForm);
+$('cancelBtn').addEventListener('click',closeForm);
+$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeForm()});
+
+function validate(){
+  const shortName=cleanName($('fShort').value);
+  const name=cleanName($('fName').value);
+  const code=cleanName($('fCode').value);
+  const seriesId=$('fSeries').value||DEFAULT_SERIES;
+  const cat=document.querySelector('input[name="fCat"]:checked').value;
+  if(!shortName)return '请填写资费简称';
+  if(!name)return '请填写资费名称';
+  if(!code)return '请填写业务编码';
+  if(rules.some(x=>x.code===code&&x.id!==editingId))return '业务编码「'+code+'」已存在，编码是认领关联的唯一键';
+  const priceRaw=$('fRefPrice').value.trim();
+  if(priceRaw==='')return cat==='welfare'?'请填写最低消费':'请填写消费金额';
+  if(!/^\d+(\.\d{1,2})?$/.test(priceRaw))return '消费金额需为数字，最多两位小数';
+  const price=Number(priceRaw);
+  if(!Number.isFinite(price)||price<0)return '消费金额不能为负数';
+  if(price>99999)return '消费金额过大';
+  const data={shortName,name,code,seriesId,category:cat,price,liability:$('fLiability').value.trim()};
+  if(cat==='welfare'){
+    const c=document.querySelector('input[name="fCond"]:checked');
+    data.condAvg=c&&c.value==='avg6'?'avg6':'avg3';
+  }
+  return data;
+}
+$('saveBtn').addEventListener('click',()=>{
+  const err=validate();
+  if(typeof err==='string'){$('formErr').textContent=err;return}
+  const now=Date.now();
+  if(editingId){
+    const i=rules.findIndex(x=>x.id===editingId);
+    if(i>=0){
+      const next={...rules[i],...err,updatedAt:now};
+      if(next.category!=='welfare')delete next.condAvg; // 类别切为凑单消费类时清除消费条件
+      rules[i]=next;
+    }
+  }else{
+    rules.push({id:'r'+now+Math.random().toString(36).slice(2,6),...err,createdAt:now,updatedAt:now});
+  }
+  persist();closeForm();render();
+  toast(editingId?'已保存资费':'已新增资费');
+});
+
+/* ============ 搜索与筛选 ============ */
+const kwEl=$('kw'),kwClear=$('kwClear');
+function syncKwClear(){kwClear.classList.toggle('show',kwEl.value.length>0)}
+kwEl.addEventListener('input',()=>{syncKwClear();pageRule=1;render()});
+kwClear.addEventListener('click',()=>{kwEl.value='';syncKwClear();pageRule=1;render();kwEl.focus()});
+syncKwClear();
+$('fCatFilter').addEventListener('change',e=>{catFilter=e.target.value;pageRule=1;render()});
+$('fSeriesFilter').addEventListener('change',e=>{seriesFilter=e.target.value;pageRule=1;renderSeries();render()});
+$('fSrcFilter').addEventListener('change',e=>{srcFilter=e.target.value;pageRule=1;render()});
+
+/* ============ xlsx 导入导出（规则字段） ============ */
+const XLSX_COLS=[
+  {key:'shortName',head:'资费简称',width:20,type:'s'},
+  {key:'name',head:'资费名称',width:30,type:'s'},
+  {key:'code',head:'业务编码',width:20,type:'s'},
+  {key:'series',head:'资费系列',width:16,type:'s'},
+  {key:'category',head:'资费类别',width:14,type:'s'},
+  {key:'condAvg',head:'消费条件',width:16,type:'s'},
+  {key:'price',head:'消费金额/最低消费',width:16,type:'n'},
+  {key:'liability',head:'违约责任',width:34,type:'s'}
+];
+const XLSX_SHEET='资费规则';
+const CRC_TABLE=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0}return t})();
+function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC_TABLE[(c^u8[i])&0xFF]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function zipStore(files){
+  const enc=new TextEncoder(),parts=[],central=[];let offset=0;
+  const now=new Date();
+  const time=((now.getHours()&31)<<11)|((now.getMinutes()&63)<<5)|((now.getSeconds()/2)&31);
+  const date=(((now.getFullYear()-1980)&127)<<9)|(((now.getMonth()+1)&15)<<5)|(now.getDate()&31);
+  files.forEach(f=>{
+    const name=enc.encode(f.name),data=f.data,crc=crc32(data);
+    const lh=new Uint8Array(30+name.length),lv=new DataView(lh.buffer);
+    lv.setUint32(0,0x04034b50,true);lv.setUint16(4,20,true);lv.setUint16(6,0,true);lv.setUint16(8,0,true);
+    lv.setUint16(10,time,true);lv.setUint16(12,date,true);lv.setUint32(14,crc,true);
+    lv.setUint32(18,data.length,true);lv.setUint32(22,data.length,true);
+    lv.setUint16(26,name.length,true);lv.setUint16(28,0,true);
+    lh.set(name,30);
+    parts.push(lh,data);
+    const ch=new Uint8Array(46+name.length),cv=new DataView(ch.buffer);
+    cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);
+    cv.setUint16(8,0,true);cv.setUint16(10,0,true);cv.setUint16(12,time,true);cv.setUint16(14,date,true);
+    cv.setUint32(16,crc,true);cv.setUint32(20,data.length,true);cv.setUint32(24,data.length,true);
+    cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);
+    ch.set(name,46);
+    central.push(ch);
+    offset+=lh.length+data.length;
+  });
+  const cdSize=central.reduce((n,c)=>n+c.length,0);
+  const eocd=new Uint8Array(22),ev=new DataView(eocd.buffer);
+  ev.setUint32(0,0x06054b50,true);ev.setUint16(8,files.length,true);ev.setUint16(10,files.length,true);
+  ev.setUint32(12,cdSize,true);ev.setUint32(16,offset,true);
+  const out=new Uint8Array(offset+cdSize+22);let p=0;
+  parts.forEach(x=>{out.set(x,p);p+=x.length});
+  central.forEach(x=>{out.set(x,p);p+=x.length});
+  out.set(eocd,p);
+  return out;
+}
+const XLSX_ENTITIES={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'};
+function xmlText(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>XLSX_ENTITIES[c]).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'')}
+function unescapeXml(s){return String(s==null?'':s).replace(/&#(\d+);/g,(m,n)=>String.fromCharCode(Number(n))).replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,'&')}
+function colLetter(i){let s='',n=i+1;while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26)}return s}
+function xlsxRows(){
+  const order=new Map(series.map((s,i)=>[s.id,i]));
+  const list=rules.slice().sort((a,b)=>{
+    const oa=order.has(a.seriesId)?order.get(a.seriesId):999,ob=order.has(b.seriesId)?order.get(b.seriesId):999;
+    if(oa!==ob)return oa-ob;
+    return String(a.code).localeCompare(String(b.code));
+  });
+  return [XLSX_COLS.map(c=>c.head)].concat(list.map(x=>XLSX_COLS.map(c=>{
+    if(c.key==='shortName')return x.shortName||'';
+    if(c.key==='name')return x.name||'';
+    if(c.key==='code')return x.code||'';
+    if(c.key==='series')return seriesName(x.seriesId);
+    if(c.key==='category')return CAT_NAME[x.category]||'';
+    if(c.key==='condAvg')return x.category==='welfare'?(x.condAvg==='avg6'?'近6月平均消费':'近3月平均消费'):'';
+    if(c.key==='price')return x.price!=null?Number(x.price):'';
+    if(c.key==='liability')return x.liability||'';
+    return '';
+  })));
+}
+function buildSheetXml(rows){
+  const body=rows.map((cells,ri)=>cells.map((v,ci)=>{
+    const ref=colLetter(ci)+(ri+1);
+    if(v===''||v==null)return '';
+    if(ri===0)return `<c r="${ref}" s="1" t="inlineStr"><is><t xml:space="preserve">${xmlText(v)}</t></is></c>`;
+    if(typeof v==='number'&&Number.isFinite(v))return `<c r="${ref}"><v>${v}</v></c>`;
+    return `<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${xmlText(v)}</t></is></c>`;
+  }).join('')).map((cells,ri)=>`<row r="${ri+1}"${ri===0?' ht="22" customHeight="1"':''}>${cells}</row>`).join('');
+  const last=colLetter(XLSX_COLS.length-1)+rows.length;
+  const cols=XLSX_COLS.map((c,i)=>`<col min="${i+1}" max="${i+1}" width="${c.width}" customWidth="1"/>`).join('');
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
+    +`<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><dimension ref="A1:${last}"/><sheetViews><sheetView tabSelected="1" workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="18"/><cols>${cols}</cols><sheetData>${body}</sheetData><autoFilter ref="A1:${last}"/></worksheet>`;
+}
+const XLSX_CT='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>';
+const XLSX_RELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>';
+const XLSX_WB='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="'+XLSX_SHEET+'" sheetId="1" r:id="rId1"/></sheets></workbook>';
+const XLSX_WB_RELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
+const XLSX_STYLES='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><color theme="1"/><name val="等线"/><family val="2"/><charset val="134"/></font><font><b/><sz val="11"/><color theme="1"/><name val="等线"/><family val="2"/><charset val="134"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFEFF4FA"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/></cellXfs><cellStyles count="1"><cellStyle name="常规" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+function buildXlsx(){
+  const enc=new TextEncoder();
+  const f=(name,str)=>({name,data:enc.encode(str)});
+  return zipStore([
+    f('[Content_Types].xml',XLSX_CT),
+    f('_rels/.rels',XLSX_RELS),
+    f('xl/workbook.xml',XLSX_WB),
+    f('xl/_rels/workbook.xml.rels',XLSX_WB_RELS),
+    f('xl/styles.xml',XLSX_STYLES),
+    f('xl/worksheets/sheet1.xml',buildSheetXml(xlsxRows()))
+  ]);
+}
+function exportXlsx(){
+  if(!rules.length){showInfo('暂无数据','当前没有规则数据，先新增或导入后再导出。');return}
+  let bytes;
+  try{bytes=buildXlsx()}catch(e){showInfo('导出失败',(e&&e.message)||'生成 Excel 文件时出错');return}
+  const blob=new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const fname='资费规则_'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'.xlsx';
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=fname;a.style.display='none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1000);
+  toast('已导出 '+rules.length+' 条规则');
+}
+async function inflateRaw(bytes){
+  if(typeof DecompressionStream==='undefined')throw new Error('当前浏览器不支持解析 xlsx，请使用新版 Chrome / Edge / Safari 后重试');
+  const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+async function unzip(u8){
+  const dv=new DataView(u8.buffer,u8.byteOffset,u8.byteLength);
+  let eocd=-1;
+  for(let i=u8.length-22;i>=Math.max(0,u8.length-66000);i--){
+    if(dv.getUint32(i,true)===0x06054b50){eocd=i;break}
+  }
+  if(eocd<0)throw new Error('文件不是有效的 xlsx（压缩包结构缺失）');
+  const count=dv.getUint16(eocd+10,true);
+  let p=dv.getUint32(eocd+16,true);
+  const files={};
+  for(let i=0;i<count;i++){
+    if(dv.getUint32(p,true)!==0x02014b50)break;
+    const method=dv.getUint16(p+10,true);
+    const compSize=dv.getUint32(p+20,true);
+    const nameLen=dv.getUint16(p+28,true),extraLen=dv.getUint16(p+30,true),cmtLen=dv.getUint16(p+32,true);
+    const localOff=dv.getUint32(p+42,true);
+    const name=new TextDecoder('utf-8').decode(u8.subarray(p+46,p+46+nameLen));
+    const lNameLen=dv.getUint16(localOff+26,true),lExtraLen=dv.getUint16(localOff+28,true);
+    const start=localOff+30+lNameLen+lExtraLen;
+    files[name]={method,data:u8.subarray(start,start+compSize)};
+    p+=46+nameLen+extraLen+cmtLen;
+  }
+  return files;
+}
+function parseSharedStrings(xml){
+  const out=[];
+  const items=xml.match(/<si\b[^>]*\/>|<si\b[^>]*>[\s\S]*?<\/si>/g)||[];
+  items.forEach(si=>{
+    let text='';
+    si.replace(/<t[^>]*>([\s\S]*?)<\/t>/g,(m,t)=>{text+=t;return m});
+    out.push(unescapeXml(text));
+  });
+  return out;
+}
+function parseSheetXml(xml,sst){
+  const rows=[];
+  const rowRe=/<row\b[^>]*?(?:\/>|>([\s\S]*?)<\/row>)/g;
+  let rm;
+  while((rm=rowRe.exec(xml))){
+    const inner=rm[1]||'';
+    const cells=[];
+    const cellRe=/<c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g;
+    let cm;
+    while((cm=cellRe.exec(inner))){
+      const attrs=cm[1]||'',body=cm[2]||'';
+      const refM=attrs.match(/\br="([A-Z]+)\d+"/);
+      const col=refM?refM[1].split('').reduce((n,ch)=>n*26+(ch.charCodeAt(0)-64),0)-1:cells.length;
+      const tM=attrs.match(/\bt="([^"]+)"/);
+      const type=tM?tM[1]:'n';
+      let val='';
+      if(type==='inlineStr'){
+        const isM=body.match(/<is>([\s\S]*?)<\/is>/);
+        if(isM){let tx='';isM[1].replace(/<t[^>]*>([\s\S]*?)<\/t>/g,(m,t)=>{tx+=t;return m});val=unescapeXml(tx)}
+      }else{
+        const vM=body.match(/<v[^>]*>([\s\S]*?)<\/v>/);
+        if(vM)val=unescapeXml(vM[1]);
+        if(type==='s')val=sst[Number(val)]!=null?sst[Number(val)]:'';
+      }
+      cells[col]=val;
+    }
+    rows.push(cells);
+  }
+  return rows;
+}
+async function readXlsx(buf){
+  const files=await unzip(new Uint8Array(buf));
+  const dec=async name=>{
+    const f=files[name];
+    if(!f)return null;
+    const bytes=f.method===0?f.data:await inflateRaw(f.data);
+    return new TextDecoder('utf-8').decode(bytes);
+  };
+  let sheetPath='xl/worksheets/sheet1.xml';
+  const wb=await dec('xl/workbook.xml');
+  const rels=await dec('xl/_rels/workbook.xml.rels');
+  if(wb&&rels){
+    const sheets=[...wb.matchAll(/<sheet\b[^>]*>/g)].map(m=>m[0]);
+    for(const tag of sheets){
+      const idM=tag.match(/r:id="([^"]+)"/);
+      if(!idM)continue;
+      const relTag=(rels.match(/<Relationship\b[^>]*>/g)||[]).find(t=>new RegExp('Id="'+idM[1]+'"').test(t));
+      if(!relTag)continue;
+      const tg=relTag.match(/Target="([^"]+)"/);
+      if(!tg)continue;
+      let t=tg[1];
+      if(t.startsWith('/'))sheetPath=t.slice(1);
+      else if(t.startsWith('xl/'))sheetPath=t;
+      else sheetPath='xl/'+t.replace(/^\.\//,'');
+      break;
+    }
+  }
+  const sst=parseSharedStrings((await dec('xl/sharedStrings.xml'))||'');
+  const sheetXml=await dec(sheetPath)||await dec('xl/worksheets/sheet1.xml');
+  if(!sheetXml)throw new Error('文件里没有找到工作表数据');
+  return parseSheetXml(sheetXml,sst);
+}
+const IMPORT_ALIASES={
+  shortName:['资费简称','简称'],
+  name:['资费名称','名称','业务名称','官方名称'],
+  code:['业务编码','编码'],
+  series:['资费系列','系列','所属系列'],
+  category:['资费类别','类别','业务类别'],
+  condAvg:['消费条件'],
+  price:['消费金额/最低消费','消费金额','最低消费'],
+  liability:['违约责任','违约']
+};
+function normHead(s){
+  return String(s==null?'':s).replace(/[\s\u3000]/g,'').replace(/[（(][^）)]*[）)]/g,'').replace(/[：:*]/g,'').replace(/元$/,'');
+}
+function parseImportRows(rows){
+  let headerRow=-1,map={};
+  for(let i=0;i<Math.min(rows.length,10);i++){
+    const built={};
+    (rows[i]||[]).forEach((cell,ci)=>{
+      const key=normHead(cell);
+      if(!key)return;
+      Object.keys(IMPORT_ALIASES).forEach(k=>{
+        if(built[k]===undefined&&IMPORT_ALIASES[k].some(a=>a===key))built[k]=ci;
+      });
+    });
+    if(built.shortName!==undefined||built.name!==undefined||built.code!==undefined){headerRow=i;map=built;break}
+  }
+  if(headerRow<0)throw new Error('未找到表头行，表格需包含「资费简称 / 资费名称 / 业务编码」列');
+  const records=[],errors=[];
+  for(let i=headerRow+1;i<rows.length;i++){
+    const row=rows[i]||[];
+    const get=k=>map[k]===undefined?'':String(row[map[k]]==null?'':row[map[k]]).trim();
+    const shortName=cleanName(get('shortName')),name=cleanName(get('name')),code=cleanName(get('code'));
+    if(!shortName&&!name&&!code){
+      if(row.some(v=>String(v==null?'':v).trim()!==''))errors.push('第 '+(i+1)+' 行：缺少资费简称 / 名称 / 编码，已跳过');
+      continue;
+    }
+    if(!code){errors.push('第 '+(i+1)+' 行「'+(shortName||name)+'」：缺少业务编码，已跳过');continue}
+    if(!shortName&&!name){errors.push('第 '+(i+1)+' 行：缺少资费简称和资费名称，已跳过');continue}
+    const catRaw=get('category');
+    let category='';
+    if(/福利/.test(catRaw))category='welfare';
+    else if(/凑单|消费/.test(catRaw))category='consume';
+    else if(!catRaw)category='';
+    if(!category){errors.push('第 '+(i+1)+' 行「'+(shortName||name)+'」：资费类别无法识别'+(catRaw?'（'+catRaw+'）':'，缺少类别')+'，已跳过');continue}
+    let condAvg;
+    if(category==='welfare'){
+      const condRaw=get('condAvg');
+      if(/6/.test(condRaw))condAvg='avg6';
+      else condAvg='avg3'; // 缺省按近3月
+    }
+    let price=null;
+    const priceRaw=get('price');
+    if(priceRaw!==''&&/^\d+(\.\d{1,2})?$/.test(priceRaw))price=Number(priceRaw);
+    records.push({shortName:shortName||name,name:name||shortName,code,seriesName:cleanName(get('series')),category,condAvg,price,liability:get('liability')});
+  }
+  return {records,errors};
+}
+// 导入计划：按 code 去重判定新增/更新；系列新建/复用
+function planImport(records){
+  const idByName=new Map();
+  series.forEach(s=>{if(!idByName.has(s.name))idByName.set(s.name,s.id)});
+  const newNames=[],reused=[];
+  const seen=new Set();
+  let add=0,update=0;
+  records.forEach(r=>{
+    const sname=r.seriesName;
+    let sid;
+    if(!sname){
+      sid=DEFAULT_SERIES;
+      if(!seen.has('默认系列')){seen.add('默认系列');reused.push('默认系列')}
+    }else if(idByName.has(sname)){
+      sid=idByName.get(sname);
+      if(!seen.has(sname)){seen.add(sname);reused.push(sname)}
+    }else{
+      sid='NEW:'+sname;
+      if(!seen.has(sname)){seen.add(sname);newNames.push(sname)}
+    }
+    r._sid=sid;
+    if(rules.some(x=>x.code===r.code))update++;else add++;
+  });
+  return {add,update,newNames,reused,seriesTotal:newNames.length+reused.length};
+}
+function applyImport(records,plan){
+  const now=Date.now();
+  let created=0;
+  (plan&&plan.newNames?plan.newNames:[]).forEach(name=>{
+    const sid='s'+now+Math.random().toString(36).slice(2,6);
+    series.push({id:sid,name,createdAt:now,updatedAt:now});
+    created++;
+  });
+  records.forEach((r,i)=>{
+    let sid=r._sid;
+    if(String(sid).startsWith('NEW:')){
+      const s=series.find(x=>x.name===String(sid).slice(4));
+      sid=s?s.id:DEFAULT_SERIES;
+    }
+    const data={shortName:r.shortName,name:r.name,code:r.code,category:r.category,seriesId:sid,liability:r.liability,updatedAt:now};
+    if(r.category==='welfare'&&r.condAvg)data.condAvg=r.condAvg;
+    if(r.price!=null)data.price=r.price;
+    const exist=rules.find(x=>x.code===r.code);
+    if(exist)Object.assign(exist,data);
+    else rules.push({id:'r'+now+i+Math.random().toString(36).slice(2,6),...data,createdAt:now});
+  });
+  persistSeries();
+  persist();renderSeries();render();syncSeriesSelect();
+  return {seriesAdded:created};
+}
+$('exportBtn').addEventListener('click',exportXlsx);
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{
+  const file=e.target.files&&e.target.files[0];
+  e.target.value='';
+  if(!file)return;
+  await handleImportFile(file);
+});
+async function handleImportFile(file){
+  if(!/\.xlsx$/i.test(file.name)){showInfo('格式不支持','仅支持 .xlsx 格式的 Excel 文件（.xls / .csv 请先另存为 .xlsx）。');return}
+  let rows;
+  try{rows=await readXlsx(await file.arrayBuffer())}
+  catch(err){showInfo('导入失败',(err&&err.message)||'无法解析该文件，请确认它是有效的 .xlsx 文件。');return}
+  let parsed;
+  try{parsed=parseImportRows(rows)}
+  catch(err){showInfo('导入失败',(err&&err.message)||'表格格式不符合要求。');return}
+  const plan=planImport(parsed.records);
+  const lines=[
+    '文件：'+file.name,
+    '识别到 '+parsed.records.length+' 条规则：新增 '+plan.add+' 条，更新 '+plan.update+' 条（按业务编码匹配）。',
+    '系列：共 '+plan.seriesTotal+' 个'+(plan.newNames.length?'，新建 '+plan.newNames.length+' 个（'+plan.newNames.join('、')+'）':'，全部复用。'),
+    parsed.errors.length?'另有 '+parsed.errors.length+' 行不符合要求，将被跳过。':''
+  ].filter(Boolean).join('\n');
+  askConfirm(lines,()=>{
+    const res=applyImport(parsed.records,plan);
+    const out=['新增 '+plan.add+' 条，更新 '+plan.update+' 条'+(res.seriesAdded?'，新增资费系列 '+res.seriesAdded+' 个':'')+'。'];
+    if(parsed.errors.length)out.push('跳过 '+parsed.errors.length+' 行：\n'+parsed.errors.slice(0,5).join('\n')+(parsed.errors.length>5?'\n…':''));
+    showInfo('导入完成',out.join('\n'));
+  },{title:'导入确认',okText:'导入',okClass:''});
+}
+
+/* ============ 启动 ============ */
+if(checkAccess()){
+  loadRules();
+  render();
+  syncSeriesSelect();
+  bindPager($('pager'));
+}
+</script>
+</body>
+</html>
