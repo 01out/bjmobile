@@ -34,7 +34,7 @@ h1{font-size:25px;margin:0 0 7px}.sub{font-size:12px;color:#8b929c}
 .stag.renaming input{width:120px;height:28px;font-size:12px;padding:0 8px;border:1px solid #dfe3e8;border-radius:7px;outline:none;background:#fff}
 .stag .mini{height:26px;font-size:11px;padding:0 9px}
 .stag-mini{padding:2px 9px;font-size:11px;gap:4px;cursor:default}
-.cat-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cat-line{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .ext-badge{flex:0 0 auto;font-size:10px;color:#c2492b;background:#fdeee9;border:1px solid #f2c9bb;border-radius:999px;padding:1px 8px}
 .filters{display:flex;gap:8px;flex:0 0 auto}
 .io-group{display:flex;gap:8px;flex:0 0 auto}
@@ -58,7 +58,7 @@ button:disabled{opacity:.55;cursor:wait}
 .table-wrap{margin-top:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .price-cell{font-weight:600;white-space:nowrap}
 .price-cell small{font-weight:400;font-size:10px;color:#9aa1aa;margin-right:2px}
-table{width:100%;border-collapse:collapse;min-width:600px}
+table{width:100%;border-collapse:collapse;min-width:900px}
 th{font-size:11px;font-weight:500;color:#8b929c;text-align:left;padding:6px 10px;background:#fafbfc;border-bottom:1px solid #edf0f2;white-space:nowrap}
 td{padding:13.5px 10px;border-bottom:1px solid #edf0f2;font-size:13px;vertical-align:middle}
 tbody tr:last-child td{border-bottom:0}
@@ -66,6 +66,8 @@ tbody tr:hover td{background:#fafbfc}
 .nm-line{display:flex;align-items:center;gap:6px;min-width:0}
 .nm{font-weight:600;color:#20242a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .chip{display:inline-block;font-size:11px;color:#4d6fa8;background:#eef4ff;border:1px solid #dbe7ff;border-radius:999px;padding:2px 9px;white-space:nowrap}
+/* 资费全称列 */
+.full-name{font-size:12px;color:#212429;word-break:break-all;line-height:1.5}
 .chip.welfare{color:#a3730a;background:#fdf6e7;border-color:#f3e3bd}
 .code-line{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:11px;color:#8b929c;min-width:0}
 .code-line code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#8b929c;background:none;border:0;padding:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
@@ -94,7 +96,10 @@ tbody tr:hover td{background:#fafbfc}
 .hidden{display:none}
 .modal{position:fixed;inset:0;background:#1b233152;display:flex;align-items:flex-end;justify-content:center;padding:0;z-index:50}
 .modal.hidden{display:none}
-.sheet{width:100%;max-width:520px;background:#fff;border-radius:18px 18px 0 0;padding:19px 19px calc(19px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;box-shadow:0 -10px 40px #1b233126}
+.sheet{width:100%;max-width:520px;background:#fff;border-radius:18px 18px 0 0;padding:19px 19px calc(19px + env(safe-area-inset-bottom));max-height:92vh;overflow:hidden;box-shadow:0 -10px 40px #1b233126;display:flex;flex-direction:column}
+/* 弹窗：标题区/底部操作区固定，仅内容区滚动 */
+.sheet-head,.sheet-foot,.sheet-fixed{flex:0 0 auto}
+.sheet-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sheet-head b{font-size:15px}
 .icon{width:28px;height:28px;border-radius:999px;background:#f2f5f9;color:#5b6470;font-size:17px;line-height:1;padding:0}
@@ -137,8 +142,9 @@ tbody tr:hover td{background:#fafbfc}
   tbody td:nth-child(2){flex:1 1 100%;order:2}
   tbody td:nth-child(3){flex:1 1 auto;order:3}
   tbody td:nth-child(4){flex:0 0 auto;order:3;margin-left:auto}
-  tbody td:nth-child(5){flex:1 1 100%;order:4}
-  tbody td:nth-child(6){flex:1 1 100%;order:5;text-align:right;margin-top:1px}
+  tbody td:nth-child(5){flex:0 0 auto;order:4}
+  tbody td:nth-child(6){flex:1 1 100%;order:5}
+  tbody td:nth-child(7){flex:1 1 100%;order:6;text-align:right;margin-top:1px}
   tbody td.empty{flex:1 1 100%;order:1}
   .pager{justify-content:center}
 }
@@ -187,11 +193,12 @@ tbody tr:hover td{background:#fafbfc}
       <table data-page-node-id="oorQY4lcBTNgUcM6xAY9PC">
         <thead data-page-node-id="42jY5ZCr0fnBPu1BccVVkl">
           <tr data-page-node-id="Mhq9FOFIh1HehP8oP7xjio">
-            <th data-page-node-id="QOMkZOMwsqLf2h1SOMNqYj" style="width:24%"><!--pnid:VrC4fkSHTND6UsEQZ8H3jo-->资费简称</th>
-            <th data-page-node-id="sLGFn84sei29OgsKXePjYb" style="width:16%"><!--pnid:04KJ3fMoW7qeCk4O9cT9QZ-->类别 / 系列</th>
-            <th data-page-node-id="jPmiJo4Jx7rDwMTCjI9Mwr" style="width:11%"><!--pnid:S1oftYVNf0YstyzVFPhoep-->资费价格</th>
-            <th data-page-node-id="X3FF16IqYtDKubgGBMbdGf" style="width:10%"><!--pnid:T9CsSxtKk6y0NPC3Fugsh4-->上架状态</th>
-            <th data-page-node-id="cgyiwLeVac2EsvFGgLdcMB" style="width:29%"><!--pnid:NvcocGkf3bJlcLiXlFP5cF-->违约责任</th>
+            <th data-page-node-id="QOMkZOMwsqLf2h1SOMNqYj" style="width:18%"><!--pnid:VrC4fkSHTND6UsEQZ8H3jo-->资费简称</th>
+            <th data-page-node-id="d6YJuT0HY8swVbVtq8OdyC" style="width:16%"><!--pnid:UZjuNazjPERHsix0sIULbJ-->资费全称</th>
+            <th data-page-node-id="sLGFn84sei29OgsKXePjYb" style="width:13%"><!--pnid:04KJ3fMoW7qeCk4O9cT9QZ-->类别 / 系列</th>
+            <th data-page-node-id="jPmiJo4Jx7rDwMTCjI9Mwr" style="width:10%"><!--pnid:S1oftYVNf0YstyzVFPhoep-->资费价格</th>
+            <th data-page-node-id="X3FF16IqYtDKubgGBMbdGf" style="width:8%"><!--pnid:T9CsSxtKk6y0NPC3Fugsh4-->上架状态</th>
+            <th data-page-node-id="cgyiwLeVac2EsvFGgLdcMB" style="width:25%"><!--pnid:NvcocGkf3bJlcLiXlFP5cF-->违约责任</th>
             <th data-page-node-id="HxkZPBYoI24wdoRHl9VbHV" style="width:10%"><!--pnid:eo6GK99Cfmkz1B3dliu6bB-->操作</th>
           </tr>
         </thead>
@@ -216,6 +223,7 @@ tbody tr:hover td{background:#fafbfc}
 <div data-page-node-id="mKgS00quGlAu0kKsmUMwfl" class="modal hidden" id="modal">
   <div data-page-node-id="0mQCJaPNXE3JuBHOmRm7nP" aria-modal="true" class="sheet" role="dialog">
     <div data-page-node-id="96gt9RF5YWZYZzbOk4MHLn" class="sheet-head"><b data-page-node-id="k4SGeZSwo5e1C2MUihBx84" id="formTitle"><!--pnid:HxTnnoKMIxLmXFXK0ygSHN-->新增资费</b><button data-page-node-id="EcQIAaMY9aIdH5EA6PYf4B" aria-label="关闭" class="icon" id="closeBtn"><!--pnid:9Wp7aidsXf9NiFPygYGgki-->×</button></div>
+    <div data-page-node-id="2HSh15jscMRAqGkpNEUnvc" class="sheet-body">
     <div data-page-node-id="GK4kXCU5w7ffV6u4BY76wf" class="field">
       <label data-page-node-id="OTAT0NjgX6icyq3k8XNvAb"><!--pnid:BK2Atew9f9g43UPcnK0EXw-->资费简称 <i data-page-node-id="IGtwKv4xTB1Cx5NlrcLcwJ"><!--pnid:WNqOJzRMnl2RGTfdbKoBxT-->*</i></label>
       <input data-page-node-id="D3BggDCaig7XcaUarvi0Hc" id="fShort" maxlength="30" placeholder="自定义简称，如：买二送一">
@@ -261,6 +269,7 @@ tbody tr:hover td{background:#fafbfc}
       <label data-page-node-id="rfVYuV3YLy5tVa0jhKEpnx"><!--pnid:JCAMDaXm17uKok42bBLBea-->违约责任</label>
       <textarea data-page-node-id="liax8tU1LGD8gweK9iNv5h" id="fLiability" maxlength="200" placeholder="选填，如：合约期内取消需支付违约金 30 元"></textarea>
     </div>
+    </div>
     <div data-page-node-id="0EVVi4c15pmz61cRXWYzYY" class="form-err" id="formErr"></div>
     <div data-page-node-id="Afjaapz9q2t2FBVsqhIddI" class="sheet-foot">
       <button data-page-node-id="aYuoIYs4bngQcRbS0xuu1p" class="ghost" id="cancelBtn"><!--pnid:UqBKWOVDvXk34T2ltfBDrQ-->取消</button>
@@ -272,7 +281,9 @@ tbody tr:hover td{background:#fafbfc}
 <div data-page-node-id="kSS6RylIgy8yvbescF7gUX" class="modal hidden" id="confirmModal">
   <div data-page-node-id="mONtLc3iJmkL3ItprZTamY" aria-modal="true" class="sheet" role="alertdialog">
     <div data-page-node-id="GvqWs4qmGVNaBVjhr9PU2F" class="sheet-head"><b data-page-node-id="kemHP2tCzXtd8HIUcipBOT" id="cfTitle"><!--pnid:rK5i8NWvPGRrEKY9ddeFOt-->删除确认</b></div>
+    <div data-page-node-id="V26DTWhwdWV7I3Nrv2S5Xk" class="sheet-body">
     <div data-page-node-id="uG7xicn72sYJLsLfhy4k0a" class="cf-msg" id="cfMsg"></div>
+    </div>
     <div data-page-node-id="odokawIpOI5QIIOFJc72or" class="sheet-foot">
       <button data-page-node-id="aVsnOmq7VrfBelHCS0Q9F7" class="ghost" id="cfCancel"><!--pnid:TtqvEyrtHd1l7YLbH9hemw-->取消</button>
       <button data-page-node-id="S5Iq7QuUNamLACougr0Sok" class="danger" id="cfOk"><!--pnid:WUNVQWu03VPq2CUkvm7m0t-->删除</button>
@@ -283,7 +294,9 @@ tbody tr:hover td{background:#fafbfc}
 <div data-page-node-id="ZqMnIpYYEWg7LrbL5yfvaQ" class="modal hidden" id="infoModal">
   <div data-page-node-id="rImoGdaE54dWnA2DP7d610" aria-modal="true" class="sheet" role="dialog">
     <div data-page-node-id="Y5zSwuel9udprXAcCN9JbX" class="sheet-head"><b data-page-node-id="2wrs7nZbELTQs9FpPw0xYI" id="infoTitle"><!--pnid:kM4anIaOQZTaeRG34fa9qu-->提示</b><button data-page-node-id="n6C2SquYoaN3cznOOscBiC" aria-label="关闭" class="icon" id="infoClose"><!--pnid:uzrKmbTBE0Jv5NyOMeCziT-->×</button></div>
+    <div data-page-node-id="Ie3UOIifhBPx8KrcJ2VE4a" class="sheet-body">
     <div data-page-node-id="MgDdDrgASQk58IoIxpPGxe" class="cf-msg" id="infoMsg"></div>
+    </div>
     <div data-page-node-id="1VxoXI1yIuRxcblKDDzsp6" class="sheet-foot"><button data-page-node-id="17Ks8w2DDkBY7yrH2AVwLz" id="infoOk"><!--pnid:pHX9yTGtwM5voBqb119NGS-->知道了</button></div>
   </div>
 </div>
@@ -547,6 +560,7 @@ function render(){
       <div class="nm-line"><span class="nm${x.offShelf?' off':''}" title="${escapeHtml(x.name)}">${escapeHtml(x.shortName)}</span></div>
       <div class="code-line"><code title="${escapeHtml(x.code)}">${escapeHtml(x.code)}</code><button class="copy-btn" data-act="copy" data-code="${escapeHtml(x.code)}" title="复制业务编码" aria-label="复制业务编码"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>
     </td>
+    <td class="full-name">${escapeHtml(x.name)}</td>
     <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span>${x.external?'<span class="ext-badge" title="用户添加业务时自动创建">用户添加</span>':''}</div></td>
     <td class="price-cell">${x.price!=null?((x.category==='welfare'?'<small>最低</small>':'')+'¥'+Number(x.price).toFixed(2)):'—'}</td>
     <td><span class="shelf-badge ${x.offShelf?'off':'on'}" data-act="shelf" title="点击切换上架 / 下架">${x.offShelf?'已下架':'上架中'}</span></td>

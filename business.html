@@ -93,7 +93,12 @@ tbody tr:hover td{background:#fafbfc}
 body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.wrap>p{display:none}
 .modal{position:fixed;inset:0;background:#1b233152;display:flex;align-items:flex-end;justify-content:center;padding:0;z-index:50}
 .modal.hidden{display:none}
-.sheet{width:100%;max-width:1000px;background:#fff;border-radius:18px 18px 0 0;padding:19px 19px calc(19px + env(safe-area-inset-bottom));max-height:96vh;overflow:auto;box-shadow:0 -10px 40px #1b233126}
+.sheet{width:100%;max-width:1000px;background:#fff;border-radius:18px 18px 0 0;padding:19px 19px calc(19px + env(safe-area-inset-bottom));max-height:96vh;overflow:hidden;box-shadow:0 -10px 40px #1b233126;display:flex;flex-direction:column}
+/* 弹窗：标题区/底部操作区固定，仅内容区滚动 */
+.sheet-head,.sheet-foot,.sheet-fixed{flex:0 0 auto}
+.sheet-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* 删除确认弹窗：宽度收窄至其他弹窗的50% */
+#confirmModal .sheet{max-width:500px}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sheet-head b{font-size:15px}
 /* 弹窗标题右侧轻提示（灰色小字） */
@@ -285,7 +290,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
   <div data-page-node-id="Aon2NoiloTF4n8DI5ZPYhd" aria-modal="true" class="sheet" role="dialog">
     <div data-page-node-id="YdpOHOgeDiEQ2IDmtdMroo" class="sheet-head"><b data-page-node-id="EDuX5lSkOFGrv9Qn3ee5tp" id="formTitle"><!--pnid:HrkPai80EJDWC0sB4CpaYu-->添加业务</b><span data-page-node-id="Z6r2Ha0zkMReKs3Dt5dMNd" class="head-notice hidden" id="pickNotice"><!--pnid:adLqCrioXGKKQs3AVpwwJD-->个人收集，仅供学习，以官网为准</span><button data-page-node-id="69AVH5ZH7azuikmHu2ayD0" aria-label="关闭" class="icon" id="closeBtn"><!--pnid:E8RhUNkWkRbpAo67mQLMvD-->×</button></div>
     <!--pnid:PGGLTPcQXp0scOgn5wHkzr--><!-- 添加业务：勾选规则批量添加 -->
-    <div data-page-node-id="055qM68fmga3nlJ6FZWNKL" class="hidden" id="pickArea">
+    <div data-page-node-id="055qM68fmga3nlJ6FZWNKL" class="sheet-fixed hidden" id="pickArea">
       <div data-page-node-id="NzcqjU6ppY6H47RzkeE0d5" class="field">
         <div data-page-node-id="v5BlWKQVC52jv405CHwTZT" class="pick-search">
           <select data-page-node-id="YIojFJilo967nSgVfnSlpf" aria-label="按资费类别筛选" id="pickCatFilter">
@@ -304,9 +309,12 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
         <div data-page-node-id="i8qfWFicp2z31TffS4vRRa" class="pick-series-head"><b data-page-node-id="x7ywunG3vLjII19ii3JHGz"><!--pnid:pFVeuNlytAH5VyG4k8vftX-->资费系列</b></div>
         <div data-page-node-id="6JOGKGkhZkrfaI13mkCXCb" class="pick-series-tags" id="pickSeriesTags"></div>
       </div>
+    </div>
+    <div data-page-node-id="8JZLKjZ8SpC5OTgP7vNJuY" class="sheet-body">
+      <div data-page-node-id="pufEECNXJfJO7EritGo3bV" class="hidden" id="pickScroll">
       <div data-page-node-id="bU2anPWo0hbTP9bVZ3pT83" class="pick-grid" id="pickList"></div>
       <div data-page-node-id="jMK2tKqUPgy7ws60l9pdQy" class="pager hidden" id="pickPager"></div>
-    </div>
+      </div>
     <!--pnid:DIbnCyVhwKkHynaE3i70U0--><!-- 编辑时：只读信息 -->
     <div data-page-node-id="1SVlr9dKcP4kAm2da1UOFZ" class="picked hidden" id="pickedInfo"></div>
     <!--pnid:latfS9cEaTa5w0c1kGDtGv--><!-- 编辑时：可编辑字段 -->
@@ -335,6 +343,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
         </div>
       </div>
     </div>
+    </div>
     <div data-page-node-id="QQrChR0foch1BPAoCql4Zi" class="form-err" id="formErr"></div>
     <div data-page-node-id="bokM5bsB6Vvm2Zm55SrfpJ" class="sheet-foot">
       <button data-page-node-id="4iq5aHjoqIo8LbWve2Knia" class="ghost" id="cancelBtn"><!--pnid:vHhbtrvg21fQRkI98uLnyE-->取消</button>
@@ -347,6 +356,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 <div data-page-node-id="PGNlC1ZrsOlEzfX8zDvW6F" class="modal hidden" id="dateModal">
   <div data-page-node-id="YgHROBlQBDzpGn59guTu4a" aria-modal="true" class="sheet" role="dialog">
     <div data-page-node-id="5pgAMLLeR437IMDkf6iFmo" class="sheet-head"><b data-page-node-id="ZTvaiBnLiGIsCGsuu4SFwj"><!--pnid:QidXozEIRBWW1ROltaCx77-->设置起止日期</b><button data-page-node-id="WowGlsjyqRokDIwHCYIJzw" aria-label="关闭" class="icon" id="dateCloseBtn"><!--pnid:ayTWgRz995Dz3TBeZOmizF-->×</button></div>
+    <div data-page-node-id="THYpVTBpJVagJnMq7dPcXy" class="sheet-body">
     <div data-page-node-id="RI7AL3W2yFUqSJdWqXh4Xx" class="pk-date-name" id="dateName"></div>
     <div data-page-node-id="KspmuAHUjyFhvkssb5BV7k" class="field">
       <label data-page-node-id="dpcsINh4plkXOYJhBNB1VH"><!--pnid:duxQc6d2yV4TJOFRPbFi1Y-->起止日期</label>
@@ -355,6 +365,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
         <span data-page-node-id="UUCczcDT0tco0rbYRlxXg8"><!--pnid:5hugLCy57pjrijXXpjpVXj-->至</span>
         <input data-page-node-id="9iI3ZG0iXTwEoHzk40OJ6z" aria-label="结束日期" id="dEnd" type="date">
       </div>
+    </div>
     </div>
     <div data-page-node-id="JczGEBTwFkmbZvCDLl1zAZ" class="form-err" id="dateErr"></div>
     <div data-page-node-id="FVsPjhl1R2KTFPG5O6Hlys" class="sheet-foot">
@@ -367,7 +378,9 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 <div data-page-node-id="9vMoRFMlOnVwxHFD3ndKnQ" class="modal hidden" id="confirmModal">
   <div data-page-node-id="JGs6F2NkZaqwo7KioX3hZ4" aria-modal="true" class="sheet" role="alertdialog">
     <div data-page-node-id="zYjv4raxAsVemuBZIebyLn" class="sheet-head"><b data-page-node-id="pcKtpl7ZOfmgY24brDexcP" id="cfTitle"><!--pnid:Xdl5arEsLL7Hrq9RXNqf84-->删除确认</b></div>
+    <div data-page-node-id="jucVVgxjwSiVz1LUrtzW59" class="sheet-body">
     <div data-page-node-id="z67MHli6dQq4fwnfZ6gojF" class="cf-msg" id="cfMsg"></div>
+    </div>
     <div data-page-node-id="7Q5WcDBGMoa86NS1xED9Gy" class="sheet-foot">
       <button data-page-node-id="yZwVIPh50rRjkXzFBFgban" class="ghost" id="cfCancel"><!--pnid:oR3qTSiSxbHFOHy2QYh5DE-->取消</button>
       <button data-page-node-id="wfTva0OnxyMKdApcAzzwOB" class="danger" id="cfOk"><!--pnid:Lou0fKgiBx47giHLPoRksz-->删除</button>
@@ -378,7 +391,9 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 <div data-page-node-id="Zms2SAmA1hfiHqbi8McMZf" class="modal hidden" id="infoModal">
   <div data-page-node-id="CD2tRffJY0YuWGn1yllDgZ" aria-modal="true" class="sheet" role="dialog">
     <div data-page-node-id="SZk6QYhRof2117aKZIc4jO" class="sheet-head"><b data-page-node-id="Aet6tBjEThjifENrgt0aYJ" id="infoTitle"><!--pnid:bLSxMOlnFL2dgvIHba9q0g-->提示</b><button data-page-node-id="PSruOlOjuiXdcxhXTfUn2k" aria-label="关闭" class="icon" id="infoClose"><!--pnid:NOddfq4eVuztXElgmIAGgq-->×</button></div>
+    <div data-page-node-id="fESuNPMCq7f6hUJivgq2du" class="sheet-body">
     <div data-page-node-id="LSTzTVVK0GtJM3SVX05mbn" class="cf-msg" id="infoMsg"></div>
+    </div>
     <div data-page-node-id="D2Ri2yRfKDFCcI3jfjSYau" class="sheet-foot"><button data-page-node-id="Q92bYW7DePhMqqPqzjtjrk" id="infoOk"><!--pnid:L7otsv4eE5PXnWqnchU8mV-->知道了</button></div>
   </div>
 </div>
@@ -814,6 +829,7 @@ function openForm(item){
     $('formTitle').textContent='编辑业务';
     $('pickNotice').classList.add('hidden');
     $('pickArea').classList.add('hidden');
+    $('pickScroll').classList.add('hidden');
     if(item.code)renderPicked(item.code);
     else{
       pickedCode=null;
@@ -827,6 +843,7 @@ function openForm(item){
     $('formTitle').textContent='添加业务';
     $('pickNotice').classList.remove('hidden');
     $('pickArea').classList.remove('hidden');
+    $('pickScroll').classList.remove('hidden');
     $('pickedInfo').classList.add('hidden');
     $('pickedInfo').innerHTML='';
     $('editArea').classList.add('hidden');
