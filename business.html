@@ -33,7 +33,7 @@ h1{font-size:25px;margin:0 0 7px}.sub{font-size:12px;color:#8b929c}
 .stag.renaming input{width:120px;height:28px;font-size:12px;padding:0 8px;border:1px solid #dfe3e8;border-radius:7px;outline:none;background:#fff}
 .stag .mini{height:26px;font-size:11px;padding:0 9px}
 .stag-mini{padding:2px 9px;font-size:11px;gap:4px;cursor:default}
-.cat-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cat-line{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .filters{display:flex;gap:8px;flex:0 0 auto}
 .io-group{display:flex;gap:8px;flex:0 0 auto}
 .io-btn{background:#f2f5f9;color:#4a5361;font-weight:500;padding:0 14px}
@@ -116,6 +116,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 /* 添加业务弹窗：主按钮取消收窄至25%，靠右下角 */
 #modal .sheet-foot{justify-content:flex-end}
 #modal .sheet-foot button{flex:0 0 25%;min-width:88px}
+#modal .sheet-foot #saveBtn{flex:1 1 auto;min-width:0}
 .ghost{background:#f2f5f9;color:#4a5361}
 .danger{background:#d9363e}
 .cf-msg{font-size:13px;line-height:1.7;color:#4a5361;margin-bottom:16px;word-break:break-word;white-space:pre-line}
@@ -124,8 +125,8 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 .switch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #20242a33;transition:left .15s}
 .switch.on{background:#1677ff}
 .switch.on::after{left:16px}
-/* 开通状态列与资费列间距加大20px */
-.st-cell{padding-left:30px}
+/* 开通状态开关与表头居中对齐 */
+.st-cell{text-align:center}
 .code-line{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:11px;color:#8b929c;min-width:0}
 .code-line code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#8b929c;background:none;border:0;padding:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
 .off-badge{display:inline-block;font-size:10px;color:#6b7480;background:#f2f4f7;border:1px solid #dbe0e7;border-radius:999px;padding:1px 8px;white-space:nowrap}
@@ -142,7 +143,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 .pick-search-btn:hover{background:#3c8dff}
 .pk-date-name{font-size:13px;color:#4a5361;margin-bottom:12px;font-weight:600;word-break:break-word}
 /* 添加业务：卡片网格（3×6=18，默认灰阴影，选中蓝高亮） */
-.pick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:-4px 0 4px}
+.pick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:4px 0 4px;padding-top:5px}
 .pick-item{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;background:#fff;border:1px solid #e6eaef;border-radius:11px;padding:9px;cursor:pointer;box-shadow:0 2px 7px #20242a17;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .pick-item:hover{border-color:#b9d2ff}
 .pick-item.sel{border-color:#1677ff;background:#f4f9ff;box-shadow:0 2px 10px #1677ff45}
@@ -270,9 +271,9 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
         <thead data-page-node-id="Hulsu1xxbuYD90ffBhvjLM">
           <tr data-page-node-id="PVjd8SQRHIQASKG8tr9cwA">
             <th data-page-node-id="qOHPFDYA2xGGtS6DrALU9D" style="width:19%"><!--pnid:z49KGrtRLnr1ck37ekj6cg-->业务名称/编码</th>
-            <th data-page-node-id="TtmoPcgDMRwnEP8PiF9DES" style="width:12%"><!--pnid:gFKDEhrGzmzF17arPsQbS8-->类别/系列/上架状态</th>
+            <th data-page-node-id="TtmoPcgDMRwnEP8PiF9DES" style="width:12%"><!--pnid:gFKDEhrGzmzF17arPsQbS8-->类别/系列</th>
             <th data-page-node-id="PNAKzPrxmmehM7naqeFVdb" style="width:12%"><!--pnid:aO3U0w2izlhMNwOK6KLrbi-->资费/羊毛</th>
-            <th data-page-node-id="sHo4PPXPdyShdFXIyRiHvn" style="width:7.5%"><!--pnid:eziUOU3izyab7vshJvgp2x-->开通状态</th>
+            <th data-page-node-id="sHo4PPXPdyShdFXIyRiHvn" style="width:7.5%; text-align:center"><!--pnid:eziUOU3izyab7vshJvgp2x-->开通状态</th>
             <th data-page-node-id="iTYiaIgRaYoaDBR5POpyNe" style="width:34%"><!--pnid:uJLFagzkzVD6yNCJhv61Co-->其他</th>
             <th data-page-node-id="xYOxHuodHpBkYlDLPEGlsD" style="width:16%"><!--pnid:kzdnEavVFeblH9p1ZJAxTo-->操作</th>
           </tr>
@@ -711,7 +712,7 @@ function render(){
         ${x.code?`<div class="code-line"><code title="${escapeHtml(x.code)}">${escapeHtml(x.code)}</code><button class="copy-btn" data-act="copy" data-code="${escapeHtml(x.code)}" title="复制业务编码" aria-label="复制业务编码"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></div>`:''}
         ${x.offShelf?'<div class="off-line" style="margin-top:3px"><span class="off-badge">已下架</span></div>':''}
       </td>
-      <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span><span class="sh-badge ${x.offShelf?'off':'on'}">${x.offShelf?'已下架':'上架中'}</span></div></td>
+      <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span></div></td>
       <td class="price">${welfare?'<small>低消</small>':''}${priceText(x.price)}<span class="sep">-</span><span class="wool">${priceText(x.wool!=null?x.wool:0)}</span></td>
       <td class="st-cell"><button class="switch${x.active?' on':''}" data-act="toggleSt" role="switch" aria-checked="${x.active?'true':'false'}" aria-label="开通状态"${(x.startDate||x.endDate)?' title="范围内自动开通，到期自动关闭；手动关闭后保持关闭"':''}></button></td>
       <td class="other"><div class="other-date">${escapeHtml(dateRangeText(x))}</div><div class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</div></td>
