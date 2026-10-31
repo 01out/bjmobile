@@ -445,16 +445,16 @@ const CAT_NAME={consume:'消费凑单类',welfare:'条件福利类'};
 const COND_NAME={avg3:'近3月平均消费',avg6:'近6月平均消费',month:'每月消费'};
 // 消费条件归一：avg3 近3月平均 / avg6 近6月平均 / month 每月消费；未知值回退 avg3
 function normCond(v){return v==='avg6'||v==='month'?v:'avg3'}
-// 合约消费金额（元，整数 >=0）：所有业务都有，记在 business 里由用户维护；记录里没有该字段时用规则表资费兜底（仅内存派生，不写回存储）
+// 合约消费金额（元，最多两位小数，>=0）：所有业务都有，记在 business 里由用户维护；记录里没有该字段时用规则表资费兜底（仅内存派生，不写回存储）
 function effContract(x){
   if(!x)return 0;
   if(x.contract!==undefined&&x.contract!==null&&x.contract!==''){
-    const v=Math.round(Number(x.contract));
+    const v=Math.round(Number(x.contract)*100)/100;
     if(Number.isFinite(v)&&v>=0)return v;
   }
   const r=x.code?ruleMap.get(x.code):null;
   const p=r&&r.price!=null?Number(r.price):Number(x.price);
-  return Number.isFinite(p)&&p>=0?Math.round(p):0;
+  return Number.isFinite(p)&&p>=0?Math.round(p*100)/100:0;
 }
 // 官方详情页地址模板，{code} 为业务编码占位；为空时认领弹窗不显示"官方详情"按钮
 const OFFICIAL_URL='https://h.app.coc.10086.cn/cmcc-app/pc-pages/tariffZonePers.html?pageId=834148205904408576&prov=100&channelId=P00000010700';
@@ -930,7 +930,7 @@ function save(){
     if(i>=0){
       const prev=items[i];
       // 资费只由 rules 维护，编辑不改写 price 快照；合约金额由用户填写
-      const contract=Math.round(Number($('fContract').value.trim()));
+      const contract=Math.round(Number($('fContract').value.trim())*100)/100; // 保留两位小数，不四舍五入取整
       const next={...prev,wool:Number($('fWool').value.trim()),contract,startDate:$('fStart').value||'',endDate:$('fEnd').value||'',active,updatedAt:now};
       // 开通状态以本次保存为准：开通则解除手动关闭标记；由开通改为未开通视为手动关闭
       if(active)delete next.manualOff;
@@ -1034,7 +1034,7 @@ kwClear.addEventListener('click',()=>{
   kwEl.focus();
 });
 syncKwClear();
-// 合约消费金额：只允许数字与小数点，提交时四舍五入取整
+// 合约消费金额：只允许数字与小数点、最多两位小数，保存时保留两位、不取整
 $('fContract').addEventListener('input',e=>{
   const clean=sanitizePrice(e.target.value);
   if(clean!==e.target.value)e.target.value=clean;

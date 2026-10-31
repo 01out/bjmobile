@@ -58,6 +58,8 @@ button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;fo
 .ctag .del{display:none;align-items:center;justify-content:center;width:18px;height:18px;margin-right:-5px;border:0;border-radius:999px;background:#fff;color:#d9363e;cursor:pointer;padding:0}
 .ctag .del:hover{background:#fef2f2}
 .ctag.show-del .del{display:inline-flex}
+/* 标签与下拉里业务名后的合约资费：红色 */
+.ctag .cam,.cons-dd .dd-item .cam{color:#d9363e;font-weight:600;margin-left:4px}
 /* 未开通凑单业务下拉（当月消费输入框聚焦时） */
 .cons-dd{grid-column:2;display:flex;flex-direction:column;gap:3px;margin-top:4px;background:#fff;border:1px solid #dfe3e8;border-radius:10px;padding:5px;box-shadow:0 6px 18px #20242a14}
 .cons-dd.hidden{display:none}
@@ -589,6 +591,8 @@ function consRowWool(row){
 // 各行已开通凑单业务标签（多次开通显示 名称 ×N；该月已过有效期的业务不显示）
 function renderConsTags(){
   const biz=loadBizRaw();
+  // 合约资费取自 business.contract（无则 rules 资费兜底），与规划口径同源
+  let rules=null;try{const arr=JSON.parse(localStorage.getItem('arpu_rules_v1')||'[]');rules=new Map();if(Array.isArray(arr))arr.forEach(r=>{if(r&&r.code)rules.set(String(r.code).trim(),r)})}catch(e){}
   plan.rows.forEach(row=>{
     const box=document.querySelector(`.cons-tags[data-ctags="${row.m}"]`);
     if(!box)return;
@@ -600,7 +604,8 @@ function renderConsTags(){
     box.innerHTML=ids.map(id=>{
       const x=biz.find(b=>bizId(b)===id),n=row.counts[id];
       const nm=esc(x?x.name||'':id);
-      return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}" title="点击增加一次开通"><span>${nm}${n>1?' ×'+n:''}</span><button class="del" data-del="${esc(id)}" data-m="${row.m}" aria-label="删除" tabindex="-1"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></span>`;
+      const cp=contractOf(x,rules);
+      return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}" title="点击增加一次开通"><span>${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b>${n>1?' ×'+n:''}</span><button class="del" data-del="${esc(id)}" data-m="${row.m}" aria-label="删除" tabindex="-1"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></span>`;
     }).join('');
   });
 }
@@ -629,11 +634,13 @@ function showConsDropdown(row){
     dd.classList.remove('hidden');
   }else{
     const owned=rowSeriesOwned(row);
+    let rules=null;try{const arr=JSON.parse(localStorage.getItem('arpu_rules_v1')||'[]');rules=new Map();if(Array.isArray(arr))arr.forEach(r=>{if(r&&r.code)rules.set(String(r.code).trim(),r)})}catch(e){}
     dd.innerHTML=cands.map(x=>{
       const sid=x.seriesId||'default';
       const conflict=sid==='default'?'':owned[sid];
+      const cp=contractOf(x,rules);
       // 同系列互斥业务可直接选，选中即视为业务变更（替换原业务）
-      return `<div class="dd-item${conflict?' swap':''}" data-add="${esc(bizId(x))}" data-m="${row.m}"${conflict?` title="选择后替换同系列原业务「${esc(conflict)}」"`:''}><span>${esc(x.name||'')}</span>${conflict?`<span class="dd-tip">变更自「${esc(conflict)}」</span>`:''}</div>`;
+      return `<div class="dd-item${conflict?' swap':''}" data-add="${esc(bizId(x))}" data-m="${row.m}"${conflict?` title="选择后替换同系列原业务「${esc(conflict)}」"`:''}><span>${esc(x.name||'')}<b class="cam">¥${Number(cp).toFixed(2)}</b></span>${conflict?`<span class="dd-tip">变更自「${esc(conflict)}」</span>`:''}</div>`;
     }).join('');
     dd.classList.remove('hidden');
   }
@@ -741,12 +748,12 @@ document.addEventListener('pointerdown',e=>{
 function contractOf(x,rules){
   if(!x)return 0;
   if(x.contract!==undefined&&x.contract!==null&&x.contract!==''){
-    const v=Math.round(Number(x.contract));
+    const v=Math.round(Number(x.contract)*100)/100;
     if(Number.isFinite(v)&&v>=0)return v;
   }
   const r=rules&&x.code?rules.get(String(x.code).trim()):null;
   const p=r&&r.price!=null?Number(r.price):Number(x.price);
-  return Number.isFinite(p)&&p>=0?Math.round(p):0;
+  return Number.isFinite(p)&&p>=0?Math.round(p*100)/100:0;
 }
 function welfareCandidates(ym){
   let series=[],rules=new Map();
