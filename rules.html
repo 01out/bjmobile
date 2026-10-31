@@ -58,6 +58,7 @@ button:disabled{opacity:.55;cursor:wait}
 .table-wrap{margin-top:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .price-cell{font-weight:600;white-space:nowrap}
 .price-cell small{font-weight:400;font-size:10px;color:#9aa1aa;margin-right:2px}
+.price-cell .cond-sub{display:block;font-weight:400;font-size:10px;color:#9aa1aa;margin-bottom:1px;line-height:1.35;white-space:normal}
 table{width:100%;border-collapse:collapse;min-width:900px}
 th{font-size:11px;font-weight:500;color:#8b929c;text-align:left;padding:6px 10px;background:#fafbfc;border-bottom:1px solid #edf0f2;white-space:nowrap}
 td{padding:13.5px 10px;border-bottom:1px solid #edf0f2;font-size:13px;vertical-align:middle}
@@ -258,9 +259,9 @@ tbody tr:hover td{background:#fafbfc}
     <div data-page-node-id="yLIxgJlwlKRSar0XcSBWaz" class="field hidden" id="condField">
       <label data-page-node-id="7091b8XUjehdEogiByJ9Ed"><!--pnid:Endo3boOkbOjJYGJ5XHDHI-->消费条件</label>
       <div data-page-node-id="uvxiNZAb1ves7a1oiz4YJ7" class="radios">
-        <label data-page-node-id="sxXBhnhoF9ferz8arLbyt5"><input data-page-node-id="RD0nIfQ3zhH9AHUXEJ1Jym" name="fCond" type="radio" value="avg3"><!--pnid:oO0Rqr1lE0xixGvwYkyu8d-->近3月平均消费达标</label>
-        <label data-page-node-id="bHJ8ntDsmP5XA7eg3NVaES"><input data-page-node-id="7hq70zfkPImYazFeOjZirH" name="fCond" type="radio" value="avg6"><!--pnid:4wE1cvf9wtUYJzx6TNlcH2-->近6月平均消费达标</label>
-        <label data-page-node-id="o0fwKW6SWYTRbFInksoOGi"><input data-page-node-id="F7URIdHLJdRwXoMGKDwLCf" name="fCond" type="radio" value="month"><!--pnid:LXHXEltBNQlW61QRidb2Hz-->未来每月消费达标</label>
+        <label data-page-node-id="sxXBhnhoF9ferz8arLbyt5"><input data-page-node-id="RD0nIfQ3zhH9AHUXEJ1Jym" name="fCond" type="radio" value="avg3"><!--pnid:oO0Rqr1lE0xixGvwYkyu8d-->近3月平均消费</label>
+        <label data-page-node-id="bHJ8ntDsmP5XA7eg3NVaES"><input data-page-node-id="7hq70zfkPImYazFeOjZirH" name="fCond" type="radio" value="avg6"><!--pnid:4wE1cvf9wtUYJzx6TNlcH2-->近6月平均消费</label>
+        <label data-page-node-id="o0fwKW6SWYTRbFInksoOGi"><input data-page-node-id="F7URIdHLJdRwXoMGKDwLCf" name="fCond" type="radio" value="month"><!--pnid:LXHXEltBNQlW61QRidb2Hz-->每月消费</label>
       </div>
     </div>
     <div data-page-node-id="rgfe97gW89gQaLLTGol37Y" class="field">
@@ -314,7 +315,7 @@ const KEY_BIZ='arpu_business_v1';
 const DEFAULT_SERIES='default';
 const CAT_NAME={consume:'凑单消费类',welfare:'条件福利类'};
 // 消费条件文案（与弹窗单选、xlsx 导入导出一致）
-const COND_NAME={avg3:'近3月平均消费达标',avg6:'近6月平均消费达标',month:'未来每月消费达标'};
+const COND_NAME={avg3:'近3月平均消费',avg6:'近6月平均消费',month:'每月消费'};
 
 const $=id=>document.getElementById(id);
 let rules=[],series=[],editingId=null,seriesFilter='',renamingSeriesId=null,addingSeries=false,catFilter='',srcFilter='';
@@ -566,7 +567,7 @@ function render(){
     </td>
     <td class="full-name">${escapeHtml(x.name)}</td>
     <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span>${x.external?'<span class="ext-badge" title="用户添加业务时自动创建">用户添加</span>':''}</div></td>
-    <td class="price-cell">${x.price!=null?((x.category==='welfare'?'<small>最低</small>':'')+'¥'+Number(x.price).toFixed(2)):'—'}</td>
+    <td class="price-cell">${x.category==='welfare'?`<span class="cond-sub">${COND_NAME[x.condAvg]||COND_NAME.avg3}</span>`:''}${x.price!=null?((x.category==='welfare'?'<small>最低</small>':'')+'¥'+Number(x.price).toFixed(2)):'—'}</td>
     <td><span class="shelf-badge ${x.offShelf?'off':'on'}" data-act="shelf" title="点击切换上架 / 下架">${x.offShelf?'已下架':'上架中'}</span></td>
     <td class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</td>
     <td class="ops">

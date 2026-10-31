@@ -65,7 +65,6 @@ tbody tr:hover td{background:#fafbfc}
 .chip{display:inline-block;font-size:11px;color:#4d6fa8;background:#eef4ff;border:1px solid #dbe7ff;border-radius:999px;padding:2px 9px;white-space:nowrap}
 .chip.welfare{color:#a3730a;background:#fdf6e7;border-color:#f3e3bd}
 .price{font-weight:600;white-space:nowrap}
-.price small{font-weight:400;font-size:10px;color:#9aa1aa;margin-right:3px}
 .price .sep{font-weight:400;color:#c3ccd6;margin:0 3px}
 .price .wool{font-weight:500;color:#b07c1a}
 /* 起止日期范围 */
@@ -182,6 +181,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 .pk-row{display:flex;gap:10px;font-size:12px;line-height:1.9;min-width:0}
 .pk-k{flex:0 0 58px;color:#8b929c}
 .pk-row span:last-child{word-break:break-word;min-width:0}
+.pk-sep{display:inline-block;margin:0 6px;color:#c3c9d2}
 .pk-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .pk-dim{color:#9aa1aa}
 /* 轻提示 */
@@ -272,7 +272,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
           <tr data-page-node-id="PVjd8SQRHIQASKG8tr9cwA">
             <th data-page-node-id="qOHPFDYA2xGGtS6DrALU9D" style="width:19%"><!--pnid:z49KGrtRLnr1ck37ekj6cg-->业务名称/编码</th>
             <th data-page-node-id="TtmoPcgDMRwnEP8PiF9DES" style="width:12%"><!--pnid:gFKDEhrGzmzF17arPsQbS8-->类别/系列</th>
-            <th data-page-node-id="PNAKzPrxmmehM7naqeFVdb" style="width:12%"><!--pnid:aO3U0w2izlhMNwOK6KLrbi-->资费/羊毛</th>
+            <th data-page-node-id="PNAKzPrxmmehM7naqeFVdb" style="width:12%"><!--pnid:aO3U0w2izlhMNwOK6KLrbi-->合约/羊毛</th>
             <th data-page-node-id="sHo4PPXPdyShdFXIyRiHvn" style="width:7.5%; text-align:center"><!--pnid:eziUOU3izyab7vshJvgp2x-->开通状态</th>
             <th data-page-node-id="iTYiaIgRaYoaDBR5POpyNe" style="width:34%"><!--pnid:uJLFagzkzVD6yNCJhv61Co-->其他</th>
             <th data-page-node-id="xYOxHuodHpBkYlDLPEGlsD" style="width:16%"><!--pnid:kzdnEavVFeblH9p1ZJAxTo-->操作</th>
@@ -320,9 +320,9 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
     <div data-page-node-id="1SVlr9dKcP4kAm2da1UOFZ" class="picked hidden" id="pickedInfo"></div>
     <!--pnid:latfS9cEaTa5w0c1kGDtGv--><!-- 编辑时：可编辑字段 -->
     <div data-page-node-id="MbLXpk4byz9mnKf5dw4GzU" class="hidden" id="editArea">
-      <div data-page-node-id="hriCAs6xfSJ1j1wwfhOSeo" class="field">
-        <label data-page-node-id="r022yRCemOyVhuIil1njGI" id="priceLabel"><!--pnid:8YN3U1Kq1Cykr9172pn7cp-->资费价格（元）<i data-page-node-id="8sJ0TU6oImnsdwOoWOUbPR"><!--pnid:XwQyOlr4MTgIJ0dDjyeg2f-->*</i></label>
-        <input data-page-node-id="XWU0HxGD7EDcJi58qhQzzX" id="fPrice" inputmode="decimal" placeholder="如：10.00">
+      <div data-page-node-id="DyC8Wis9RIMoHbBxIlYT8p" class="field" id="contractField">
+        <label data-page-node-id="4ibqb7CEDnZoBtsY8zFcwL" id="contractLabel"><!--pnid:8ffLkNvip4Rn3tD6pfApZ3-->合约消费金额（元）<i data-page-node-id="plezFtl21PCkUPDlvQo1tj"><!--pnid:nyaXmwnAAgqaC7jK5zPzNT-->*</i></label>
+        <input data-page-node-id="0gQ7Fu5lGvb7AcxZH61qPM" id="fContract" inputmode="decimal" placeholder="如：25.00">
       </div>
       <div data-page-node-id="IZ3GbhcGZuYmN4eWFW8f5u" class="field">
         <label data-page-node-id="hfLM6jktehN5yXtCQbjfJD"><!--pnid:lTlGOn2KBYjIDBBS72pbKF-->羊毛（元）<i data-page-node-id="MMScN2wFSTq1v0SaOz8ZhW"><!--pnid:4M6IxC9qNqW1ny11c8BY6B-->*</i></label>
@@ -442,9 +442,20 @@ function migrateLegacy(){
 const DEFAULT_SERIES='default';
 const CAT_NAME={consume:'消费凑单类',welfare:'条件福利类'};
 // 消费条件文案（与规则页单选、xlsx 导入导出一致）
-const COND_NAME={avg3:'近3月平均消费达标',avg6:'近6月平均消费达标',month:'未来每月消费达标'};
+const COND_NAME={avg3:'近3月平均消费',avg6:'近6月平均消费',month:'每月消费'};
 // 消费条件归一：avg3 近3月平均 / avg6 近6月平均 / month 每月消费；未知值回退 avg3
 function normCond(v){return v==='avg6'||v==='month'?v:'avg3'}
+// 合约消费金额（元，整数 >=0）：所有业务都有，记在 business 里由用户维护；记录里没有该字段时用规则表资费兜底（仅内存派生，不写回存储）
+function effContract(x){
+  if(!x)return 0;
+  if(x.contract!==undefined&&x.contract!==null&&x.contract!==''){
+    const v=Math.round(Number(x.contract));
+    if(Number.isFinite(v)&&v>=0)return v;
+  }
+  const r=x.code?ruleMap.get(x.code):null;
+  const p=r&&r.price!=null?Number(r.price):Number(x.price);
+  return Number.isFinite(p)&&p>=0?Math.round(p):0;
+}
 // 官方详情页地址模板，{code} 为业务编码占位；为空时认领弹窗不显示"官方详情"按钮
 const OFFICIAL_URL='https://h.app.coc.10086.cn/cmcc-app/pc-pages/tariffZonePers.html?pageId=834148205904408576&prov=100&channelId=P00000010700';
 let items=[],editingId=null;
@@ -709,7 +720,6 @@ function render(){
   renderPager($('pager'),list.length,pageBiz,p=>{pageBiz=p;render()});
   const rows=list.slice((pageBiz-1)*PAGE_SIZE,pageBiz*PAGE_SIZE);
   $('tbody').innerHTML=rows.map(x=>{
-    const welfare=x.category==='welfare';
     return `<tr data-id="${x.id}">
       <td>
         <div class="nm-line"><span class="nm" title="${escapeHtml(x.name)}">${escapeHtml(x.name)}</span></div>
@@ -717,7 +727,7 @@ function render(){
         ${x.offShelf?'<div class="off-line" style="margin-top:3px"><span class="off-badge">已下架</span></div>':''}
       </td>
       <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span></div></td>
-      <td class="price">${welfare?'<small>低消</small>':''}${priceText(x.price)}<span class="sep">-</span><span class="wool">${priceText(x.wool!=null?x.wool:0)}</span></td>
+      <td class="price">${priceText(effContract(x))}<span class="sep">-</span><span class="wool">${priceText(x.wool!=null?x.wool:0)}</span></td>
       <td class="st-cell"><button class="switch${x.active?' on':''}" data-act="toggleSt" role="switch" aria-checked="${x.active?'true':'false'}" aria-label="开通状态"${(x.startDate||x.endDate)?' title="范围内自动开通，到期自动关闭；手动关闭后保持关闭"':''}></button></td>
       <td class="other"><div class="other-date">${escapeHtml(dateRangeText(x))}</div><div class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</div></td>
       <td class="ops">
@@ -730,13 +740,6 @@ function render(){
 }
 
 /* ============ 添加（认领）/ 编辑弹窗 ============ */
-function syncPriceHint(){
-  const r=ruleMap.get(pickedCode);
-  const welfare=!!(r&&r.category==='welfare');
-  // 表头随资费类别：凑单消费类 → 消费价格；条件福利类 → 最低消费
-  $('priceLabel').innerHTML=`${welfare?'最低消费（元）':'消费价格（元）'}<i>*</i>`;
-  $('fPrice').placeholder=welfare?'请输入最低消费，如10.00':'如：10.00';
-}
 function unclaimedRules(){
   const claimed=new Set(items.map(x=>x.code).filter(Boolean));
   let list=[...ruleMap.values()].filter(r=>!claimed.has(cleanName(r.code)));
@@ -814,7 +817,9 @@ function renderPicked(code){
     <div class="pk-row"><span class="pk-k">业务编码</span><span class="pk-code">${escapeHtml(cleanName(r.code))}</span></div>
     <div class="pk-row"><span class="pk-k">业务类别</span><span>${CAT_NAME[r.category]||''}</span></div>
     <div class="pk-row"><span class="pk-k">所属系列</span><span>${escapeHtml(seriesName(r.seriesId))}</span></div>
-    <div class="pk-row"><span class="pk-k">${r.category==='welfare'?'最低消费':'消费金额'}</span><span>${r.price!=null?priceText(r.price):'—'}</span></div>
+    ${r.category==='welfare'
+      ?`<div class="pk-row"><span class="pk-k">最低资费</span><span>${COND_NAME[normCond(r.condAvg)]||COND_NAME.avg3}<span class="pk-sep">·</span>${r.price!=null?priceText(r.price):'—'}</span></div>`
+      :`<div class="pk-row"><span class="pk-k">消费金额</span><span>${r.price!=null?priceText(r.price):'—'}</span></div>`}
     <div class="pk-row"><span class="pk-k">违约责任</span><span>${r.liability?escapeHtml(r.liability):'—'}</span></div>`;
   const ob=$('officialBtn');
   if(ob)ob.addEventListener('click',()=>openOfficial(code,ob));
@@ -823,7 +828,8 @@ function openForm(item){
   editingId=item?item.id:null;
   pickedCode=null;
   $('formErr').textContent='';
-  $('fPrice').value=item?priceText(item.price):'';
+  // 合约消费金额必填：编辑时回显已存值；记录里没有该字段时用规则表资费兜底，保存后才落盘
+  $('fContract').value=item?String(effContract(item)):'';
   $('fWool').value=item?priceText(item.wool!=null?item.wool:0):'0.00';
   $('fStart').value=item&&item.startDate?item.startDate:'';
   $('fEnd').value=item&&item.endDate?item.endDate:'';
@@ -842,7 +848,6 @@ function openForm(item){
       $('pickedInfo').innerHTML='<div class="pk-head"><b>未关联业务编码</b></div><div class="pk-row"><span class="pk-dim">该业务为旧数据（无业务编码），仅可编辑下方字段</span></div>';
     }
     $('editArea').classList.remove('hidden');
-    syncPriceHint();
     $('saveBtn').textContent='保存';
   }else{
     $('formTitle').textContent='添加业务';
@@ -861,7 +866,7 @@ function openForm(item){
     renderPickList();
   }
   $('modal').classList.remove('hidden');
-  if(item)setTimeout(()=>$('fPrice').focus(),30);
+  if(item)setTimeout(()=>$('fContract').focus(),30);
   else setTimeout(()=>$('pickKw').focus(),30);
 }
 function closeForm(){$('modal').classList.add('hidden');editingId=null;pickedCode=null;pickedSet=new Set()}
@@ -896,12 +901,12 @@ function validate(){
     if(!pickedSet.size)return '请先勾选要添加的业务';
     return '';
   }
-  const priceRaw=$('fPrice').value.trim();
-  if(priceRaw==='')return '请填写资费价格';
-  if(!/^\d+(\.\d{1,2})?$/.test(priceRaw))return '价格需为数字，最多两位小数';
-  const price=Number(priceRaw);
-  if(!Number.isFinite(price)||price<0)return '价格不能为负数';
-  if(price>99999)return '价格过大';
+  const contractRaw=$('fContract').value.trim();
+  if(contractRaw==='')return '请填写合约消费金额';
+  if(!/^\d+(\.\d{1,2})?$/.test(contractRaw))return '合约消费金额需为数字，最多两位小数';
+  const contractVal=Number(contractRaw);
+  if(!Number.isFinite(contractVal)||contractVal<0)return '合约消费金额不能为负数';
+  if(contractVal>99999)return '合约消费金额过大';
   const woolRaw=$('fWool').value.trim();
   if(woolRaw==='')return '请填写羊毛';
   if(!/^\d+(\.\d{1,2})?$/.test(woolRaw))return '羊毛需为数字，最多两位小数';
@@ -920,13 +925,13 @@ function save(){
   const now=Date.now();
   let savedId=editingId;
   if(editingId){
-    const r=pickedCode?ruleMap.get(pickedCode):null;
-    const price=Number($('fPrice').value.trim());
     const active=document.querySelector('input[name="fStatus"]:checked').value==='on';
     const i=items.findIndex(x=>x.id===editingId);
     if(i>=0){
       const prev=items[i];
-      const next={...prev,price,wool:Number($('fWool').value.trim()),startDate:$('fStart').value||'',endDate:$('fEnd').value||'',active,updatedAt:now};
+      // 资费只由 rules 维护，编辑不改写 price 快照；合约金额由用户填写
+      const contract=Math.round(Number($('fContract').value.trim()));
+      const next={...prev,wool:Number($('fWool').value.trim()),contract,startDate:$('fStart').value||'',endDate:$('fEnd').value||'',active,updatedAt:now};
       // 开通状态以本次保存为准：开通则解除手动关闭标记；由开通改为未开通视为手动关闭
       if(active)delete next.manualOff;
       else if(prev.active)next.manualOff=true;
@@ -946,6 +951,7 @@ function save(){
         seriesId:series.some(x=>x.id===r.seriesId)?r.seriesId:DEFAULT_SERIES,
         liability:r.liability||'',
         condAvg:r.category==='welfare'?normCond(r.condAvg):undefined,
+        contract:Math.round(Number(r.price)||0),
         price:r.price!=null?Number(r.price):0,
         wool:0,
         startDate:'',endDate:'',
@@ -1028,14 +1034,15 @@ kwClear.addEventListener('click',()=>{
   kwEl.focus();
 });
 syncKwClear();
-$('fPrice').addEventListener('input',e=>{
+// 合约消费金额：只允许数字与小数点，提交时四舍五入取整
+$('fContract').addEventListener('input',e=>{
   const clean=sanitizePrice(e.target.value);
   if(clean!==e.target.value)e.target.value=clean;
 });
-$('fPrice').addEventListener('keydown',e=>{
+$('fContract').addEventListener('keydown',e=>{
   if(['e','E','+','-','*','/',' '].includes(e.key))e.preventDefault();
 });
-// 羊毛输入：与价格相同的过滤规则（正数和 0）
+// 羊毛输入：与合约金额相同的过滤规则（正数和 0）
 $('fWool').addEventListener('input',e=>{
   const clean=sanitizePrice(e.target.value);
   if(clean!==e.target.value)e.target.value=clean;
@@ -1133,7 +1140,7 @@ const XLSX_COLS=[
   {key:'category',head:'业务类别',width:14,type:'s'},
   {key:'series',head:'所属系列',width:16,type:'s'},
   {key:'cond',head:'消费条件',width:20,type:'s'},
-  {key:'price',head:'资费价格（元）',width:14,type:'n'},
+  {key:'contract',head:'合约消费金额（元）',width:18,type:'n'},
   {key:'wool',head:'羊毛（元）',width:11,type:'n'},
   {key:'start',head:'开始日期',width:13,type:'d'},
   {key:'end',head:'结束日期',width:13,type:'d'},
@@ -1205,14 +1212,14 @@ const XLSX_WB='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<workboo
 const XLSX_WB_RELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
 const XLSX_STYLES='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="yyyy\\-mm\\-dd"/></numFmts><fonts count="2"><font><sz val="11"/><color theme="1"/><name val="等线"/><family val="2"/><charset val="134"/></font><font><b/><sz val="11"/><color theme="1"/><name val="等线"/><family val="2"/><charset val="134"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFEFF4FA"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="2" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="常规" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
 
-// 导出顺序：按系列分组，同系列资费从低到高
+// 导出顺序：按系列分组，同系列合约金额从低到高
 function xlsxRows(){
   const order=new Map(series.map((s,i)=>[s.id,i]));
   const list=items.slice().sort((a,b)=>{
     const sa=seriesOf(a),sb=seriesOf(b);
     const oa=order.has(sa)?order.get(sa):999,ob=order.has(sb)?order.get(sb):999;
     if(oa!==ob)return oa-ob;
-    return (Number(a.price)||0)-(Number(b.price)||0);
+    return effContract(a)-effContract(b);
   });
   return [XLSX_COLS.map(c=>c.head)].concat(list.map(x=>XLSX_COLS.map(c=>{
     if(c.key==='code')return x.code||'';
@@ -1220,7 +1227,7 @@ function xlsxRows(){
     if(c.key==='category')return x.category==='welfare'?'条件福利类':'消费凑单类';
     if(c.key==='series')return seriesName(x.seriesId);
     if(c.key==='cond')return x.category==='welfare'?(COND_NAME[x.condAvg]||COND_NAME.avg3):'';
-    if(c.key==='price')return Number(x.price)||0;
+    if(c.key==='contract')return effContract(x);
     if(c.key==='wool')return Number(x.wool)||0;
     if(c.key==='start')return x.startDate||'';
     if(c.key==='end')return x.endDate||'';
@@ -1387,7 +1394,8 @@ const IMPORT_ALIASES={
   category:['业务类别','类别'],
   series:['所属系列','系列','资费系列'],
   cond:['消费条件','平均消费'],
-  price:['资费价格','最低消费','资费','价格'],
+  // 合约消费金额：兼容旧表头（资费价格 / 最低消费 / 合约最低消费），一律读作合约金额
+  contract:['合约消费金额','合约最低消费','合约消费','合约月消费','合约','资费价格','最低消费','资费','价格'],
   wool:['羊毛','返利'],
   start:['开始日期','起始日期','开始时间','生效日期'],
   end:['结束日期','截止日期','结束时间','失效日期'],
@@ -1451,18 +1459,24 @@ function mapImportRows(rows){
     if(/福利|welfare/i.test(catRaw))category='welfare';
     else if(/凑单|消费|consume/i.test(catRaw))category='consume';
     if(!category){errors.push(`第 ${i+1} 行「${name}」：业务类别无法识别（${catRaw||'空'}），已跳过`);continue}
-    const price=toNum(get('price'));
-    if(price==null||price<0){errors.push(`第 ${i+1} 行「${name}」：资费价格不是有效数字，已跳过`);continue}
+    // 合约消费金额：必填（允许 0），保留整数
+    const contractNum=toNum(get('contract'));
+    if(contractNum==null||contractNum<0){errors.push(`第 ${i+1} 行「${name}」：合约消费金额不是有效数字，已跳过`);continue}
+    const contract=Math.round(contractNum);
     const wool=toNum(get('wool'));
     if(wool!=null&&wool<0){errors.push(`第 ${i+1} 行「${name}」：羊毛不能为负数，已跳过`);continue}
+    // 资费快照只作门槛兜底：优先取规则表同编码的资费，查不到才退回合约金额
+    const rule=code?ruleMap.get(code):null;
+    const rulePrice=rule&&rule.price!=null&&Number.isFinite(Number(rule.price))?Number(rule.price):contract;
     const start=toDate(get('start')),end=toDate(get('end'));
     if(start&&end&&start>end){errors.push(`第 ${i+1} 行「${name}」：开始日期晚于结束日期，已跳过`);continue}
-    records.push({
-      name,code,category,seriesName:get('series'),price,wool:wool==null?0:wool,
+    const rec={
+      name,code,category,seriesName:get('series'),price:rulePrice,wool:wool==null?0:wool,contract,
       startDate:start,endDate:end,liability:get('liability'),
       condAvg:/每月|当月|单月/.test(get('cond'))?'month':(/6/.test(get('cond'))?'avg6':'avg3'),
       active:parseStatus(get('status'))
-    });
+    };
+    records.push(rec);
   }
   return {records,errors,headerRow:headerRow+1};
 }
@@ -1532,6 +1546,7 @@ function applyImport(records,plan){
       startDate:r.startDate,endDate:r.endDate,liability:r.liability,active:r.active,seriesId:sid
     };
     if(r.category==='welfare')data.condAvg=normCond(r.condAvg);
+    data.contract=r.contract;
     if(r.code)data.code=r.code;
     const exist=r.code?items.find(x=>x.code===r.code):items.find(x=>x.name===r.name&&seriesOf(x)===sid);
     if(exist){

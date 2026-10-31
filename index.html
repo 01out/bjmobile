@@ -23,6 +23,15 @@ button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;fo
 .history{display:none;margin-top:15px}.history-title{font-size:12px;color:#8b929c;margin-bottom:7px}.history-list{display:flex;flex-wrap:wrap;gap:7px}.history-item{font-size:13px;background:#f7f8fa;border:1px solid #e9edf1;padding:7px 10px;border-radius:8px;cursor:pointer}
 .hidden{display:none}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f7f8fa;border-radius:12px;padding:15px}.stat-k{font-size:12px;color:#8b929c}.stat-v{font-size:28px;font-weight:700;margin-top:5px}.unit{font-size:12px;font-weight:400;margin-left:3px}
 .table{margin-top:15px}.row{display:grid;grid-template-columns:1fr 1fr;padding:11px 2px;border-bottom:1px solid #edf0f2;font-size:14px}.row:last-child{border-bottom:0}.right{text-align:right}.muted{color:#9aa1aa}
+/* 当月消费手动补录输入框（接口更新延迟时）与均消自算括号 */
+.cur-cell{display:flex;align-items:center;justify-content:flex-end}
+.cur-box{display:inline-flex;align-items:center;border:1px solid #e6ecf3;border-radius:8px;padding:0 8px;background:#fff}
+.cur-box:focus-within{border-color:#1677ff}
+.cur-pre{font-style:normal;color:#8b929c;font-size:13px;margin-right:2px}
+.cur-cons{width:96px;border:0;background:transparent;outline:none;padding:5px 0;font-size:14px;text-align:right;color:#20242a}
+.cur-cons:not(:placeholder-shown){width:68px}
+.cur-cons::placeholder{color:#c3c9d2;font-size:12px}
+.stat-self{font-size:14px;font-weight:600;color:#5a6270;margin-left:5px;white-space:nowrap}
 .plan-month{background:#fff;border:1px solid #e6ecf3;border-radius:14px;padding:13px 14px 11px;margin-top:10px;box-shadow:0 2px 10px #20242a0f,0 1px 2px #20242a08}
 .plan-month:first-child{margin-top:5px}
 .plan-row{display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:center;padding:0}
@@ -201,6 +210,17 @@ function round(v){return Math.round(v)}
 // 月度消费值原样展示，不做四舍五入（仅清理浮点误差，如 100.50000000000001 -> 100.5）
 function numText(v){return v==null?'—':String(Number(Number(v).toPrecision(12)))}
 function money(v){return v==null?'—':`¥${round(v)}`}
+// 反推当月消费：均消按整数四舍五入展示，反推要取「刚好四舍五入到目标整数」的最小值
+// 例：目标是 38，则按 37.5 反推（3×37.5=112.5 展示为 38），而不是按 38 反推多花 1.5
+function minConsForAvg(target,sum,n){
+  let c=target*n-0.5*n-sum;
+  if(!Number.isFinite(c))return null;
+  if(c<0)c=0; // 目标已达成，当月无需再消费
+  c=Math.round(c*100)/100;
+  // 浮点兜底：加上当月后四舍五入必须真的到目标整数，差一点就补一分钱
+  if(Math.round((sum+c)/n)<target)c=Math.round((c+0.01)*100)/100;
+  return c;
+}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
 // 手机号输入框：有内容时才显示清空图标
@@ -264,20 +284,60 @@ function missingMonths(map){
   for(let i=0;i<6;i++){const m=monthAdd(last,-i);if(map[m]==null)miss.push(m)}
   return miss.sort();
 }
+// 当月消费手动补录：运营商接口更新有 2 天左右延迟，当月通常无数据，允许用户自行输入
+let curCons='',statHist={},statMap={};
+function selfAvgMap(){
+  const now=currentMonth(),last=monthAdd(now,-1),m={...statHist};
+  if(curCons!==''&&Number.isFinite(Number(curCons)))m[last]=Number(curCons);
+  else if(statMap[last]!=null)m[last]=statMap[last];
+  return m;
+}
+// 近3/6月平均：接口窗口（截至上月）+ 自算窗口（含当月补录值），自算值放括号里
+function renderStats(){
+  const now=currentMonth(),last=monthAdd(now,-1),m=selfAvgMap();
+  // 接口值：截至上月的窗口；括号自算：同样截至上月，但把手动补录的上月值纳入
+  [['avg3',avgFor(statHist,last,3),avgFor(m,last,3)],['avg6',avgFor(statHist,last,6),avgFor(m,last,6)]]
+    .forEach(([id,a,s])=>{
+      document.getElementById(id).innerHTML=`${money(a)}${s!=null?`<span class="stat-self">(${money(s)})</span>`:''}<span class="unit">元/月</span>`;
+    });
+}
 function showHistorical(map,hist){
   const now=currentMonth(), last=monthAdd(now,-1);
-  const a3=avgFor(hist,last,3),a6=avgFor(hist,last,6);
-  document.getElementById('avg3').innerHTML=money(a3)+'<span class="unit">元/月</span>';
-  document.getElementById('avg6').innerHTML=money(a6)+'<span class="unit">元/月</span>';
+  statHist=hist||{};statMap=map||{};curCons='';
+  renderStats();
   const keys=Object.keys(map).sort();
-  document.getElementById('historyTable').innerHTML=keys.length?keys.map(m=>`<div class="row"><div>${m}</div><div class="right">¥${numText(map[m])}</div></div>`).join(''):'<div class="empty">暂无消费数据</div>';
+  let rows=keys.map(m=>`<div class="row"><div>${m}</div><div class="right">¥${numText(map[m])}</div></div>`).join('');
+  // 上月无数据（运营商接口更新有延迟）且其余月份正常时，追加上月行，由用户手动输入消费值
+  if(map[last]==null&&keys.length){
+    rows+=`<div class="row"><div>${last}</div><div class="right cur-cell"><span class="cur-box"><i class="cur-pre">¥</i><input class="cur-cons" type="text" inputmode="decimal" autocomplete="off" placeholder="输入上月消费"></span></div></div>`;
+  }
+  document.getElementById('historyTable').innerHTML=rows||'<div class="empty">暂无消费数据</div>';
   dataCard.classList.remove('hidden');
-  const miss=missingMonths(hist),rows=3+miss.length;
-  const hint=miss.length?`近 6 个月（${monthAdd(last,-5)} ~ ${last}）缺少 ${miss.length} 个月的数据（${miss.join('、')}），规划月份已扩展为 3 + ${miss.length} = ${rows} 个月。`:'';
-  buildPlan(hist,rows,hint);
+  const miss=missingMonths(hist),rowsN=3+miss.length;
+  const hint=miss.length?`近 6 个月（${monthAdd(last,-5)} ~ ${last}）缺少 ${miss.length} 个月的数据（${miss.join('、')}），规划月份已扩展为 3 + ${miss.length} = ${rowsN} 个月。`:'';
+  // 传副本：规划模块会动态并入补录的上月值，不能污染接口统计用的 statHist
+  buildPlan({...hist},rowsN,hint);
 }
+// 上月消费补录输入：只允许数字和一位小数点、最多两位小数，实时刷新括号里的自算均消
+document.getElementById('historyTable').addEventListener('input',e=>{
+  if(!e.target.classList||!e.target.classList.contains('cur-cons'))return;
+  let v=e.target.value.replace(/[^\d.]/g,'');
+  const i=v.indexOf('.');
+  if(i>=0)v=v.slice(0,i+1)+v.slice(i+1).replace(/\./g,'').slice(0,2);
+  if(v!==e.target.value)e.target.value=v;
+  curCons=v;
+  renderStats();
+  // 接口缺上月时，把补录值并入规划数据：未来月的近3/6月均消、福利达标判定与趋势图都改用含补录的口径
+  if(plan.rows.length){
+    const last=monthAdd(currentMonth(),-1);
+    if(curCons!==''&&Number.isFinite(Number(curCons)))plan.map[last]=Number(curCons);
+    else if(statMap[last]==null)delete plan.map[last]; // 清空输入且接口本就没有该月时，恢复原状
+    recalcPlan();
+  }
+});
 // 查询失败：无任何可用历史数据，缺少月份数按默认 6 计算
 function showFailedPlan(){
+  curCons='';statHist={};statMap={};
   document.getElementById('avg3').innerHTML='—<span class="unit">元/月</span>';
   document.getElementById('avg6').innerHTML='—<span class="unit">元/月</span>';
   document.getElementById('historyTable').innerHTML='';
@@ -397,10 +457,10 @@ function recalcPlan(){
       if(row.cons!==''&&Number.isFinite(n)&&n>=0)cons=n;
     }else if(row.anchor==='a3'){
       const a=Number(row.a3),p=prev(2);
-      if(row.a3!==''&&Number.isFinite(a)&&p){const c=3*a-p[0]-p[1];if(c>=0)cons=c}
+      if(row.a3!==''&&Number.isFinite(a)&&p)cons=minConsForAvg(Math.round(a),p[0]+p[1],3);
     }else{
       const a=Number(row.a6),p=prev(5);
-      if(row.a6!==''&&Number.isFinite(a)&&p){const c=6*a-p.reduce((s,v)=>s+v,0);if(c>=0)cons=c}
+      if(row.a6!==''&&Number.isFinite(a)&&p)cons=minConsForAvg(Math.round(a),p.reduce((s,v)=>s+v,0),6);
     }
     if(cons!=null)val[m]=cons;
 
@@ -501,13 +561,13 @@ function initCounts(m){
   loadBizRaw().filter(x=>x&&bizCat(x)==='consume'&&x.active&&bizInMonth(x,m)).forEach(x=>{c[bizId(x)]=1});
   return c;
 }
-// 该行已开通凑单业务的资费总和（按开通次数累计；已过有效期的业务不计入该行）
+// 该行已开通凑单业务的合约金额总和（按开通次数累计；已过有效期的业务不计入该行）
 function consRowSum(row){
   const biz=loadBizRaw();let s=0;
   Object.keys(row.counts||{}).forEach(id=>{
     const n=row.counts[id];if(!n)return;
     const x=biz.find(b=>bizId(b)===id);
-    if(x&&bizInMonth(x,row.m)&&Number.isFinite(Number(x.price)))s+=Number(x.price)*n;
+    if(x&&bizInMonth(x,row.m))s+=contractOf(x)*n;
   });
   return s;
 }
@@ -602,7 +662,7 @@ function addConsume(row,id){
   if(!x)return;
   row.counts=row.counts||{};
   const sid=x.seriesId||'default';
-  const price=Number(x.price)||0;
+  const price=contractOf(x);
   let times=1,removedPrice=0;
   // 同一自定义系列互斥：视为业务变更，移除该系列原业务后加入新业务（沿用原开通次数）
   if(sid!=='default'&&(row.counts[id]||0)<=0){
@@ -612,7 +672,7 @@ function addConsume(row,id){
       const n=row.counts[cid];if(!n)return;
       const y=biz.find(b=>bizId(b)===cid);
       if(!y||(y.seriesId||'default')!==sid)return;
-      old+=n;removedPrice+=(Number(y.price)||0)*n;row.counts[cid]=0;
+      old+=n;removedPrice+=contractOf(y)*n;row.counts[cid]=0;
     });
     if(old)times=old;
   }
@@ -632,9 +692,9 @@ function removeConsume(row,id){
   if(n<=0)return;
   const x=bizById(id);
   row.counts[id]=n-1;
-  if(!row.consAuto&&x&&Number.isFinite(Number(x.price))){
+  if(!row.consAuto&&x){
     const cur=Number(row.el.cons.value);
-    if(Number.isFinite(cur)){row.el.cons.value=fmtNum(Math.max(0,cur-Number(x.price)));row.cons=row.el.cons.value}
+    if(Number.isFinite(cur)){row.el.cons.value=fmtNum(Math.max(0,cur-contractOf(x)));row.cons=row.el.cons.value}
   }
   recalcPlan();
 }
@@ -675,27 +735,49 @@ document.addEventListener('pointerdown',e=>{
 });
 
 /* ============ 福利开通提示：与业务管理页数据联动 ============ */
-// 候选：条件福利类业务。未开通的全部提示开通；已开通的仅「未来每月消费达标」(month) 需要逐月提示达标差额
+// 候选：条件福利类业务。未开通的按 rules 资费门槛提示开通；已开通的按「合约消费金额」逐月提示达标差额
 // 按目标月份过滤（该月已过有效期的业务不再提示）；互斥与系列规则一致（同一自定义系列业务互斥）
+// 合约消费金额：记录里的 contract 为准（整数 >=0）；老数据没有该字段时用规则表同编码的资费兜底
+function contractOf(x,rules){
+  if(!x)return 0;
+  if(x.contract!==undefined&&x.contract!==null&&x.contract!==''){
+    const v=Math.round(Number(x.contract));
+    if(Number.isFinite(v)&&v>=0)return v;
+  }
+  const r=rules&&x.code?rules.get(String(x.code).trim()):null;
+  const p=r&&r.price!=null?Number(r.price):Number(x.price);
+  return Number.isFinite(p)&&p>=0?Math.round(p):0;
+}
 function welfareCandidates(ym){
-  let series=[];
+  let series=[],rules=new Map();
   const t=todayStr();
   const ymKey=ym||t.slice(0,7);
   const items=loadBizRaw();
   try{series=JSON.parse(localStorage.getItem('arpu_series_v1')||'[]')}catch(e){}
   if(!Array.isArray(series))series=[];
-  const condOf=x=>(x.condAvg==='avg6'||x.condAvg==='month')?x.condAvg:'avg3'; // avg3 近3月 / avg6 近6月 / month 未来每月（旧数据无该字段按近3月）
+  try{
+    const arr=JSON.parse(localStorage.getItem('arpu_rules_v1')||'[]');
+    if(Array.isArray(arr))arr.forEach(r=>{if(r&&r.code)rules.set(String(r.code).trim(),r)});
+  }catch(e){}
+  const condOf=x=>(x.condAvg==='avg6'||x.condAvg==='month')?x.condAvg:'avg3'; // avg3 近3月 / avg6 近6月 / month 每月消费（旧数据无该字段按近3月）
+  // 未开通门槛只认 rules 资费（管理员统一维护）；记录里的资费快照仅在规则表查不到时兜底
+  const rulePriceOf=x=>{
+    const r=x&&x.code?rules.get(String(x.code).trim()):null;
+    const p=r&&r.price!=null?Number(r.price):Number(x&&x.price);
+    return Number.isFinite(p)?p:null;
+  };
   return items.filter(x=>{
-    if(!x||bizCat(x)!=='welfare'||!bizInMonth(x,ymKey)||!Number.isFinite(Number(x.price)))return false;
-    return x.active?condOf(x)==='month':true; // 已开通：只有未来每月消费达标需要持续提示
+    if(!x||bizCat(x)!=='welfare'||!bizInMonth(x,ymKey))return false;
+    return rulePriceOf(x)!=null; // 未开通门槛由 rules 资费决定
   }).map(x=>{
     const sid=x.seriesId||'default',self=bizId(x);
     return {
       id:self,
       name:String(x.name||''),
-      price:Number(x.price),
+      price:rulePriceOf(x),
       cond:condOf(x),
       active:!!x.active,
+      contract:contractOf(x,rules),
       sid,
       isDefault:sid==='default',
       conflicts:sid==='default'?[]:items.filter(y=>y&&y.active&&(y.seriesId||'default')===sid&&bizInMonth(y,ymKey)&&bizId(y)!==self).map(y=>String(y.name||''))
@@ -706,10 +788,15 @@ function welfareCandidates(ym){
 const seriesSel={},wExpanded=new Set();
 let planVal=null;
 function tipText(t,need,arrow){
-  // 已开通的未来每月消费达标业务：提示当月补齐多少即可达标
-  if(t.active)return `该月消费补充 <b>${need.toFixed(2)}</b> 元，即可达标<b>${esc(t.name)}</b>${arrow||''}`;
+  // 业务名后统一带【合约资费】，让每条提示里的金额都能对上具体资费
+  const nm=`<b>${esc(t.name)}</b><b>【${Number(t.contract||0).toFixed(2)}】</b>`;
+  // 已开通业务：与合约消费金额比较，当月够数即达标
+  if(t.active){
+    if(need<=0)return `该月消费已达标${nm}${arrow||''}`;
+    return `该月消费补充 <b>${need.toFixed(2)}</b> 元，即可达标${nm}${arrow||''}`;
+  }
   const conflict=t.conflicts.length?`，与已开通的<b>${esc(t.conflicts.join('、'))}</b>互斥`:'';
-  return `该月消费补充 <b>${need.toFixed(2)}</b> 元，下个月即可开通<b>${esc(t.name)}</b>${arrow||''}${conflict}`;
+  return `该月消费补充 <b>${need.toFixed(2)}</b> 元，下个月即可开通${nm}${arrow||''}${conflict}`;
 }
 function renderWelfareTips(val){
   planVal=val;
@@ -731,9 +818,15 @@ function renderWelfareTips(val){
       if(sid==='default')return;
       if(!bySeries[sid].some(c=>c.id===seriesSel[sid]))seriesSel[sid]=bySeries[sid][0].id;
     });
-    // 消费窗口 = m 往前 N 个月（近3月 N=3、近6月 N=6、每月消费 N=1）；未填的未来月（>= 当前月）按 0 起算，历史月份缺失则无法计算
+    // 未开通：消费窗口 = m 往前 N 个月（近3月 N=3、近6月 N=6、每月消费 N=1），凑够门槛即可开通
+    // 已开通：与合约消费金额比单月消费，差额即当月还需补充的金额
     const gv=k=>{const v=val[k];return v!=null?v:(k>=nowM?0:null)};
     const calc=c=>{
+      if(c.active){
+        const v=gv(m);
+        if(v==null)return null;
+        return Math.max(0,c.contract-v);
+      }
       const n=c.cond==='avg6'?6:c.cond==='month'?1:3;let sum=0;
       for(let i=0;i<n;i++){const v=gv(monthAdd(m,-i));if(v==null)return null;sum+=v}
       return Math.max(0,c.price*n-sum);
