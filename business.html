@@ -441,6 +441,10 @@ function migrateLegacy(){
 }
 const DEFAULT_SERIES='default';
 const CAT_NAME={consume:'消费凑单类',welfare:'条件福利类'};
+// 消费条件文案（与规则页单选、xlsx 导入导出一致）
+const COND_NAME={avg3:'近3月平均消费达标',avg6:'近6月平均消费达标',month:'未来每月消费达标'};
+// 消费条件归一：avg3 近3月平均 / avg6 近6月平均 / month 每月消费；未知值回退 avg3
+function normCond(v){return v==='avg6'||v==='month'?v:'avg3'}
 // 官方详情页地址模板，{code} 为业务编码占位；为空时认领弹窗不显示"官方详情"按钮
 const OFFICIAL_URL='https://h.app.coc.10086.cn/cmcc-app/pc-pages/tariffZonePers.html?pageId=834148205904408576&prov=100&channelId=P00000010700';
 let items=[],editingId=null;
@@ -513,7 +517,7 @@ function load(){
     if(r.category==='consume'||r.category==='welfare')x.category=r.category,x.type=r.category;
     if(series.some(s=>s.id===r.seriesId))x.seriesId=r.seriesId;
     x.liability=r.liability||'';
-    if(r.category==='welfare')x.condAvg=r.condAvg==='avg6'?'avg6':'avg3';
+    if(r.category==='welfare')x.condAvg=normCond(r.condAvg);
     else delete x.condAvg;
   });
   // 兼容旧数据：业务类别统一为两类；系列归一到已存在的系列（无则归默认系列）
@@ -941,7 +945,7 @@ function save(){
         offShelf:!!r.offShelf,
         seriesId:series.some(x=>x.id===r.seriesId)?r.seriesId:DEFAULT_SERIES,
         liability:r.liability||'',
-        condAvg:r.category==='welfare'?(r.condAvg==='avg6'?'avg6':'avg3'):undefined,
+        condAvg:r.category==='welfare'?normCond(r.condAvg):undefined,
         price:r.price!=null?Number(r.price):0,
         wool:0,
         startDate:'',endDate:'',
@@ -1215,7 +1219,7 @@ function xlsxRows(){
     if(c.key==='name')return x.name||'';
     if(c.key==='category')return x.category==='welfare'?'条件福利类':'消费凑单类';
     if(c.key==='series')return seriesName(x.seriesId);
-    if(c.key==='cond')return x.category==='welfare'?(x.condAvg==='avg6'?'近6个月平均消费':'近3个月平均消费'):'';
+    if(c.key==='cond')return x.category==='welfare'?(COND_NAME[x.condAvg]||COND_NAME.avg3):'';
     if(c.key==='price')return Number(x.price)||0;
     if(c.key==='wool')return Number(x.wool)||0;
     if(c.key==='start')return x.startDate||'';
@@ -1456,7 +1460,7 @@ function mapImportRows(rows){
     records.push({
       name,code,category,seriesName:get('series'),price,wool:wool==null?0:wool,
       startDate:start,endDate:end,liability:get('liability'),
-      condAvg:/6/.test(get('cond'))?'avg6':'avg3',
+      condAvg:/每月|当月|单月/.test(get('cond'))?'month':(/6/.test(get('cond'))?'avg6':'avg3'),
       active:parseStatus(get('status'))
     });
   }
@@ -1527,7 +1531,7 @@ function applyImport(records,plan){
       name:r.name,category:r.category,type:r.category,price:r.price,wool:r.wool,
       startDate:r.startDate,endDate:r.endDate,liability:r.liability,active:r.active,seriesId:sid
     };
-    if(r.category==='welfare')data.condAvg=r.condAvg||'avg3';
+    if(r.category==='welfare')data.condAvg=normCond(r.condAvg);
     if(r.code)data.code=r.code;
     const exist=r.code?items.find(x=>x.code===r.code):items.find(x=>x.name===r.name&&seriesOf(x)===sid);
     if(exist){
@@ -1556,7 +1560,7 @@ function applyImport(records,plan){
         id:'r'+now+i+Math.random().toString(36).slice(2,6),
         code:r.code,shortName:'',name:r.name,
         seriesId:item?item.seriesId:DEFAULT_SERIES,
-        category:r.category,condAvg:r.category==='welfare'?(r.condAvg==='avg6'?'avg6':'avg3'):undefined,
+        category:r.category,condAvg:r.category==='welfare'?normCond(r.condAvg):undefined,
         price:r.price!=null?r.price:null,
         liability:r.liability||'',
         external:true,createdAt:now,updatedAt:now

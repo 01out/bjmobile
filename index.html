@@ -675,7 +675,8 @@ document.addEventListener('pointerdown',e=>{
 });
 
 /* ============ 福利开通提示：与业务管理页数据联动 ============ */
-// 候选：条件福利类且未开通的业务；按目标月份过滤（该月已过有效期的业务不再提示）；互斥与系列规则一致（同一自定义系列业务互斥）
+// 候选：条件福利类业务。未开通的全部提示开通；已开通的仅「未来每月消费达标」(month) 需要逐月提示达标差额
+// 按目标月份过滤（该月已过有效期的业务不再提示）；互斥与系列规则一致（同一自定义系列业务互斥）
 function welfareCandidates(ym){
   let series=[];
   const t=todayStr();
@@ -683,16 +684,21 @@ function welfareCandidates(ym){
   const items=loadBizRaw();
   try{series=JSON.parse(localStorage.getItem('arpu_series_v1')||'[]')}catch(e){}
   if(!Array.isArray(series))series=[];
-  return items.filter(x=>x&&bizCat(x)==='welfare'&&!x.active&&bizInMonth(x,ymKey)&&Number.isFinite(Number(x.price))).map(x=>{
-    const sid=x.seriesId||'default';
+  const condOf=x=>(x.condAvg==='avg6'||x.condAvg==='month')?x.condAvg:'avg3'; // avg3 近3月 / avg6 近6月 / month 未来每月（旧数据无该字段按近3月）
+  return items.filter(x=>{
+    if(!x||bizCat(x)!=='welfare'||!bizInMonth(x,ymKey)||!Number.isFinite(Number(x.price)))return false;
+    return x.active?condOf(x)==='month':true; // 已开通：只有未来每月消费达标需要持续提示
+  }).map(x=>{
+    const sid=x.seriesId||'default',self=bizId(x);
     return {
-      id:String(x.id||x.name||''),
+      id:self,
       name:String(x.name||''),
       price:Number(x.price),
-      avg6:x.condAvg==='avg6', // 消费条件：按近6月平均还是近3月平均（旧数据无该字段按近3月）
+      cond:condOf(x),
+      active:!!x.active,
       sid,
       isDefault:sid==='default',
-      conflicts:sid==='default'?[]:items.filter(y=>y&&y.active&&(y.seriesId||'default')===sid&&bizInMonth(y,ymKey)).map(y=>String(y.name||''))
+      conflicts:sid==='default'?[]:items.filter(y=>y&&y.active&&(y.seriesId||'default')===sid&&bizInMonth(y,ymKey)&&bizId(y)!==self).map(y=>String(y.name||''))
     };
   });
 }
@@ -700,6 +706,8 @@ function welfareCandidates(ym){
 const seriesSel={},wExpanded=new Set();
 let planVal=null;
 function tipText(t,need,arrow){
+  // 已开通的未来每月消费达标业务：提示当月补齐多少即可达标
+  if(t.active)return `该月消费补充 <b>${need.toFixed(2)}</b> 元，即可达标<b>${esc(t.name)}</b>${arrow||''}`;
   const conflict=t.conflicts.length?`，与已开通的<b>${esc(t.conflicts.join('、'))}</b>互斥`:'';
   return `该月消费补充 <b>${need.toFixed(2)}</b> 元，下个月即可开通<b>${esc(t.name)}</b>${arrow||''}${conflict}`;
 }
@@ -723,10 +731,10 @@ function renderWelfareTips(val){
       if(sid==='default')return;
       if(!bySeries[sid].some(c=>c.id===seriesSel[sid]))seriesSel[sid]=bySeries[sid][0].id;
     });
-    // 平均消费窗口 = m 往前 N 个月（消费条件为近3月 N=3、近6月 N=6）；未填的未来月（>= 当前月）按 0 起算，历史月份缺失则无法计算
+    // 消费窗口 = m 往前 N 个月（近3月 N=3、近6月 N=6、每月消费 N=1）；未填的未来月（>= 当前月）按 0 起算，历史月份缺失则无法计算
     const gv=k=>{const v=val[k];return v!=null?v:(k>=nowM?0:null)};
     const calc=c=>{
-      const n=c.avg6?6:3;let sum=0;
+      const n=c.cond==='avg6'?6:c.cond==='month'?1:3;let sum=0;
       for(let i=0;i<n;i++){const v=gv(monthAdd(m,-i));if(v==null)return null;sum+=v}
       return Math.max(0,c.price*n-sum);
     };

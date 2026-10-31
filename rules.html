@@ -109,6 +109,7 @@ tbody tr:hover td{background:#fafbfc}
 .radios{display:flex;gap:18px;font-size:14px;padding-top:4px}
 .radios label{display:inline-flex;align-items:center;gap:6px;margin:0;color:#20242a;font-size:14px}
 .radios input{width:15px;height:15px;accent-color:#1677ff;margin:0}
+#condField .radios{flex-wrap:wrap;gap:10px 18px}
 .form-err{min-height:16px;font-size:11px;color:#d9363e;margin:2px 0 6px}
 .sheet-foot{display:flex;gap:9px}
 .sheet-foot button{flex:1;height:40px}
@@ -257,8 +258,9 @@ tbody tr:hover td{background:#fafbfc}
     <div data-page-node-id="yLIxgJlwlKRSar0XcSBWaz" class="field hidden" id="condField">
       <label data-page-node-id="7091b8XUjehdEogiByJ9Ed"><!--pnid:Endo3boOkbOjJYGJ5XHDHI-->消费条件</label>
       <div data-page-node-id="uvxiNZAb1ves7a1oiz4YJ7" class="radios">
-        <label data-page-node-id="sxXBhnhoF9ferz8arLbyt5"><input data-page-node-id="RD0nIfQ3zhH9AHUXEJ1Jym" name="fCond" type="radio" value="avg3"><!--pnid:oO0Rqr1lE0xixGvwYkyu8d-->近3月平均消费</label>
-        <label data-page-node-id="bHJ8ntDsmP5XA7eg3NVaES"><input data-page-node-id="7hq70zfkPImYazFeOjZirH" name="fCond" type="radio" value="avg6"><!--pnid:4wE1cvf9wtUYJzx6TNlcH2-->近6月平均消费</label>
+        <label data-page-node-id="sxXBhnhoF9ferz8arLbyt5"><input data-page-node-id="RD0nIfQ3zhH9AHUXEJ1Jym" name="fCond" type="radio" value="avg3"><!--pnid:oO0Rqr1lE0xixGvwYkyu8d-->近3月平均消费达标</label>
+        <label data-page-node-id="bHJ8ntDsmP5XA7eg3NVaES"><input data-page-node-id="7hq70zfkPImYazFeOjZirH" name="fCond" type="radio" value="avg6"><!--pnid:4wE1cvf9wtUYJzx6TNlcH2-->近6月平均消费达标</label>
+        <label data-page-node-id="o0fwKW6SWYTRbFInksoOGi"><input data-page-node-id="F7URIdHLJdRwXoMGKDwLCf" name="fCond" type="radio" value="month"><!--pnid:LXHXEltBNQlW61QRidb2Hz-->未来每月消费达标</label>
       </div>
     </div>
     <div data-page-node-id="rgfe97gW89gQaLLTGol37Y" class="field">
@@ -311,6 +313,8 @@ const KEY_S='arpu_series_v1';
 const KEY_BIZ='arpu_business_v1';
 const DEFAULT_SERIES='default';
 const CAT_NAME={consume:'凑单消费类',welfare:'条件福利类'};
+// 消费条件文案（与弹窗单选、xlsx 导入导出一致）
+const COND_NAME={avg3:'近3月平均消费达标',avg6:'近6月平均消费达标',month:'未来每月消费达标'};
 
 const $=id=>document.getElementById(id);
 let rules=[],series=[],editingId=null,seriesFilter='',renamingSeriesId=null,addingSeries=false,catFilter='',srcFilter='';
@@ -628,7 +632,7 @@ function openForm(item){
   if(item)$('fSeries').value=item.seriesId||DEFAULT_SERIES;
   const cat=item?item.category:'consume';
   document.querySelector(`input[name="fCat"][value="${cat}"]`).checked=true;
-  const cond=item&&item.condAvg?item.condAvg:'avg3';
+  const cond=item&&['avg3','avg6','month'].includes(item.condAvg)?item.condAvg:'avg3';
   document.querySelectorAll('input[name="fCond"]').forEach(r=>r.checked=r.value===cond);
   syncCondField();
   $('fRefPrice').value=item&&item.price!=null?Number(item.price).toFixed(2):'';
@@ -672,7 +676,7 @@ function validate(){
   const data={shortName,name,code,seriesId,category:cat,price,liability:$('fLiability').value.trim(),offShelf:document.querySelector('input[name="fShelf"]:checked').value==='off'};
   if(cat==='welfare'){
     const c=document.querySelector('input[name="fCond"]:checked');
-    data.condAvg=c&&c.value==='avg6'?'avg6':'avg3';
+    data.condAvg=c&&(c.value==='avg6'||c.value==='month')?c.value:'avg3';
   }
   return data;
 }
@@ -768,7 +772,7 @@ function xlsxRows(){
     if(c.key==='code')return x.code||'';
     if(c.key==='series')return seriesName(x.seriesId);
     if(c.key==='category')return CAT_NAME[x.category]||'';
-    if(c.key==='condAvg')return x.category==='welfare'?(x.condAvg==='avg6'?'近6月平均消费':'近3月平均消费'):'';
+    if(c.key==='condAvg')return x.category==='welfare'?(COND_NAME[x.condAvg]||COND_NAME.avg3):'';
     if(c.key==='price')return x.price!=null?Number(x.price):'';
     if(c.key==='shelf')return x.offShelf?'已下架':'上架中';
     if(c.key==='liability')return x.liability||'';
@@ -968,7 +972,8 @@ function parseImportRows(rows){
     let condAvg;
     if(category==='welfare'){
       const condRaw=get('condAvg');
-      if(/6/.test(condRaw))condAvg='avg6';
+      if(/每月|当月|单月/.test(condRaw))condAvg='month';
+      else if(/6/.test(condRaw))condAvg='avg6';
       else condAvg='avg3'; // 缺省按近3月
     }
     let price=null;
