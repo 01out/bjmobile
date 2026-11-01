@@ -829,8 +829,8 @@ function openForm(item){
   editingId=item?item.id:null;
   pickedCode=null;
   $('formErr').textContent='';
-  // 合约消费金额必填：编辑时回显已存值；记录里没有该字段时用规则表资费兜底，保存后才落盘
-  $('fContract').value=item?String(effContract(item)):'';
+  // 合约消费金额必填：编辑时回显已存值（两位小数，不取整）；记录里没有该字段时用规则表资费兜底，保存后才落盘
+  $('fContract').value=item?priceText(effContract(item)):'';
   $('fWool').value=item?priceText(item.wool!=null?item.wool:0):'0.00';
   $('fStart').value=item&&item.startDate?item.startDate:'';
   $('fEnd').value=item&&item.endDate?item.endDate:'';
@@ -952,7 +952,7 @@ function save(){
         seriesId:series.some(x=>x.id===r.seriesId)?r.seriesId:DEFAULT_SERIES,
         liability:r.liability||'',
         condAvg:r.category==='welfare'?normCond(r.condAvg):undefined,
-        contract:Math.round(Number(r.price)||0),
+        contract:Number.isFinite(Number(r.price))?Math.round(Number(r.price)*100)/100:0, // 默认取资费原值（最多两位小数），不取整；用户可后续编辑
         price:r.price!=null?Number(r.price):0,
         wool:0,
         startDate:'',endDate:'',
@@ -1460,10 +1460,10 @@ function mapImportRows(rows){
     if(/福利|welfare/i.test(catRaw))category='welfare';
     else if(/凑单|消费|consume/i.test(catRaw))category='consume';
     if(!category){errors.push(`第 ${i+1} 行「${name}」：业务类别无法识别（${catRaw||'空'}），已跳过`);continue}
-    // 合约消费金额：必填（允许 0），保留整数
+    // 合约消费金额：必填（允许 0），保留两位小数，不取整
     const contractNum=toNum(get('contract'));
     if(contractNum==null||contractNum<0){errors.push(`第 ${i+1} 行「${name}」：合约消费金额不是有效数字，已跳过`);continue}
-    const contract=Math.round(contractNum);
+    const contract=contractNum;
     const wool=toNum(get('wool'));
     if(wool!=null&&wool<0){errors.push(`第 ${i+1} 行「${name}」：羊毛不能为负数，已跳过`);continue}
     // 资费快照只作门槛兜底：优先取规则表同编码的资费，查不到才退回合约金额
