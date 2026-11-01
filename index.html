@@ -797,9 +797,10 @@ let planVal=null;
 // 消费条件文案（与 business/rules 页 COND_NAME 同口径）
 const COND_NAME={avg3:'近3月平均消费',avg6:'近6月平均消费',month:'每月消费'};
 function tipText(t,need,arrow){
-  // 业务名后统一带【消费条件 · 合约消费金额】：金额恒取合约消费金额（与提示里的补差额同源）
+  // 业务名后带标签（金额均取合约消费金额）：已开通=【合约每月低消 金额】；未开通=【消费条件 · 合约消费金额】
   const amt=Number(t.contract||0).toFixed(2);
-  const nm=`<b>${esc(t.name)}</b><b>【${COND_NAME[t.cond]||COND_NAME.avg3} · ${amt}】</b>`;
+  const tag=t.active?`【合约每月低消 ${amt}】`:`【${COND_NAME[t.cond]||COND_NAME.avg3} · ${amt}】`;
+  const nm=`<b>${esc(t.name)}</b><b>${tag}</b>`;
   // 已开通业务：与合约消费金额比较，当月够数即达标
   if(t.active){
     if(need<=0)return `该月消费已达标${nm}${arrow||''}`;
