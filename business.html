@@ -162,6 +162,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 .pc-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto}
 .pc-price{font-size:13px;font-weight:600;white-space:nowrap}
 .pc-price small{font-weight:400;font-size:10px;color:#9aa1aa;margin-right:2px}
+.pc-sep{color:#c3c9d2;font-weight:400;margin:0 4px 0 1px}
 .pc-official{height:24px;font-size:11px;padding:0 10px;border-radius:7px}
 .pick-empty{grid-column:1/-1;font-size:12px;color:#9aa1aa;text-align:center;padding:18px 0}
 /* 分页插件 */
@@ -796,7 +797,7 @@ function renderPickList(){
         <button type="button" class="copy-btn pc-copy" data-act="copy" data-code="${escapeHtml(code)}" title="复制业务编码" aria-label="复制业务编码"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
       </div>
       <div class="pc-tags"><span class="chip ${r.category}">${CAT_NAME[r.category]||''}</span><span class="stag stag-mini${(r.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(r.seriesId))}">${escapeHtml(seriesName(r.seriesId))}</span><span class="sh-badge ${r.offShelf?'off':'on'}">${r.offShelf?'已下架':'已上架'}</span></div>
-      <div class="pc-foot"><span class="pc-price">${welfare?'<small>低消</small>':''}${r.price!=null?priceText(r.price):'—'}</span>${link}</div>
+      <div class="pc-foot"><span class="pc-price">${welfare?`<small>${COND_NAME[normCond(r.condAvg)]||COND_NAME.avg3}</small><span class="pc-sep">·</span>`:''}${r.price!=null?priceText(r.price):'—'}</span>${link}</div>
     </label>`;
   }).join('');
   syncSaveBtn();
