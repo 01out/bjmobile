@@ -266,7 +266,9 @@ function normalize(raw){
     if(Number.isFinite(n)&&n>=0)map[monthAdd(now,-(i+shift))]=n;
   }
   if(!Object.keys(map).length) throw new Error('query failed');
-  return map;
+  // 接口自带均消：arpu_avg = 近3月平均、arpu_avg6 = 近6月平均（均为截至上月的口径，接口已取整）
+  const apiNum=v=>{const n=Number(v);return v!==null&&v!==undefined&&v!==''&&Number.isFinite(n)&&n>=0?n:null};
+  return {map,avg3:apiNum(ent.arpu_avg),avg6:apiNum(ent.arpu_avg6)};
 }
 function getMonths(map,start,count){
   const arr=[];for(let i=0;i<count;i++){const m=monthAdd(start,-i);if(map[m]==null)return null;arr.push(map[m])}return arr;
@@ -286,41 +288,67 @@ function missingMonths(map){
   for(let i=0;i<6;i++){const m=monthAdd(last,-i);if(map[m]==null)miss.push(m)}
   return miss.sort();
 }
-// 当月消费手动补录：运营商接口更新有 2 天左右延迟，当月通常无数据，允许用户自行输入
-let curCons='',statHist={},statMap={};
+// 上月消费手动补录：运营商接口更新有延迟，上月往往还没有数据，允许用户自行输入
+let curCons='',statHist={},statMap={},statApi={avg3:null,avg6:null};
+// 补录值持久化：{手机号:{'YYYY-MM':'值'}}——离开页面、重新查询后自动回显，不用每次重输
+const KEY_SUPP='arpu_supp_v1';
+function suppLoad(phone,month){
+  try{
+    const all=JSON.parse(localStorage.getItem(KEY_SUPP)||'{}');
+    const b=all&&typeof all==='object'&&!Array.isArray(all)?all[phone]:null;
+    const v=b&&typeof b==='object'&&!Array.isArray(b)?b[month]:null;
+    return v==null?'':String(v);
+  }catch(e){return ''}
+}
+function suppSave(phone,month,val){
+  if(!/^\d{11}$/.test(phone||''))return;
+  let all=null;try{all=JSON.parse(localStorage.getItem(KEY_SUPP)||'{}')}catch(e){all=null}
+  if(!all||typeof all!=='object'||Array.isArray(all))all={};
+  const b=(all[phone]&&typeof all[phone]==='object'&&!Array.isArray(all[phone]))?{...all[phone]}:{};
+  if(val===''||val==null)delete b[month];else b[month]=String(val);
+  if(Object.keys(b).length)all[phone]=b;else delete all[phone];
+  try{localStorage.setItem(KEY_SUPP,JSON.stringify(all))}catch(e){}
+}
 function selfAvgMap(){
   const now=currentMonth(),last=monthAdd(now,-1),m={...statHist};
   if(curCons!==''&&Number.isFinite(Number(curCons)))m[last]=Number(curCons);
   else if(statMap[last]!=null)m[last]=statMap[last];
   return m;
 }
-// 近3/6月平均：接口窗口（截至上月）+ 自算窗口（含当月补录值），自算值放括号里
+// 均消统计卡：主值取接口返回的近3/6月平均（截至上月口径）；只有接口缺上月消费值时，括号里补系统自算值（含补录）
 function renderStats(){
   const now=currentMonth(),last=monthAdd(now,-1),m=selfAvgMap();
-  // 接口值：截至上月的窗口；括号自算：同样截至上月，但把手动补录的上月值纳入
-  [['avg3',avgFor(statHist,last,3),avgFor(m,last,3)],['avg6',avgFor(statHist,last,6),avgFor(m,last,6)]]
-    .forEach(([id,a,s])=>{
-      document.getElementById(id).innerHTML=`${money(a)}${s!=null?`<span class="stat-self">(${money(s)})</span>`:''}<span class="unit">元/月</span>`;
+  const missLast=statHist[last]==null;
+  [['avg3',statApi.avg3,avgFor(m,last,3)],['avg6',statApi.avg6,avgFor(m,last,6)]]
+    .forEach(([id,api,self])=>{
+      const main=api!=null?api:self;
+      const tip=missLast&&self!=null?`<span class="stat-self">(${money(self)})</span>`:'';
+      document.getElementById(id).innerHTML=`${money(main)}${tip}<span class="unit">元/月</span>`;
     });
 }
 function showHistorical(map,hist){
   const now=currentMonth(), last=monthAdd(now,-1);
-  statHist=hist||{};statMap=map||{};curCons='';
+  statHist=hist||{};statMap=map||{};
+  // 接口缺上月时，回显该手机号上保存过的补录值
+  const missLast=statMap[last]==null;
+  curCons=missLast?suppLoad(curQuery,last):'';
   renderStats();
   const keys=Object.keys(map).sort();
   let rows=keys.map(m=>`<div class="row"><div>${m}</div><div class="right">¥${numText(map[m])}</div></div>`).join('');
   // 上月无数据（运营商接口更新有延迟）且其余月份正常时，追加上月行，由用户手动输入消费值
   if(map[last]==null&&keys.length){
-    rows+=`<div class="row"><div>${last}</div><div class="right cur-cell"><span class="cur-box"><i class="cur-pre">¥</i><input class="cur-cons" type="text" inputmode="decimal" autocomplete="off" placeholder="输入上月消费"></span></div></div>`;
+    rows+=`<div class="row"><div>${last}</div><div class="right cur-cell"><span class="cur-box"><i class="cur-pre">¥</i><input class="cur-cons" type="text" inputmode="decimal" autocomplete="off" value="${esc(curCons)}" placeholder="输入上月消费"></span></div></div>`;
   }
   document.getElementById('historyTable').innerHTML=rows||'<div class="empty">暂无消费数据</div>';
   dataCard.classList.remove('hidden');
   const miss=missingMonths(hist),rowsN=3+miss.length;
   const hint=miss.length?`近 6 个月（${monthAdd(last,-5)} ~ ${last}）缺少 ${miss.length} 个月的数据（${miss.join('、')}），规划月份已扩展为 3 + ${miss.length} = ${rowsN} 个月。`:'';
   // 传副本：规划模块会动态并入补录的上月值，不能污染接口统计用的 statHist
-  buildPlan({...hist},rowsN,hint);
+  const planMap={...hist};
+  if(curCons!==''&&Number.isFinite(Number(curCons)))planMap[last]=Number(curCons);
+  buildPlan(planMap,rowsN,hint);
 }
-// 上月消费补录输入：只允许数字和一位小数点、最多两位小数，实时刷新括号里的自算均消
+// 上月消费补录输入：只允许数字和一位小数点、最多两位小数；实时刷新自算均消并持久化
 document.getElementById('historyTable').addEventListener('input',e=>{
   if(!e.target.classList||!e.target.classList.contains('cur-cons'))return;
   let v=e.target.value.replace(/[^\d.]/g,'');
@@ -328,10 +356,11 @@ document.getElementById('historyTable').addEventListener('input',e=>{
   if(i>=0)v=v.slice(0,i+1)+v.slice(i+1).replace(/\./g,'').slice(0,2);
   if(v!==e.target.value)e.target.value=v;
   curCons=v;
+  const last=monthAdd(currentMonth(),-1);
+  suppSave(curQuery,last,v);
   renderStats();
   // 接口缺上月时，把补录值并入规划数据：未来月的近3/6月均消、福利达标判定与趋势图都改用含补录的口径
   if(plan.rows.length){
-    const last=monthAdd(currentMonth(),-1);
     if(curCons!==''&&Number.isFinite(Number(curCons)))plan.map[last]=Number(curCons);
     else if(statMap[last]==null)delete plan.map[last]; // 清空输入且接口本就没有该月时，恢复原状
     recalcPlan();
@@ -339,7 +368,7 @@ document.getElementById('historyTable').addEventListener('input',e=>{
 });
 // 查询失败：无任何可用历史数据，缺少月份数按默认 6 计算
 function showFailedPlan(){
-  curCons='';statHist={};statMap={};
+  curCons='';statHist={};statMap={};statApi={avg3:null,avg6:null};
   document.getElementById('avg3').innerHTML='—<span class="unit">元/月</span>';
   document.getElementById('avg6').innerHTML='—<span class="unit">元/月</span>';
   document.getElementById('historyTable').innerHTML='';
@@ -1016,7 +1045,8 @@ async function search(){
     const res=await fetch(PROXY+encodeURIComponent(buildQueryUrl(phone)),{method:'GET',cache:'no-store'});
     if(!res.ok)throw new Error('query failed');
     const raw=await res.json();
-    const map=normalize(raw);
+    const {map,avg3,avg6}=normalize(raw);
+    statApi={avg3,avg6};
     const hist=knownMonths(map);
     if(!Object.keys(hist).length)throw new Error('query failed');
     saveRecord(phone);showHistorical(map,hist);
