@@ -73,7 +73,8 @@ tbody tr:hover td{background:#fafbfc}
 .date-range span{flex:0 0 auto;font-size:12px;color:#9aa1aa}
 .liab{color:#8b929c}
 .liab-txt{white-space:normal;word-break:break-word;line-height:1.5;font-size:12px}
-.other-date{font-size:11px;color:#9aa1aa;line-height:1.5;margin-bottom:3px;white-space:normal;word-break:break-word}
+.other-date{font-size:11px;color:#9aa1aa;line-height:1.5;margin-bottom:3px;white-space:normal;word-break:break-word;cursor:pointer}
+.other-date:hover{color:#1677ff}
 .badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 7px;border-radius:999px;border:1px solid;white-space:nowrap}
 .badge.on{color:#2f8f5b;background:#eefaf3;border-color:#cdecdb}
 .badge.off{color:#8b929c;background:#f5f6f8;border-color:#e6eaef}
@@ -99,6 +100,8 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
 .sheet-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 /* 删除确认弹窗：宽度收窄至其他弹窗的50% */
 #confirmModal .sheet{max-width:500px}
+/* 起止日期弹窗宽度为普通弹窗（1000px）的一半 */
+#dateModal .sheet{max-width:500px}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sheet-head b{font-size:15px}
 /* 弹窗标题右侧轻提示（灰色小字） */
@@ -734,9 +737,8 @@ function render(){
       <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span></div></td>
       <td class="price">${priceText(effContract(x))}<span class="sep">-</span><span class="wool">${priceText(x.wool!=null?x.wool:0)}</span></td>
       <td class="st-cell"><button class="switch${x.active?' on':''}" data-act="toggleSt" role="switch" aria-checked="${x.active?'true':'false'}" aria-label="开通状态"${(x.startDate||x.endDate)?' title="范围内自动开通，到期自动关闭；手动关闭后保持关闭"':''}></button></td>
-      <td class="other"><div class="other-date">${escapeHtml(dateRangeText(x))}</div><div class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</div></td>
+      <td class="other"><div class="other-date" data-act="date" title="点击设置起止日期">${escapeHtml(dateRangeText(x))}</div><div class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</div></td>
       <td class="ops">
-        <button class="mini" data-act="date" title="设置起止日期">日期</button>
         <button class="mini" data-act="edit">编辑</button>
         <button class="mini danger" data-act="del">删除</button>
       </td>

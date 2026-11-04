@@ -902,7 +902,9 @@ function renderWelfareTips(val){
     Object.values(bySeries).forEach(arr=>arr.sort((a,b)=>a.price-b.price||a.name.localeCompare(b.name,'zh')));
     Object.keys(bySeries).forEach(sid=>{
       if(sid==='default')return;
-      if(!bySeries[sid].some(c=>c.id===seriesSel[sid]))seriesSel[sid]=bySeries[sid][0].id;
+      const arr=bySeries[sid];
+      // 优先展示已开通业务；无已开通时才用用户上次选择（或资费最低）
+      if(!arr.some(c=>c.active)&&!arr.some(c=>c.id===seriesSel[sid]))seriesSel[sid]=arr[0].id;
     });
     // 未开通：消费窗口 = m 往前 N 个月（近3月 N=3、近6月 N=6、每月消费 N=1），凑够门槛即可开通
     // 已开通：与合约消费金额比单月消费，差额即当月还需补充的金额
@@ -923,17 +925,22 @@ function renderWelfareTips(val){
     (bySeries.default||[]).map(c=>({c,need:calc(c)})).filter(t=>t.need!=null)
       .sort((a,b)=>a.need-b.need||a.c.name.localeCompare(b.c.name,'zh'))
       .forEach(t=>{html+=`<div class="wtip"><span class="star">☆</span><span>${tipText(t.c,t.need)}</span></div>`});
-    // 自定义系列：每个系列一行（默认展示资费最低业务），点下拉箭头展开该系列全部业务
+    // 自定义系列：每个系列一行，优先展示已开通业务；未开通业务统一收在下拉列表里，
+    // 下拉按钮只在该系列还有未开通业务时才显示
     Object.keys(bySeries).filter(sid=>sid!=='default').map(sid=>{
-      const sel=bySeries[sid].find(c=>c.id===seriesSel[sid]);
-      return {sid,sel,need:calc(sel)};
+      const arr=bySeries[sid];
+      const act=arr.find(c=>c.active);
+      const sel=act||arr.find(c=>c.id===seriesSel[sid])||arr[0];
+      if(!act)seriesSel[sid]=sel.id;
+      return {sid,sel,need:calc(sel),pend:arr.filter(c=>!c.active)};
     }).filter(t=>t.need!=null)
       .sort((a,b)=>a.need-b.need)
       .forEach(t=>{
-        const key=m+'|'+t.sid,open=wExpanded.has(key);
-        html+=`<div class="wtip${open?' open':''}"><span class="star">☆</span><span>${tipText(t.sel,t.need,arrow(t.sid))}</span></div>`;
+        const key=m+'|'+t.sid,open=wExpanded.has(key)&&t.pend.length>0;
+        const ar=t.pend.length?arrow(t.sid):'';
+        html+=`<div class="wtip${open?' open':''}"><span class="star">☆</span><span>${tipText(t.sel,t.need,ar)}</span></div>`;
         if(open){
-          html+='<div class="wlist">'+bySeries[t.sid].map(c=>{
+          html+='<div class="wlist">'+t.pend.map(c=>{
             const n2=calc(c);
             return `<div class="wtip${c.id===t.sel.id?' on':''}" data-w="pick" data-m="${m}" data-sid="${esc(t.sid)}" data-id="${esc(c.id)}"><span class="star">☆</span><span>${n2==null?'该月数据不足，暂无法计算「<b>'+esc(c.name)+'</b>」的开通条件':tipText(c,n2)}</span></div>`;
           }).join('')+'</div>';
