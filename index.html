@@ -20,7 +20,11 @@ header{display:flex;justify-content:space-between;align-items:flex-start;gap:12p
 .clear-btn:hover{background:#a7b2be}
 button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;font-weight:600;padding:0 20px;cursor:pointer;white-space:nowrap}button:disabled{opacity:.55;cursor:wait}
 .status{font-size:13px;color:#8b929c;min-height:18px;margin-top:9px}.error{color:#d9363e}.ok{color:#2f8f5b}
-.history{display:none;margin-top:15px}.history-title{font-size:12px;color:#8b929c;margin-bottom:7px}.history-list{display:flex;flex-wrap:wrap;gap:7px}.history-item{font-size:13px;background:#f7f8fa;border:1px solid #e9edf1;padding:7px 10px;border-radius:8px;cursor:pointer}
+.history{display:none;margin-top:15px}.history-title{font-size:12px;color:#8b929c;margin-bottom:7px}.history-list{display:flex;flex-wrap:wrap;gap:7px}.history-item{font-size:13px;background:#f7f8fa;border:1px solid #e9edf1;padding:7px 10px;border-radius:8px;cursor:pointer;position:relative;user-select:none;-webkit-user-select:none}
+/* 历史记录长按 500ms：右上角弹出红色叉删除按钮 */
+.hist-del{display:none;position:absolute;top:-7px;right:-7px;width:17px;height:17px;border:0;border-radius:50%;background:#d9363e;color:#fff;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 1px 3px rgba(32,36,42,.3)}
+.hist-del:active{background:#b3232c}
+.history-item.show-del .hist-del{display:flex}
 .hidden{display:none}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f7f8fa;border-radius:12px;padding:15px}.stat-k{font-size:12px;color:#8b929c}.stat-v{font-size:28px;font-weight:700;margin-top:5px}.unit{font-size:12px;font-weight:400;margin-left:3px}
 .table{margin-top:15px}.row{display:grid;grid-template-columns:1fr 1fr;padding:11px 2px;border-bottom:1px solid #edf0f2;font-size:14px}.row:last-child{border-bottom:0}.right{text-align:right}.muted{color:#9aa1aa}
 /* 当月消费手动补录输入框（接口更新延迟时）与均消自算括号 */
@@ -55,9 +59,15 @@ button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;fo
 /* 当月已开通消费凑单类业务标签 */
 .cons-tags{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:7px}
 .ctag{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:999px;background:#eef4ff;border:1px solid #dbe7ff;color:#4d6fa8;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-.ctag .del{display:none;align-items:center;justify-content:center;width:18px;height:18px;margin-right:-5px;border:0;border-radius:999px;background:#fff;color:#d9363e;cursor:pointer;padding:0}
-.ctag .del:hover{background:#fef2f2}
-.ctag.show-del .del{display:inline-flex}
+/* 跷跷板开关：整个标签立体移动（按左端次数-1，左侧压向屏幕内、右侧弹向屏幕外；perspective+rotateY），按右端次数+1；次数用红色 LED 圆点显示在右侧（次数=1 不显示） */
+.ctag{transform:perspective(300px) rotateY(0deg);transform-origin:50% 50%;transition:transform .16s ease}
+.ctag.tilt-l{transform:perspective(300px) rotateY(-26deg)}
+.ctag.tilt-r{transform:perspective(300px) rotateY(26deg)}
+.ctag .sw-bar{display:inline-flex;align-items:center;gap:6px}
+.ctag .sw-btn{width:18px;height:18px;margin:0;flex:0 0 auto;border:0;border-radius:50%;background:linear-gradient(180deg,#ffffff,#e6edf7);color:#4d6fa8;font-size:12px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 1px 2px rgba(32,36,42,.18),inset 0 1px 0 #fff}
+.ctag .sw-btn:active{background:linear-gradient(180deg,#dde7f4,#cbd8ea)}
+.ctag .led{display:none;flex:0 0 auto;min-width:17px;height:17px;padding:0 4px;margin-left:1px;border-radius:999px;background:radial-gradient(circle at 32% 28%,#ff9a9a,#e5303c 58%,#a81325);color:#fff;font-size:10px;font-weight:700;line-height:17px;text-align:center;box-shadow:0 1px 2px rgba(150,15,30,.4),inset 0 1px 1px rgba(255,255,255,.55),0 0 7px rgba(217,54,62,.35)}
+.ctag .led.on{display:inline-block}
 /* 标签与下拉里业务名后的合约资费：红色 */
 .ctag .cam,.cons-dd .dd-item .cam{color:#d9363e;font-weight:600;margin-left:4px}
 /* 未开通凑单业务下拉（当月消费输入框聚焦时） */
@@ -107,9 +117,13 @@ button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;fo
   .search-field{display:block}.search-field .clear-btn{width:20px;height:20px;min-width:20px;margin:0;padding:0;line-height:20px}
   .plan-month{padding:12px 12px 10px;margin-top:9px}
   .plan-row{grid-template-columns:1fr;gap:6px;padding:0}
-  /* 移动端：隐藏共享表头，每个字段上方显示各自的标签，一行一个字段 */
+  /* 移动端：隐藏共享表头，每个字段上方显示各自的标签；两行布局：当月消费+羊毛 / 近3月均消+近6月均消 */
   .plan-head{display:none}
-  .plan-fields{grid-template-columns:1fr;gap:11px}
+  .plan-fields{grid-template-columns:1fr 1fr;gap:11px}
+  .plan-fields .pf:nth-child(1){order:1}
+  .plan-fields .pf-wool{order:2}
+  .plan-fields .pf:nth-child(2){order:3}
+  .plan-fields .pf:nth-child(3){order:4}
   .pf .pf-l{display:block;font-size:13px;color:#20242a;margin-bottom:5px}
   .cons-tags{grid-column:1}
   .cons-dd{grid-column:1}
@@ -247,9 +261,45 @@ function renderRecords(){
   const box=document.getElementById('history'),list=document.getElementById('historyList');
   if(!records.length){box.style.display='none';return}
   box.style.display='block';
-  list.innerHTML=records.map(p=>`<div class="history-item" data-phone="${esc(p)}">${p.slice(0,3)}****${p.slice(-4)}</div>`).join('');
-  list.querySelectorAll('.history-item').forEach(x=>x.onclick=()=>{mobileEl.value=x.dataset.phone;syncClearBtn();search()});
+  list.innerHTML=records.map(p=>`<div class="history-item" data-phone="${esc(p)}">${p.slice(0,3)}****${p.slice(-4)}<button class="hist-del" data-del="${esc(p)}" aria-label="删除记录" tabindex="-1"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>`).join('');
+  // 删除模式保持：重渲染（如查询后记录重排）后叉仍然显示，直到点空白处才退出
+  if(delKeep){
+    const k=list.querySelector(`.history-item[data-phone="${delKeep}"]`);
+    if(k)k.classList.add('show-del');else delKeep=null;
+  }
+  list.querySelectorAll('.history-item').forEach(x=>x.onclick=e=>{
+    // 点叉：删除该条记录
+    if(e.target.closest('.hist-del')){
+      delKeep=null;
+      records=records.filter(v=>v!==x.dataset.phone);
+      try{localStorage.setItem('mobile_arpu_history',JSON.stringify(records))}catch(err){}
+      renderRecords();
+      return;
+    }
+    // 长按后松开的那一下点击：不触发查询，叉保持显示
+    if(hiFired){hiFired=false;return}
+    // 已处于删除模式时点主体：仍然查询，但叉保持显示（由 delKeep 恢复）
+    mobileEl.value=x.dataset.phone;syncClearBtn();search();
+  });
 }
+// 历史记录长按 500ms 显示右上角删除叉；叉保持显示，直到点击空白处才消失
+let hiTimer=null,hiFired=false,delKeep=null;
+(function(){
+  const list=document.getElementById('historyList');
+  list.addEventListener('pointerdown',e=>{
+    const it=e.target.closest('.history-item');
+    if(!it||e.target.closest('.hist-del'))return;
+    hiFired=false;clearTimeout(hiTimer);
+    hiTimer=setTimeout(()=>{hiFired=true;delKeep=it.dataset.phone;it.classList.add('show-del')},500);
+  });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>list.addEventListener(ev,()=>clearTimeout(hiTimer)));
+  // 点空白处：退出删除模式，收起所有叉
+  document.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.history-item'))return;
+    delKeep=null;
+    document.querySelectorAll('.history-item.show-del').forEach(x=>x.classList.remove('show-del'));
+  });
+})();
 
 function normalize(raw){
   if(!raw || typeof raw!=='object') throw new Error('query failed');
@@ -341,12 +391,11 @@ function showHistorical(map,hist){
   }
   document.getElementById('historyTable').innerHTML=rows||'<div class="empty">暂无消费数据</div>';
   dataCard.classList.remove('hidden');
-  const miss=missingMonths(hist),rowsN=3+miss.length;
-  const hint=miss.length?`近 6 个月（${monthAdd(last,-5)} ~ ${last}）缺少 ${miss.length} 个月的数据（${miss.join('、')}），规划月份已扩展为 3 + ${miss.length} = ${rowsN} 个月。`:'';
   // 传副本：规划模块会动态并入补录的上月值，不能污染接口统计用的 statHist
   const planMap={...hist};
   if(curCons!==''&&Number.isFinite(Number(curCons)))planMap[last]=Number(curCons);
-  buildPlan(planMap,rowsN,hint);
+  // 规划固定 3 个月：接口缺月不再扩展规划行数
+  buildPlan(planMap,3,'');
 }
 // 上月消费补录输入：只允许数字和一位小数点、最多两位小数；实时刷新自算均消并持久化
 document.getElementById('historyTable').addEventListener('input',e=>{
@@ -634,7 +683,7 @@ function renderConsTags(){
       const x=biz.find(b=>bizId(b)===id),n=row.counts[id];
       const nm=esc(x?x.name||'':id);
       const cp=contractOf(x,rules);
-      return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}" title="点击增加一次开通"><span>${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b>${n>1?' ×'+n:''}</span><button class="del" data-del="${esc(id)}" data-m="${row.m}" aria-label="删除" tabindex="-1"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></span>`;
+      return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}"><span class="sw-bar"><button class="sw-btn" data-dec="${esc(id)}" data-m="${row.m}" aria-label="减少一次" tabindex="-1">−</button><span>${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span><button class="sw-btn" data-inc="${esc(id)}" data-m="${row.m}" aria-label="增加一次" tabindex="-1">＋</button></span>${n>1?`<span class="led on">${n}</span>`:''}</span>`;
     }).join('');
   });
 }
@@ -740,30 +789,27 @@ const planInputsEl=document.getElementById('planInputs');
 planInputsEl.addEventListener('pointerdown',e=>{
   const it=e.target.closest('[data-add]');
   if(it){e.preventDefault();addConsume(rowByMonth(it.dataset.m),it.dataset.add);return}
-  // 点击标签以外区域收起删除图标
-  if(!e.target.closest('.ctag'))planInputsEl.querySelectorAll('.ctag.show-del').forEach(x=>x.classList.remove('show-del'));
 });
-// 标签长按 500ms 显示删除图标；单击 = 增加一次开通
-let ctTimer=null,ctFired=false;
+// 跷跷板：按下左/右端时整个标签立体倾斜（左入/右入），松开复位；长按不再触发任何额外行为
 planInputsEl.addEventListener('pointerdown',e=>{
-  const tag=e.target.closest('.ctag');
-  if(!tag)return;
-  ctFired=false;clearTimeout(ctTimer);
-  ctTimer=setTimeout(()=>{ctFired=true;tag.classList.add('show-del')},500);
+  const sb=e.target.closest('.ctag .sw-btn');
+  if(sb){const tag=sb.closest('.ctag');tag.classList.add(sb.hasAttribute('data-dec')?'tilt-l':'tilt-r')}
 });
-['pointerup','pointercancel','pointermove'].forEach(ev=>planInputsEl.addEventListener(ev,e=>{
-  clearTimeout(ctTimer);
-  if(ev==='pointermove'&&e.target.closest('.ctag'))return;
+['pointerup','pointercancel'].forEach(ev=>planInputsEl.addEventListener(ev,()=>{
+  document.querySelectorAll('.ctag.tilt-l,.ctag.tilt-r').forEach(x=>x.classList.remove('tilt-l','tilt-r'));
 }));
+planInputsEl.addEventListener('pointermove',e=>{
+  document.querySelectorAll('.ctag.tilt-l,.ctag.tilt-r').forEach(x=>{if(!x.contains(e.target))x.classList.remove('tilt-l','tilt-r')});
+});
 planInputsEl.addEventListener('click',e=>{
   const menu=e.target.closest('.cons-menu');
   if(menu){toggleConsDropdown(rowByMonth(menu.dataset.menu));return}
-  const del=e.target.closest('[data-del]');
-  if(del){removeConsume(rowByMonth(del.dataset.m),del.dataset.del);return}
+  const dec=e.target.closest('[data-dec]');
+  if(dec){removeConsume(rowByMonth(dec.dataset.m),dec.dataset.dec);return}
+  const inc=e.target.closest('[data-inc]');
+  if(inc){addConsume(rowByMonth(inc.dataset.m),inc.dataset.inc);return}
   const tag=e.target.closest('.ctag');
   if(!tag)return;
-  if(ctFired){ctFired=false;return}
-  if(tag.classList.contains('show-del')){tag.classList.remove('show-del');return}
   addConsume(rowByMonth(tag.dataset.m),tag.dataset.id);
 });
 document.addEventListener('pointerdown',e=>{
@@ -1039,6 +1085,8 @@ async function search(){
   // 身份写入移到 search() 内部：按钮点击/回车/历史记录三条路径统一生效，且仅合法手机号才记录
   try{localStorage.setItem(KEY_Q,phone)}catch(e){}
   syncOwnerEntry();
+  // 查询记录：无论查询成功或失败都保存
+  saveRecord(phone);
   searchBtn.disabled=true;statusEl.className='status';statusEl.textContent='正在查询…';
   dataCard.classList.add('hidden');planCard.classList.add('hidden');chartCard.classList.add('hidden');
   try{
@@ -1049,7 +1097,7 @@ async function search(){
     statApi={avg3,avg6};
     const hist=knownMonths(map);
     if(!Object.keys(hist).length)throw new Error('query failed');
-    saveRecord(phone);showHistorical(map,hist);
+    showHistorical(map,hist);
     statusEl.className='status ok';statusEl.textContent='查询成功';
   }catch(e){
     statusEl.className='status error';statusEl.textContent='查询失败';

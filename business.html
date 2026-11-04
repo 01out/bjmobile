@@ -79,6 +79,7 @@ tbody tr:hover td{background:#fafbfc}
 .badge.off{color:#8b929c;background:#f5f6f8;border-color:#e6eaef}
 .badge-mob{display:none}
 .ops{white-space:nowrap;font-size:0}
+.ops .mini+.mini{margin-left:5px}
 .mini{height:28px;font-size:11px;padding:0 10px;background:#f2f5f9;color:#4a5361;font-weight:500}
 .mini.danger{background:#fef2f2;color:#d9363e}
 .empty{color:#9aa1aa;font-size:12px;text-align:center;padding:30px 0}
@@ -194,6 +195,9 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
   .filters{flex:1 1 100%}.filters select{flex:1;width:auto}
   .f-search{flex:1 1 100%}#addBtn{flex:1 1 100%;width:100%}
   .io-group{flex:1 1 100%}.io-group .io-btn{flex:1}
+  /* 移动端：添加弹窗资费系列横向滚动（系列多时不挤压业务列表）；PC 端保持换行不滚动 */
+  .pick-series-tags{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .pick-series-tags .stag{flex:0 0 auto}
   /* 移动端：卡片式分行 —— 业务名称 / 类别系列+开通开关 / 资费羊毛 / 其他 / 操作(右下) */
   .table-wrap{overflow-x:visible}
   table{min-width:0;display:block}
