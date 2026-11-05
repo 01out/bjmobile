@@ -60,9 +60,6 @@ button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;fo
 .cons-tags{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:7px}
 .ctag{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:999px;background:#eef4ff;border:1px solid #dbe7ff;color:#4d6fa8;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 /* 跷跷板开关：整个标签立体移动（按左端次数-1，左侧压向屏幕内、右侧弹向屏幕外；perspective+rotateY），按右端次数+1；次数用红色 LED 圆点显示在右侧（次数=1 不显示） */
-.ctag{transform:perspective(300px) rotateY(0deg);transform-origin:50% 50%;transition:transform .16s ease}
-.ctag.tilt-l{transform:perspective(300px) rotateY(-26deg)}
-.ctag.tilt-r{transform:perspective(300px) rotateY(26deg)}
 .ctag .sw-bar{display:inline-flex;align-items:center;gap:6px}
 .ctag .sw-btn{width:18px;height:18px;margin:0;flex:0 0 auto;border:0;border-radius:50%;background:linear-gradient(180deg,#ffffff,#e6edf7);color:#4d6fa8;font-size:12px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 1px 2px rgba(32,36,42,.18),inset 0 1px 0 #fff}
 .ctag .sw-btn:active{background:linear-gradient(180deg,#dde7f4,#cbd8ea)}
@@ -606,11 +603,15 @@ function loadBizRaw(){
   // 起止日期自动控制开通状态（仅本页计算用，不写回）；
   // 手动关闭优先：business 页手动关闭（manualOff）的业务不被日期自动开通覆盖
   const t=todayStr();
+  // 多次订购以规则表为真源实时同步（rules 页切换后无需经过 business 页）
+  let ruleMulti=null;
+  try{const ra=JSON.parse(localStorage.getItem('arpu_rules_v1')||'[]');if(Array.isArray(ra)){ruleMulti=new Map();ra.forEach(r=>{if(r&&r.code)ruleMulti.set(String(r.code).trim(),!!r.multi)})}}catch(e){}
   return arr.filter(x=>x&&typeof x==='object').map(x=>{
     const s=x.startDate?String(x.startDate):'',e=x.endDate?String(x.endDate):'';
-    if(!s&&!e)return x;
-    if(x.manualOff)return {...x,active:!!x.active};
-    return {...x,active:(!s||t>=s)&&(!e||monthOf(t)<=monthOf(e))};
+    const mv=(o)=>{const v=x.code&&ruleMulti?ruleMulti.get(String(x.code).trim()):undefined;o.multi=v===undefined?!!x.multi:v;return o};
+    if(!s&&!e)return mv({...x});
+    if(x.manualOff)return mv({...x,active:!!x.active});
+    return mv({...x,active:(!s||t>=s)&&(!e||monthOf(t)<=monthOf(e))});
   });
 }
 function todayStr(){
@@ -683,7 +684,9 @@ function renderConsTags(){
       const x=biz.find(b=>bizId(b)===id),n=row.counts[id];
       const nm=esc(x?x.name||'':id);
       const cp=contractOf(x,rules);
-      return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}"><span class="sw-bar"><button class="sw-btn" data-dec="${esc(id)}" data-m="${row.m}" aria-label="减少一次" tabindex="-1">−</button><span>${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span><button class="sw-btn" data-inc="${esc(id)}" data-m="${row.m}" aria-label="增加一次" tabindex="-1">＋</button></span>${n>1?`<span class="led on">${n}</span>`:''}</span>`;
+      // 多次订购=否：只能订购一次，不显示加减符号与次数灯，点击标签整体切换开通/取消
+      if(x&&!x.multi)return `<span class="ctag single" data-id="${esc(id)}" data-m="${row.m}"><span class="sw-mid">${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span></span>`;
+      return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}"><span class="sw-bar"><button class="sw-btn" data-dec="${esc(id)}" data-m="${row.m}" aria-label="减少一次" tabindex="-1">−</button><span class="sw-mid">${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span><button class="sw-btn" data-inc="${esc(id)}" data-m="${row.m}" aria-label="增加一次" tabindex="-1">＋</button></span>${n>1?`<span class="led on">${n}</span>`:''}</span>`;
     }).join('');
   });
 }
@@ -746,6 +749,8 @@ function addConsume(row,id){
   const x=bizById(id);
   if(!x)return;
   row.counts=row.counts||{};
+  // 多次订购=否：只能订购一次，已开通时不再累加
+  if(!x.multi&&(row.counts[id]||0)>=1)return;
   const sid=x.seriesId||'default';
   const price=contractOf(x);
   let times=1,removedPrice=0;
@@ -790,27 +795,24 @@ planInputsEl.addEventListener('pointerdown',e=>{
   const it=e.target.closest('[data-add]');
   if(it){e.preventDefault();addConsume(rowByMonth(it.dataset.m),it.dataset.add);return}
 });
-// 跷跷板：按下左/右端时整个标签立体倾斜（左入/右入），松开复位；长按不再触发任何额外行为
-planInputsEl.addEventListener('pointerdown',e=>{
-  const sb=e.target.closest('.ctag .sw-btn');
-  if(sb){const tag=sb.closest('.ctag');tag.classList.add(sb.hasAttribute('data-dec')?'tilt-l':'tilt-r')}
-});
-['pointerup','pointercancel'].forEach(ev=>planInputsEl.addEventListener(ev,()=>{
-  document.querySelectorAll('.ctag.tilt-l,.ctag.tilt-r').forEach(x=>x.classList.remove('tilt-l','tilt-r'));
-}));
-planInputsEl.addEventListener('pointermove',e=>{
-  document.querySelectorAll('.ctag.tilt-l,.ctag.tilt-r').forEach(x=>{if(!x.contains(e.target))x.classList.remove('tilt-l','tilt-r')});
-});
+// ctag 点击：只认 −/＋ 按钮本体和中间文字，点空隙/LED/胶囊底不触发（防手滑把「−」变成「+1」）
 planInputsEl.addEventListener('click',e=>{
   const menu=e.target.closest('.cons-menu');
   if(menu){toggleConsDropdown(rowByMonth(menu.dataset.menu));return}
+  // 多次订购=否的业务：无加减按钮，点击标签整体切换开通/取消（只能订购一次）
+  const single=e.target.closest('.ctag.single');
+  if(single){
+    const row=rowByMonth(single.dataset.m),id=single.dataset.id;
+    if(row&&row.counts&&row.counts[id]>0)removeConsume(row,id);
+    else addConsume(row,id);
+    return;
+  }
   const dec=e.target.closest('[data-dec]');
   if(dec){removeConsume(rowByMonth(dec.dataset.m),dec.dataset.dec);return}
   const inc=e.target.closest('[data-inc]');
   if(inc){addConsume(rowByMonth(inc.dataset.m),inc.dataset.inc);return}
-  const tag=e.target.closest('.ctag');
-  if(!tag)return;
-  addConsume(rowByMonth(tag.dataset.m),tag.dataset.id);
+  const mid=e.target.closest('.sw-mid');
+  if(mid){const tag=mid.closest('.ctag');addConsume(rowByMonth(tag.dataset.m),tag.dataset.id);return}
 });
 document.addEventListener('pointerdown',e=>{
   if(!e.target.closest('.cons-dd')&&!e.target.closest('.cons-wrap'))hideConsDropdown();

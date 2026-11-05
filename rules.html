@@ -111,6 +111,12 @@ tbody tr:hover td{background:#fafbfc}
 .radios label{display:inline-flex;align-items:center;gap:6px;margin:0;color:#20242a;font-size:14px}
 .radios input{width:15px;height:15px;accent-color:#1677ff;margin:0}
 #condField .radios{flex-wrap:wrap;gap:10px 18px}
+/* 多次订购开关（与 business 页开通开关同款） */
+.switch{position:relative;flex:0 0 auto;width:32px;height:18px;min-width:32px;border-radius:999px;background:#d5dbe3;padding:0;cursor:pointer;transition:background .15s;font-size:0;border:0}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #20242a33;transition:left .15s}
+.switch.on{background:#1677ff}
+.switch.on::after{left:16px}
+.st-cell{text-align:center}
 .form-err{min-height:16px;font-size:11px;color:#d9363e;margin:2px 0 6px}
 .sheet-foot{display:flex;gap:9px}
 .sheet-foot button{flex:1;height:40px}
@@ -195,12 +201,13 @@ tbody tr:hover td{background:#fafbfc}
       <table data-page-node-id="oorQY4lcBTNgUcM6xAY9PC">
         <thead data-page-node-id="42jY5ZCr0fnBPu1BccVVkl">
           <tr data-page-node-id="Mhq9FOFIh1HehP8oP7xjio">
-            <th data-page-node-id="QOMkZOMwsqLf2h1SOMNqYj" style="width:18%"><!--pnid:VrC4fkSHTND6UsEQZ8H3jo-->资费简称</th>
-            <th data-page-node-id="d6YJuT0HY8swVbVtq8OdyC" style="width:16%"><!--pnid:UZjuNazjPERHsix0sIULbJ-->资费全称</th>
-            <th data-page-node-id="sLGFn84sei29OgsKXePjYb" style="width:13%"><!--pnid:04KJ3fMoW7qeCk4O9cT9QZ-->类别 / 系列</th>
+            <th data-page-node-id="QOMkZOMwsqLf2h1SOMNqYj" style="width:17%"><!--pnid:VrC4fkSHTND6UsEQZ8H3jo-->资费简称</th>
+            <th data-page-node-id="d6YJuT0HY8swVbVtq8OdyC" style="width:15%"><!--pnid:UZjuNazjPERHsix0sIULbJ-->资费全称</th>
+            <th data-page-node-id="sLGFn84sei29OgsKXePjYb" style="width:12%"><!--pnid:04KJ3fMoW7qeCk4O9cT9QZ-->类别 / 系列</th>
             <th data-page-node-id="jPmiJo4Jx7rDwMTCjI9Mwr" style="width:10%"><!--pnid:S1oftYVNf0YstyzVFPhoep-->资费价格</th>
+            <th data-page-node-id="5aaRvJwXIG2XP7nLeAAq5X" title="是：规划中只能订购一次（无加减）；否：可多次订购（显示加减）" style="width:8%"><!--pnid:dVF6IDhDQuaX5do41Heovk-->多次订购</th>
             <th data-page-node-id="X3FF16IqYtDKubgGBMbdGf" style="width:8%"><!--pnid:T9CsSxtKk6y0NPC3Fugsh4-->上架状态</th>
-            <th data-page-node-id="cgyiwLeVac2EsvFGgLdcMB" style="width:25%"><!--pnid:NvcocGkf3bJlcLiXlFP5cF-->违约责任</th>
+            <th data-page-node-id="cgyiwLeVac2EsvFGgLdcMB" style="width:20%"><!--pnid:NvcocGkf3bJlcLiXlFP5cF-->违约责任</th>
             <th data-page-node-id="HxkZPBYoI24wdoRHl9VbHV" style="width:10%"><!--pnid:eo6GK99Cfmkz1B3dliu6bB-->操作</th>
           </tr>
         </thead>
@@ -267,6 +274,13 @@ tbody tr:hover td{background:#fafbfc}
     <div data-page-node-id="rgfe97gW89gQaLLTGol37Y" class="field">
       <label data-page-node-id="ktEpT4zlKgXSFQOYLTA9RE" id="priceLabel"><!--pnid:PuVmGfZuKXrSWcudxPqpOF-->消费金额 <i data-page-node-id="AjiXsa25hpKTDvbGYVcz45"><!--pnid:tqxlet6OlViFWUpGUP2nRC-->*</i></label>
       <input data-page-node-id="aYujGkOc5jo8yGlZlf126E" id="fRefPrice" inputmode="decimal" placeholder="如：10.00">
+    </div>
+    <div data-page-node-id="DGCHD8xmkQ9EaWQyd6IOwM" class="field" id="multiField">
+      <label data-page-node-id="1i0EwkPo2fFViNTxO4c1XL"><!--pnid:w7oHE0Cb1eJArIiHHmbk31-->多次订购</label>
+      <div data-page-node-id="DPW1mGxh3qHZziQBZmAo7N" class="radios">
+        <label data-page-node-id="bCiaFWu0Cck5CubE7GAvlY"><input data-page-node-id="g85WAafivrGOKf0KBiKazS" name="fMulti" type="radio" value="yes"><!--pnid:2Np6ew1ugroRuopuTncYqU-->是</label>
+        <label data-page-node-id="CNZgPQMMf67XPhRfM6nNfR"><input data-page-node-id="hlWGX5A6SjKsKLVd8ON9R8" name="fMulti" type="radio" value="no"><!--pnid:b52Q6RS2aQzKixgmVsqs3O-->否</label>
+      </div>
     </div>
     <div data-page-node-id="OUnxunpSTdVz77gQvWwBxM" class="field">
       <label data-page-node-id="rfVYuV3YLy5tVa0jhKEpnx"><!--pnid:JCAMDaXm17uKok42bBLBea-->违约责任</label>
@@ -568,6 +582,7 @@ function render(){
     <td class="full-name">${escapeHtml(x.name)}</td>
     <td><div class="cat-line"><span class="chip ${x.category}">${CAT_NAME[x.category]}</span><span class="stag stag-mini${(x.seriesId||DEFAULT_SERIES)===DEFAULT_SERIES?' def':''}" title="${escapeHtml(seriesName(x.seriesId))}">${escapeHtml(seriesName(x.seriesId))}</span>${x.external?'<span class="ext-badge" title="用户添加业务时自动创建">用户添加</span>':''}</div></td>
     <td class="price-cell">${x.category==='welfare'?`<span class="cond-sub">${COND_NAME[x.condAvg]||COND_NAME.avg3}</span>`:''}${x.price!=null?((x.category==='welfare'?'<small>最低</small>':'')+'¥'+Number(x.price).toFixed(2)):'—'}</td>
+    <td class="st-cell"><button class="switch${x.multi?' on':''}" data-act="multi" role="switch" aria-checked="${x.multi?'true':'false'}" aria-label="多次订购" title="是：规划中只能订购一次（无加减）；否：可多次订购（显示加减）"></button></td>
     <td><span class="shelf-badge ${x.offShelf?'off':'on'}" data-act="shelf" title="点击切换上架 / 下架">${x.offShelf?'已下架':'上架中'}</span></td>
     <td class="liab-txt">${x.liability?escapeHtml(x.liability):'—'}</td>
     <td class="ops">
@@ -599,6 +614,14 @@ $('tbody').addEventListener('click',e=>{
   const tr=btn.closest('tr[data-id]'),id=tr?tr.dataset.id:null;
   const item=rules.find(x=>x.id===id);
   if(!item)return;
+  if(btn.dataset.act==='multi'){
+    // 点击列表中的多次订购开关直接切换（是=规划中只能订购一次；否=可多次订购）
+    item.multi=!item.multi;
+    item.updatedAt=Date.now();
+    persist();render();
+    toast(item.multi?'「'+item.shortName+'」：多次订购=是，规划中只能订购一次':'「'+item.shortName+'」：多次订购=否，规划中可多次订购');
+    return;
+  }
   if(btn.dataset.act==='shelf'){
     // 点击列表中的上架状态徽标直接切换上架 / 下架
     item.offShelf=!item.offShelf;
@@ -638,6 +661,9 @@ function openForm(item){
   syncCondField();
   $('fRefPrice').value=item&&item.price!=null?Number(item.price).toFixed(2):'';
   syncPriceLabel();
+  // 多次订购：新增默认「是」；存量数据无该字段视为「否」
+  const multi=item?!!item.multi:true;
+  document.querySelectorAll('input[name="fMulti"]').forEach(r=>r.checked=r.value===(multi?'yes':'no'));
   $('fLiability').value=item?item.liability:'';
   $('modal').classList.remove('hidden');
 }
@@ -674,7 +700,7 @@ function validate(){
   const price=Number(priceRaw);
   if(!Number.isFinite(price)||price<0)return '消费金额不能为负数';
   if(price>99999)return '消费金额过大';
-  const data={shortName,name,code,seriesId,category:cat,price,liability:$('fLiability').value.trim(),offShelf:document.querySelector('input[name="fShelf"]:checked').value==='off'};
+  const data={shortName,name,code,seriesId,category:cat,price,liability:$('fLiability').value.trim(),offShelf:document.querySelector('input[name="fShelf"]:checked').value==='off',multi:document.querySelector('input[name="fMulti"]:checked').value==='yes'};
   if(cat==='welfare'){
     const c=document.querySelector('input[name="fCond"]:checked');
     data.condAvg=c&&(c.value==='avg6'||c.value==='month')?c.value:'avg3';
@@ -717,6 +743,7 @@ const XLSX_COLS=[
   {key:'category',head:'资费类别',width:14,type:'s'},
   {key:'condAvg',head:'消费条件',width:16,type:'s'},
   {key:'price',head:'消费金额/最低消费',width:16,type:'n'},
+  {key:'multi',head:'多次订购',width:10,type:'s'},
   {key:'shelf',head:'上架状态',width:10,type:'s'},
   {key:'liability',head:'违约责任',width:34,type:'s'}
 ];
@@ -775,6 +802,7 @@ function xlsxRows(){
     if(c.key==='category')return CAT_NAME[x.category]||'';
     if(c.key==='condAvg')return x.category==='welfare'?(COND_NAME[x.condAvg]||COND_NAME.avg3):'';
     if(c.key==='price')return x.price!=null?Number(x.price):'';
+    if(c.key==='multi')return x.multi?'是':'否';
     if(c.key==='shelf')return x.offShelf?'已下架':'上架中';
     if(c.key==='liability')return x.liability||'';
     return '';
@@ -933,6 +961,7 @@ const IMPORT_ALIASES={
   category:['资费类别','类别','业务类别'],
   condAvg:['消费条件'],
   price:['消费金额/最低消费','消费金额','最低消费'],
+  multi:['多次订购','多次'],
   shelf:['上架状态','状态'],
   liability:['违约责任','违约']
 };
@@ -980,9 +1009,12 @@ function parseImportRows(rows){
     let price=null;
     const priceRaw=get('price');
     if(priceRaw!==''&&/^\d+(\.\d{1,2})?$/.test(priceRaw))price=Number(priceRaw);
+    const multiRaw=get('multi');
+    // 多次订购列：明确写「否」为 false，明确写「是」为 true，缺省为 null（新增时默认是、更新时保留原值）
+    const multi=/否/.test(multiRaw)?false:(/是/.test(multiRaw)?true:null);
     const shelfRaw=get('shelf');
     const offShelf=/下架/.test(shelfRaw)?true:(/上架/.test(shelfRaw)?false:null);
-    records.push({shortName:shortName||name,name:name||shortName,code,seriesName:cleanName(get('series')),category,condAvg,price,liability:get('liability'),offShelf});
+    records.push({shortName:shortName||name,name:name||shortName,code,seriesName:cleanName(get('series')),category,condAvg,price,multi,liability:get('liability'),offShelf});
   }
   return {records,errors};
 }
@@ -1030,6 +1062,9 @@ function applyImport(records,plan){
     if(r.category==='welfare'&&r.condAvg)data.condAvg=r.condAvg;
     if(r.price!=null)data.price=r.price;
     const exist=rules.find(x=>x.code===r.code);
+    // 多次订购：文件有值用文件值；文件缺省时新增默认「是」，更新保留原值
+    if(r.multi!=null)data.multi=r.multi;
+    else if(!exist)data.multi=true;
     if(exist)Object.assign(exist,data);
     else rules.push({id:'r'+now+i+Math.random().toString(36).slice(2,6),...data,createdAt:now});
   });

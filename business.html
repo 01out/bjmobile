@@ -530,9 +530,10 @@ function load(){
     if(!x.code)return;
     const r=ruleMap.get(x.code);
     if(!r)return;
-    // 规则表为真源：名称、类别、系列、违约责任、消费条件、上架状态实时同步
+    // 规则表为真源：名称、类别、系列、违约责任、消费条件、上架状态、多次订购实时同步
     x.name=cleanName(r.name)||x.name;
     x.offShelf=!!r.offShelf;
+    x.multi=!!r.multi;
     if(r.category==='consume'||r.category==='welfare')x.category=r.category,x.type=r.category;
     if(series.some(s=>s.id===r.seriesId))x.seriesId=r.seriesId;
     x.liability=r.liability||'';
@@ -955,6 +956,7 @@ function save(){
         name:cleanName(r.name)||cleanName(r.shortName),
         category:r.category,type:r.category,
         offShelf:!!r.offShelf,
+        multi:!!r.multi,
         seriesId:series.some(x=>x.id===r.seriesId)?r.seriesId:DEFAULT_SERIES,
         liability:r.liability||'',
         condAvg:r.category==='welfare'?normCond(r.condAvg):undefined,
@@ -1564,7 +1566,7 @@ function applyImport(records,plan){
       updated++;
     }
     else{
-      items.push({id:'b'+now+i+Math.random().toString(36).slice(2,6),...data,createdAt:now,updatedAt:now});
+      items.push({id:'b'+now+i+Math.random().toString(36).slice(2,6),...data,multi:true,createdAt:now,updatedAt:now});
       added++;
     }
   });
@@ -1585,6 +1587,7 @@ function applyImport(records,plan){
         category:r.category,condAvg:r.category==='welfare'?normCond(r.condAvg):undefined,
         price:r.price!=null?r.price:null,
         liability:r.liability||'',
+        multi:true,
         external:true,createdAt:now,updatedAt:now
       });
       known.add(r.code);
