@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html data-page-node-id="PqPl07OG6cGBtDXGa2qw1h" lang="zh-CN">
+<head data-page-node-id="W5ZyvujyN3O2cFQUHhXWUZ">
+<script data-page-node-id="fz3NodniPqKHPPZVY6Izon" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="0CMFHEzY9u2X43QXq3V1Sm" charset="UTF-8">
+<meta data-page-node-id="V06XN8v4oGlpodVKvutqG3" content="width=device-width,initial-scale=1" name="viewport">
+<title data-page-node-id="c9qnalsSE8ZsubdNt30yJF" data-pnid-children="YWq0LBDe1LwbesavT63CQ9">爱家组合方案</title>
+<style data-page-node-id="Sh7pNxcSVxp3JKwNh3daJq" data-pnid-children="VglZmpbSqRKWxyrohebmpp">
+*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#20242a;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px}
+.wrap{max-width:1080px;margin:auto;padding:40px 16px 56px}
+header{margin-bottom:14px}
+.back{display:inline-block;font-size:11px;color:#6b7480;text-decoration:none;margin-bottom:10px}
+.back:hover{color:#1677ff}
+h1{font-size:25px;margin:0 0 7px}.sub{font-size:12px;color:#8b929c}
+.card{background:#fff;border:1px solid #e9edf1;border-radius:17px;padding:19px;margin-top:14px;box-shadow:0 4px 18px #20242a08}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px}
+.label{font-size:13px;color:#8b929c}
+.ghost{height:30px;padding:0 12px;border:1px solid #e2e7ee;border-radius:8px;background:#fff;color:#6b7480;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap}
+.ghost:hover{border-color:#ffc9cd;color:#d9363e;background:#fff8f8}
+.mcard{border:1px solid #e9edf1;border-radius:14px;padding:14px 14px 12px;margin-top:10px;background:#fff;box-shadow:0 2px 10px #20242a0a}
+.mcard:first-child{margin-top:4px}
+.mhead{display:flex;align-items:center;gap:9px}
+.mno{font-size:12px;color:#8b929c;white-space:nowrap;min-width:46px}
+.phone{height:40px;flex:1;min-width:0;border:1px solid #dfe3e8;border-radius:9px;padding:0 12px;font-size:15px;letter-spacing:.3px;outline:none;background:#fff;color:#20242a}
+.phone:focus{border-color:#1677ff;box-shadow:0 0 0 3px #1677ff12}
+.phone::placeholder{font-size:13px;color:#a8b0ba;letter-spacing:0}
+.mdel{width:30px;height:30px;flex:0 0 auto;padding:0;border:0;border-radius:8px;background:transparent;color:#a8b0ba;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.mdel:hover{background:#fff2f2;color:#d9363e}
+/* 手机号后的近6月平均消费（接口自动带出，只读） */
+.a6-pill{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#8b929c;background:#f7f8fa;border:1px solid #e9edf1;border-radius:999px;padding:4px 10px;white-space:nowrap}
+.a6-pill b{color:#20242a;font-weight:600;font-variant-numeric:tabular-nums}
+.a6-pill.loading b{color:#a8b0ba}
+.cons-row{margin-top:9px}
+.cons-wrap{position:relative}
+.plan-field{height:40px;border:1px solid #dfe3e8;border-radius:9px;padding:0 9px;font-size:13px;width:100%;min-width:0;background:#fff;outline:none;color:#20242a}
+.plan-field::placeholder{font-size:11.5px;color:#a8b0ba}
+.plan-field:focus{border-color:#1677ff;box-shadow:0 0 0 3px #1677ff12}
+.cons-wrap .p-cons{padding-right:37px}
+.cons-menu{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:27px;height:27px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:7px;background:transparent;color:#9aa1aa;cursor:pointer;padding:0;font-weight:400}
+.cons-menu:hover{background:#f2f5f9;color:#1677ff}
+.cons-menu.on{background:#eef4ff;color:#1677ff}
+.cons-menu svg{display:block}
+.cons-tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:7px}
+.cons-tags:empty{margin-top:0}
+.ctag{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:999px;background:#eef4ff;border:1px solid #dbe7ff;color:#4d6fa8;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.ctag .sw-bar{display:inline-flex;align-items:center;gap:6px}
+.ctag .sw-btn{width:18px;height:18px;margin:0;flex:0 0 auto;border:0;border-radius:50%;background:linear-gradient(180deg,#ffffff,#e6edf7);color:#4d6fa8;font-size:12px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 1px 2px rgba(32,36,42,.18),inset 0 1px 0 #fff}
+.ctag .sw-btn:active{background:linear-gradient(180deg,#dde7f4,#cbd8ea)}
+.ctag .sw-btn:disabled{opacity:.45;cursor:default;background:linear-gradient(180deg,#f2f5f9,#e6eaf0);color:#a8b0ba;box-shadow:none}
+.ctag .led{display:none;flex:0 0 auto;min-width:17px;height:17px;padding:0 4px;margin-left:1px;border-radius:999px;background:radial-gradient(circle at 32% 28%,#ff9a9a,#e5303c 58%,#a81325);color:#fff;font-size:10px;font-weight:700;line-height:17px;text-align:center;box-shadow:0 1px 2px rgba(150,15,30,.4),inset 0 1px 1px rgba(255,255,255,.55),0 0 7px rgba(217,54,62,.35)}
+.ctag .led.on{display:inline-block}
+.ctag .cam{color:#d9363e;font-weight:600;margin-left:4px}
+.cons-dd{display:flex;flex-direction:column;gap:3px;margin-top:6px;background:#fff;border:1px solid #dfe3e8;border-radius:10px;padding:5px;box-shadow:0 6px 18px #20242a14}
+.cons-dd.hidden{display:none}
+.cons-dd .dd-item{font-size:12px;padding:7px 9px;border-radius:7px;cursor:pointer;color:#20242a;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cons-dd .dd-item:hover{background:#f2f5f9}
+.cons-dd .dd-item.swap{background:#fffdf6}
+.cons-dd .dd-item.swap:hover{background:#fdf6e7}
+.cons-dd .dd-item .dd-tip{font-size:11px;color:#c08a2e;white-space:nowrap}
+.cons-dd .dd-empty{font-size:12px;color:#9aa1aa;padding:7px 9px}
+.mhint{font-size:11px;color:#9aa1aa;margin-top:7px;line-height:1.6}
+.mhint b{color:#5a6270;font-weight:600}
+.add-btn{height:30px;padding:0 12px;border:1px solid #d9e7ff;border-radius:8px;background:#eef4ff;color:#1677ff;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap}
+.add-btn:hover:not(:disabled){border-color:#b6d4ff;background:#e3edff}
+.add-btn:disabled{opacity:.5;cursor:default}
+.head-btns{display:flex;gap:8px;flex:0 0 auto}
+/* 合计卡 */
+.total-card{background:linear-gradient(180deg,#f8fbff 0%,#fff 62%)}
+/* 无身份守卫：与 business 页同口径 */
+#denyView{display:none;min-height:70vh;align-items:center;justify-content:center;text-align:center}
+#denyView .deny-box{padding:40px 24px}
+#denyView .deny-d{font-size:12px;color:#8b929c;line-height:1.8}
+#denyView svg{color:#c3ccd6}
+body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.wrap>p{display:none}
+.total-flex{display:flex;align-items:flex-start;gap:250px}
+.total-left{flex:0 0 160px;min-width:0}
+.total-right{flex:0 0 auto;padding-bottom:0}
+.a6-avg{font-size:44px;font-weight:700;letter-spacing:-.6px;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.a6-avg .cur{font-size:22px;font-weight:600;color:#4a5361;margin-right:1px;letter-spacing:0}
+.a6-avg.loading{color:#a8b0ba}
+.total{display:flex;align-items:baseline;gap:2px;margin:6px 0 3px;font-size:44px;font-weight:700;letter-spacing:-.6px;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.total .cur{font-size:22px;font-weight:600;color:#4a5361;letter-spacing:0}
+.total-sub{font-size:13px;color:#6b7480;line-height:1.7;margin-top:8px}
+.total-sub b{color:#1677ff;font-weight:600}
+.progress{height:8px;border-radius:999px;background:#edf0f4;margin-top:15px;overflow:hidden}
+.progress i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#66a6ff,#1677ff);transition:width .18s}
+.ticks{position:relative;height:15px;margin-top:5px;font-size:11px;color:#9aa1aa}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.ticks span.done{color:#1677ff}
+/* 档位对照
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.tier{border:1px solid #e9edf1;border-radius:12px;padding:12px 13px;background:#fafbfc}
+.tier.on{border-color:#bcd9ff;background:#f3f8ff}
+.tier.top{border-color:#1677ff;box-shadow:0 0 0 3px #1677ff12}
+.tier-amt{font-size:21px;font-weight:700;letter-spacing:-.3px}
+.tier-amt small{font-size:12px;font-weight:500;color:#6b7480;margin-left:1px}
+.tier-st{font-size:11px;color:#9aa1aa;margin-top:4px}
+.tier.on .tier-st{color:#1677ff}
+.rule-list{margin-top:14px;border-top:1px solid #edf0f2;padding-top:10px;font-size:12px;color:#8b929c;line-height:1.9}
+.rule-list b{color:#5a6270;font-weight:600}
+*/
+.note{font-size:12px;line-height:1.7;color:#8b929c;margin-top:12px}
+@media(max-width:560px){
+  .wrap{padding-top:24px;padding-bottom:40px}
+  h1{font-size:22px}
+  .card{padding:16px}
+  .total{font-size:36px}
+  .total .cur{font-size:19px}
+  .a6-avg{font-size:36px}
+  .a6-avg .cur{font-size:19px}
+  .total-flex{align-items:flex-start;gap:50px}
+  .total-left{flex:0 0 170px}
+  .mno{min-width:0}
+  .phone{font-size:16px}
+}
+</style>
+</head>
+<body data-page-node-id="j8XUCHa7Wt0cJvRJnOHn45" class="no-identity">
+<div data-page-node-id="HxDNEmUuFPDgabD2FReQOv" class="wrap">
+  <header data-page-node-id="ujab93jBOEMAoOL711I5xb">
+    <a data-page-node-id="ULy1phxzwFX6pGTyAEeBzL" class="back" href="index.html"><!--pnid:8gx2Vm9EYCFWthX6ZWcwN3-->‹ 返回消费规划器</a>
+    <h1 data-page-node-id="fmy7rI326QVeBX1FCOeg0l"><!--pnid:Yf0M6L0YgVTszcZf4j1dgo-->爱家组合方案</h1>
+    <div data-page-node-id="jnY1mDl53WhwMPYGnturzX" class="sub"><!--pnid:XJhOESxHdh5miigdrsWDAC-->组合最多 4 个手机号，计算当月消费合计</div>
+  </header>
+
+  <div data-page-node-id="65p8MNdUOlOG8NK01Vot5x" id="denyView" style="display:flex">
+    <div data-page-node-id="6uU2fIKaCutY2o6DTzYoCz" class="deny-box">
+      <svg data-page-node-id="pQF7Cf3k6e7zPrpJY9u7Zs" aria-hidden="true" fill="none" height="44" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="44"><rect data-page-node-id="Q0EZ7U6pPYXiDYhRRMOAkc" height="11" rx="2" width="18" x="3" y="11"></rect><path data-page-node-id="fgcciU6zAZ9nhW5gNTq5Gl" d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      <div data-page-node-id="0upwt7miqyfSmXoRTxmVr4" class="deny-d"><!--pnid:dZiSqfh3aKEdWo87gBJRsN-->请回到首页查询你的手机号后，再来使用该服务。</div>
+      <div data-page-node-id="d5wI50mcGpvlWLfLEUDiqK" style="margin-top:16px"><a data-page-node-id="ifIDaeAmfOLiWwDmWOq1c5" class="back" href="index.html?auto=1" style="font-size:13px; color:#1677ff"><!--pnid:BakkrQiJ3Rnau2Vc9N9fau-->‹ 返回消费规划器</a></div>
+    </div>
+  </div>
+
+  <section data-page-node-id="rRyVe10oieTxaSM2NUledo" class="card total-card">
+    <div data-page-node-id="77gezh0rvrPa3MuoGnZ9Ec" class="total-flex">
+      <div data-page-node-id="9QwAhPgmLxGvKUQ1RV8Vmr" class="total-left">
+        <div data-page-node-id="EdN3knVhb2VLuggmX6q0Hb" class="label"><!--pnid:57bflxdSBFwbwPuyZNYIn3-->组合当月消费合计</div>
+        <div data-page-node-id="Q0D8hGt5uxBCJ7TpjKFCge" class="total"><span data-page-node-id="WEnG8ntqIfT0yj0yKAmPYp" class="cur"><!--pnid:bn65wpR0ONDkvSKfubmKkr-->¥</span><span data-page-node-id="jg7S6mesk71JBAdhc9AYUF" id="totalVal"><!--pnid:HaImZLhBcMyUl6LdMZOaU4-->0.00</span></div>
+      </div>
+      <div data-page-node-id="d1dVenUzf9XmO9R9iGV0ll" class="total-right">
+        <div data-page-node-id="raG2YzmRtjRPOPqCoB6xhl" class="label"><!--pnid:dlcr1XOnogxFt7uZyTJrQk-->近6月均消均值</div>
+        <div data-page-node-id="8boHlr74x6cFmQ4z9WXKMb" class="a6-avg" id="a6Avg"><!--pnid:0sM3eKhOWNUeMcGnYMzM2F-->—</div>
+      </div>
+    </div>
+    <div data-page-node-id="HZhLjRB8yOczU5MW8G1P3G" class="total-sub" id="totalSub"><!--pnid:IHePYNMEzIHlUZThQQR7s7-->填写手机号并计算当月消费</div>
+    <div data-page-node-id="ru0KrNYnopiMcN849bDHaE" class="progress"><i data-page-node-id="ACagVA3HNQFUsUf63aSfcC" id="progBar" style="width:0%"></i></div>
+    <div data-page-node-id="9rytVKjZJc7FAVapBBTptJ" class="ticks" id="ticks"></div>
+  </section>
+
+  <section data-page-node-id="1TEnKpDr0LgQzO1MRCgfBj" class="card">
+    <div data-page-node-id="2PiWex5nSps2EhGA29HcxF" class="card-head">
+      <div data-page-node-id="x6bIveoKYsQyxIC3RcIROX">
+        <div data-page-node-id="xr79hpTlxZWicKWrTcx1jn" class="label"><!--pnid:A62kUhkWueAlEK97Pt3jKD-->手机号与当月消费</div>
+        <div data-page-node-id="4EIIq9IYZA5oYyPxdb6TmJ" class="note" style="margin-top:5px"><!--pnid:HlhcDwJySUIz9wfHKCoxAC-->选择该号已开通的凑单业务自动计算，也可直接手输本月消费；支持 59+88 这类算式。</div>
+      </div>
+      <div data-page-node-id="Qmv4kZCkZ1e9BQaSkmvAlT" class="head-btns">
+        <button data-page-node-id="Yp7ubkgNbl7O2wZHb8PovD" class="add-btn" id="addBtn" type="button"><!--pnid:kNVPjt8546VdabaN19Xi4y-->＋ 添加手机号</button>
+        <button data-page-node-id="Ty4iorg0yX1jG90TKQfNF2" class="ghost" id="clearBtn" type="button"><!--pnid:3kpf7APz3n06GFJcvUJkAH-->清空</button>
+      </div>
+    </div>
+    <div data-page-node-id="kFhW4PvFVr9x29a5cndhfN" id="memberList"></div>
+  </section>
+
+  <section data-page-node-id="tKHFmoqknhXsab7rTf5E7i" class="card">
+    <div data-page-node-id="GmHiNqPOxpv0Y5n5cHQAGw" class="note" style="margin:0"><!--pnid:RYs0qSEEPzshELE3rYjGbU-->当月消费按你选择的业务资费估算，仅供规划参考；组合与业务选择只保存在本机浏览器。</div>
+  </section>
+</div>
+
+<script data-page-node-id="l0WngAtBwQ21h7VG8GeuMr" data-pnid-children="qz5ZcPbkEpHzdda9LhUGrc">
+/* ============ 档位：59~369 共 32 档，每档 +10（正式口径） ============ */
+const TIERS=Array.from({length:32},(_,i)=>59+i*10);
+// 进度条刻度：每 5 档标一个（50 元间隔），页面放不下 32 个数字
+const TICKS=TIERS.filter((_,i)=>i%5===0);
+
+const KEY='arpu_lovehome_v1';
+const pad=n=>String(n).padStart(2,'0');
+function currentMonth(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}`}
+function todayStr(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+function monthOf(s){return s?String(s).slice(0,7):''}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtNum(v){return String(Math.round(v*100)/100)}
+function money2(v){return Number(v||0).toFixed(2)}
+function sanitizeNum(v){
+  let s=String(v==null?'':v).replace(/[^\d.]/g,'');
+  const i=s.indexOf('.');
+  if(i!==-1)s=s.slice(0,i+1)+s.slice(i+1).replace(/\./g,'');
+  const m=s.match(/^\d*(\.\d{0,2})?/);
+  return m?m[0]:'';
+}
+// 算式：支持 + - * / 括号，失焦/回车时求值
+function evalExpr(raw){
+  let s=String(raw==null?'':raw).replace(/[＝]/g,'=').replace(/[＋]/g,'+').replace(/[－]/g,'-').replace(/[×✕]/g,'*').replace(/[÷]/g,'/').replace(/[=]+$/,'').trim();
+  if(!s||!/^[\d+\-*/().\s]+$/.test(s))return null;
+  try{const v=Function('"use strict";return('+s+')')();if(Number.isFinite(v)&&v>=0)return v}catch(e){}
+  return null;
+}
+
+/* ============ 业务数据（按手机号分桶读取，只读不改） ============ */
+function bizId(x){return String((x&&(x.id||x.name))||'')}
+function bizCat(x){return x?(x.category||x.type||''):''}
+function rulesMap(){
+  const m=new Map();
+  try{const a=JSON.parse(localStorage.getItem('arpu_rules_v1')||'[]');if(Array.isArray(a))a.forEach(r=>{if(r&&r.code)m.set(String(r.code).trim(),r)})}catch(e){}
+  return m;
+}
+// 合约消费金额：记录里的 contract 为准，老数据用规则表同编码资费兜底
+function contractOf(x,rules){
+  if(!x)return 0;
+  if(x.contract!==undefined&&x.contract!==null&&x.contract!==''){
+    const v=Math.round(Number(x.contract)*100)/100;
+    if(Number.isFinite(v)&&v>=0)return v;
+  }
+  const r=rules&&x.code?rules.get(String(x.code).trim()):null;
+  const p=r&&r.price!=null?Number(r.price):Number(x.price);
+  return Number.isFinite(p)&&p>=0?Math.round(p*100)/100:0;
+}
+// 业务在指定年月是否有效：到期月整月有效，次月起失效
+function bizInMonth(x,ym){
+  if(!x)return false;
+  const s=x.startDate?String(x.startDate):'',e=x.endDate?String(x.endDate):'';
+  if(!s&&!e)return true;
+  const m=ym||currentMonth();
+  if(s&&m<monthOf(s))return false;
+  if(e&&m>monthOf(e))return false;
+  return true;
+}
+function loadBizFor(phone){
+  if(!/^1[3-9]\d{9}$/.test(phone||''))return [];
+  let arr=[];
+  try{
+    const m=JSON.parse(localStorage.getItem('arpu_business_v2')||'{}');
+    const b=(m&&typeof m==='object'&&!Array.isArray(m))?m[phone]:null;
+    arr=Array.isArray(b)?b:[];
+  }catch(e){arr=[]}
+  const t=todayStr(),rules=rulesMap();
+  return arr.filter(x=>x&&typeof x==='object').map(x=>{
+    const s=x.startDate?String(x.startDate):'',e=x.endDate?String(x.endDate):'';
+    const r=x.code?rules.get(String(x.code).trim()):null;
+    const multi=r&&r.multi!==undefined?!!r.multi:!!x.multi;
+    if(!s&&!e)return {...x,multi};
+    if(x.manualOff)return {...x,multi,active:!!x.active};
+    return {...x,multi,active:(!s||t>=s)&&(!e||monthOf(t)<=monthOf(e))};
+  });
+}
+function activeConsume(phone,ym){
+  return loadBizFor(phone).filter(x=>bizCat(x)==='consume'&&x.active&&bizInMonth(x,ym));
+}
+function initCounts(phone){
+  const c={};
+  activeConsume(phone,currentMonth()).forEach(x=>{c[bizId(x)]=1});
+  return c;
+}
+
+/* ============ 组合状态 ============ */
+let uid=0;
+let members=[];
+function newMember(){return {uid:++uid,phone:'',counts:{},manual:'',a6:null}}
+
+/* ============ 近6月平均消费：接口自动带出（只读） ============ */
+const UPSTREAM='http://ysmapp.bj.10086.cn/app/channel-web/busiCore/customerValidateAndConsumption.action';
+const PROXY='https://arpu.151365.cc/api/query?url=';
+const API_PARAMS={submitWarePackageId:'A1000529',submitChannel:'app_share',submitCode:'WWFSX001570',submitEmpCode:'WWFSX001570',nbc:'ddf05d72a82e5df6698124e53faf3fb9'};
+function buildQueryUrl(phone){
+  const q=new URLSearchParams({submitPhoneNO:phone,...API_PARAMS});
+  return UPSTREAM+'?'+q.toString();
+}
+function monthAdd(ym,n){const [y,m]=ym.split('-').map(Number);const t=y*12+(m-1)+n;return `${Math.floor(t/12)}-${pad(t%12+1)}`}
+// 校验接口返回并取出近6月平均（arpu_avg6）；失败返回 null
+function normalizeAvg6(raw){
+  if(!raw||typeof raw!=='object'||raw.errorCode!=='success')return null;
+  let ent=raw.entity;
+  if(typeof ent==='string'){try{ent=JSON.parse(ent)}catch(e){}}
+  if(!ent||typeof ent!=='object')return null;
+  const v=ent.arpu_avg6;
+  if(v===null||v===undefined||v==='')return null;
+  const n=Number(v);
+  return Number.isFinite(n)&&n>=0?n:null;
+}
+const a6Timers={};
+function scheduleA6(row){
+  clearTimeout(a6Timers[row.uid]);
+  a6Timers[row.uid]=setTimeout(()=>{if(validPhone(row.phone))queryA6(row)},600);
+}
+function queryA6(row){
+  const phone=row.phone;
+  if(!validPhone(phone))return;
+  row.a6Loading=true;paintA6(row);paintA6Avg();
+  const req=typeof fetch==='function'
+    ?fetch(PROXY+encodeURIComponent(buildQueryUrl(phone)),{method:'GET',cache:'no-store'})
+    :Promise.reject(new Error('no fetch'));
+  req
+    .then(res=>{if(!res.ok)throw new Error('query failed');return res.json()})
+    .then(raw=>{
+      if(row.phone!==phone)return; // 号码已改，丢弃过期结果
+      row.a6=normalizeAvg6(raw);
+    })
+    .catch(()=>{
+      if(row.phone!==phone)return;
+      row.a6=null;
+    })
+    .finally(()=>{
+      if(row.phone!==phone)return;
+      row.a6Loading=false;
+      paintA6(row);paintA6Avg();save();
+    });
+}
+// 刷新所有有效号码的近6月均消（打开页面时调用，错开请求）
+function refreshAllA6(){
+  members.filter(r=>validPhone(r.phone)).forEach((r,i)=>setTimeout(()=>queryA6(r),i*400));
+}
+
+function validPhone(p){return /^1[3-9]\d{9}$/.test(p||'')}
+function rowAutoSum(row){
+  if(!validPhone(row.phone))return 0;
+  const biz=loadBizFor(row.phone),rules=rulesMap(),ym=currentMonth();
+  let s=0;
+  Object.keys(row.counts||{}).forEach(id=>{
+    const n=row.counts[id];if(!n)return;
+    const x=biz.find(b=>bizId(b)===id);
+    if(x&&bizInMonth(x,ym))s+=contractOf(x,rules)*n;
+  });
+  return s;
+}
+function rowValue(row){
+  if(row.manual!==''){const n=Number(row.manual);return Number.isFinite(n)&&n>=0?n:null}
+  if(!validPhone(row.phone))return null;
+  return rowAutoSum(row);
+}
+function consDisplay(row){
+  if(row.manual!=='')return row.manual;
+  if(!validPhone(row.phone))return '';
+  const s=rowAutoSum(row);
+  return s>0?fmtNum(s):'';
+}
+
+function save(){
+  try{
+    const data={members:members.map(m=>({phone:m.phone,counts:m.counts,manual:m.manual,a6:typeof m.a6==='number'?m.a6:null})),updatedAt:Date.now()};
+    localStorage.setItem(KEY,JSON.stringify(data));
+  }catch(e){}
+}
+function loadState(){
+  let s=null;
+  try{s=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){s=null}
+  if(s&&Array.isArray(s.members)&&s.members.length){
+    members=s.members.slice(0,4).map(m=>{
+      const row=newMember();
+      row.phone=validPhone(m&&m.phone)?m.phone:'';
+      row.counts=(m&&m.counts&&typeof m.counts==='object'&&!Array.isArray(m.counts))?{...m.counts}:{};
+      row.manual=m&&typeof m.manual==='string'?m.manual:'';
+      row.a6=m&&typeof m.a6==='number'&&Number.isFinite(m.a6)&&m.a6>=0?m.a6:null;
+      return row;
+    });
+  }
+  if(!members.length)members=[newMember()];
+}
+
+/* ============ 渲染 ============ */
+const listEl=document.getElementById('memberList');
+function renderCards(){
+  listEl.innerHTML=members.map((r,i)=>`
+  <div class="mcard" data-uid="${r.uid}">
+    <div class="mhead">
+      <span class="mno">号码 ${i+1}</span>
+      <input class="phone" data-phone="${r.uid}" type="tel" inputmode="numeric" autocomplete="off" maxlength="11" placeholder="请输入 11 位手机号" value="${esc(r.phone)}">
+      <span class="a6-pill" data-a6="${r.uid}" title="近6月平均消费（自动查询，不可修改）"></span>
+      ${members.length>1?`<button class="mdel" data-del="${r.uid}" type="button" aria-label="删除号码 ${i+1}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>`:''}
+    </div>
+    <div class="cons-row">
+      <div class="cons-wrap">
+        <input class="plan-field p-cons" data-cons="${r.uid}" type="text" inputmode="text" autocomplete="off" placeholder="选择业务自动计算，或手动输入本月消费" value="${esc(consDisplay(r))}">
+        <button class="cons-menu" data-menu="${r.uid}" type="button" aria-label="选择凑单业务" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+      <div class="cons-tags" data-tags="${r.uid}"></div>
+      <div class="cons-dd hidden" data-dd="${r.uid}"></div>
+    </div>
+    <div class="mhint" data-hint="${r.uid}"></div>
+  </div>`).join('');
+  members.forEach(r=>{
+    r.el={
+      phone:listEl.querySelector(`[data-phone="${r.uid}"]`),
+      cons:listEl.querySelector(`[data-cons="${r.uid}"]`),
+      tags:listEl.querySelector(`[data-tags="${r.uid}"]`),
+      dd:listEl.querySelector(`[data-dd="${r.uid}"]`),
+      hint:listEl.querySelector(`[data-hint="${r.uid}"]`),
+      menu:listEl.querySelector(`[data-menu="${r.uid}"]`),
+      a6:listEl.querySelector(`[data-a6="${r.uid}"]`)
+    };
+    bindPhone(r);
+    bindCons(r);
+    paintA6(r);
+  });
+  document.getElementById('addBtn').disabled=members.length>=4;
+  document.getElementById('addBtn').textContent=members.length>=4?'最多 4 个手机号':'＋ 添加手机号';
+  recalc();
+  paintA6Avg();
+}
+function rowByUid(u){return members.find(r=>r.uid===Number(u))}
+
+/* ============ 近6月均消展示（只读） ============ */
+function a6Text(row){
+  if(!validPhone(row.phone))return '';
+  if(row.a6Loading)return '近6月均消 <b>…</b>';
+  return row.a6!=null?`近6月均消 <b>¥${Math.round(row.a6)}</b>`:'近6月均消 <b>—</b>';
+}
+function paintA6(row){
+  if(!row.el||!row.el.a6)return;
+  row.el.a6.innerHTML=a6Text(row);
+  row.el.a6.classList.toggle('loading',!!row.a6Loading||row.a6==null);
+  row.el.a6.style.display=validPhone(row.phone)?'':'none';
+}
+// 合计卡右侧：所有有效号码近6月均消的平均值（忽略查询失败/查询中的号码，一个都没有则 —）
+function paintA6Avg(){
+  const el=document.getElementById('a6Avg');
+  if(!el)return;
+  const vals=members.filter(r=>validPhone(r.phone)&&typeof r.a6==='number').map(r=>r.a6);
+  if(!vals.length){el.innerHTML='—';el.classList.add('loading');return}
+  const avg=vals.reduce((s,v)=>s+v,0)/vals.length;
+  el.classList.remove('loading');
+  el.innerHTML=`<span class="cur">¥</span>${Math.round(avg)}`;
+}
+
+function bindPhone(row){
+  const el=row.el.phone;
+  if(!el)return;
+  el.addEventListener('input',()=>{
+    let v=el.value.replace(/\D/g,'').slice(0,11);
+    if(v!==el.value)el.value=v;
+    if(v===row.phone){save();return}
+    row.phone=v;
+    // 换号后业务桶、次数、手填值、近6月均消都要按新号码重来
+    row.counts=validPhone(v)?initCounts(v):{};
+    row.manual='';
+    row.a6=null;
+    if(row.el)row.el.cons.value='';
+    recalc();paintA6(row);paintA6Avg();save();
+    clearTimeout(a6Timers[row.uid]);
+    if(validPhone(v))scheduleA6(row);
+  });
+}
+function bindCons(row){
+  const el=row.el.cons;
+  if(!el)return;
+  el.addEventListener('input',()=>{
+    const t=el.value;
+    // 纯数字即时联动；含运算符的算式先不动合计，等失焦/回车再求值（与 index 一致）
+    if(/^\d*\.?\d*$/.test(t.trim())){row.manual=t;recalc()}
+    save();
+  });
+  const apply=()=>{
+    const t=el.value.trim();
+    if(t===''){row.manual='';recalc();save();return}
+    const v=evalExpr(t);
+    if(v==null){
+      // 非法输入：回到上一次有效值（手填或自动合计）
+      el.value=consDisplay(row);
+    }else{
+      el.value=fmtNum(v);
+      row.manual=el.value;
+    }
+    recalc();save();
+  };
+  el.addEventListener('blur',apply);
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();apply();el.blur()}});
+}
+
+/* ============ 业务标签 / 下拉 ============ */
+function renderTags(row){
+  const box=row.el&&row.el.tags;
+  if(!box)return;
+  if(!validPhone(row.phone)||!row.counts){box.innerHTML='';return}
+  const biz=loadBizFor(row.phone),rules=rulesMap(),ym=currentMonth();
+  const ids=Object.keys(row.counts).filter(id=>{
+    if(!(row.counts[id]>0))return false;
+    const x=biz.find(b=>bizId(b)===id);
+    return !!x&&bizInMonth(x,ym);
+  });
+  box.innerHTML=ids.map(id=>{
+    const x=biz.find(b=>bizId(b)===id),n=row.counts[id];
+    const nm=esc(x?x.name||'':id),cp=contractOf(x,rules);
+    // 多次订购=否：只能订一次，点击标签整体开通/取消
+    if(x&&!x.multi)return `<span class="ctag single" data-id="${esc(id)}" data-uid="${row.uid}"><span class="sw-bar"><button class="sw-btn" data-dec="${esc(id)}" data-uid="${row.uid}" aria-label="删除该业务" tabindex="-1">−</button><span class="sw-mid">${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span><button class="sw-btn" data-inc="${esc(id)}" data-uid="${row.uid}" aria-label="多次订购=否，不可增加" tabindex="-1" disabled>＋</button></span></span>`;
+    return `<span class="ctag" data-id="${esc(id)}" data-uid="${row.uid}"><span class="sw-bar"><button class="sw-btn" data-dec="${esc(id)}" data-uid="${row.uid}" aria-label="减少一次" tabindex="-1">−</button><span class="sw-mid">${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span><button class="sw-btn" data-inc="${esc(id)}" data-uid="${row.uid}" aria-label="增加一次" tabindex="-1">＋</button></span>${n>1?`<span class="led on">${n}</span>`:''}</span>`;
+  }).join('');
+}
+function rowSeriesOwned(row){
+  const biz=loadBizFor(row.phone),own={};
+  Object.keys(row.counts||{}).forEach(id=>{
+    if(!(row.counts[id]>0))return;
+    const x=biz.find(b=>bizId(b)===id);
+    if(!x)return;
+    const sid=x.seriesId||'default';
+    if(sid!=='default')own[sid]=String(x.name||'');
+  });
+  return own;
+}
+function showDropdown(row){
+  const dd=row.el&&row.el.dd;
+  if(!dd)return;
+  hideDropdowns();
+  if(!validPhone(row.phone)){
+    dd.innerHTML='<div class="dd-empty">请先填写合法的手机号</div>';
+    dd.classList.remove('hidden');setMenu(row,true);return;
+  }
+  const ym=currentMonth();
+  const cands=loadBizFor(row.phone).filter(x=>bizCat(x)==='consume'&&bizInMonth(x,ym)&&!(row.counts&&row.counts[bizId(x)]>0));
+  if(!cands.length){
+    dd.innerHTML='<div class="dd-empty">该号码没有可添加的消费凑单业务</div>';
+    dd.classList.remove('hidden');setMenu(row,true);return;
+  }
+  const owned=rowSeriesOwned(row),rules=rulesMap();
+  dd.innerHTML=cands.map(x=>{
+    const sid=x.seriesId||'default';
+    const conflict=sid==='default'?'':owned[sid];
+    const cp=contractOf(x,rules);
+    return `<div class="dd-item${conflict?' swap':''}" data-add="${esc(bizId(x))}" data-uid="${row.uid}"${conflict?` title="选择后替换同系列原业务「${esc(conflict)}」"`:''}><span>${esc(x.name||'')}<b class="cam">¥${Number(cp).toFixed(2)}</b></span>${conflict?`<span class="dd-tip">变更自「${esc(conflict)}」</span>`:''}</div>`;
+  }).join('');
+  dd.classList.remove('hidden');
+  setMenu(row,true);
+}
+function hideDropdowns(){
+  document.querySelectorAll('.cons-dd').forEach(dd=>dd.classList.add('hidden'));
+  document.querySelectorAll('.cons-menu.on').forEach(b=>{b.classList.remove('on');b.setAttribute('aria-expanded','false')});
+}
+function setMenu(row,on){
+  if(!row.el||!row.el.menu)return;
+  row.el.menu.classList.toggle('on',on);
+  row.el.menu.setAttribute('aria-expanded',on?'true':'false');
+}
+function addConsume(row,id){
+  if(!row||!validPhone(row.phone))return;
+  const biz=loadBizFor(row.phone),x=biz.find(b=>bizId(b)===id);
+  if(!x)return;
+  row.counts=row.counts||{};
+  if(!x.multi&&(row.counts[id]||0)>=1)return;
+  const sid=x.seriesId||'default';
+  const price=contractOf(x,rulesMap());
+  let times=1,removedPrice=0;
+  // 同一自定义系列互斥：视为业务变更，替换原业务并沿用开通次数
+  if(sid!=='default'&&(row.counts[id]||0)<=0){
+    let old=0;
+    Object.keys(row.counts).forEach(cid=>{
+      const n=row.counts[cid];if(!n)return;
+      const y=biz.find(b=>bizId(b)===cid);
+      if(!y||(y.seriesId||'default')!==sid)return;
+      old+=n;removedPrice+=contractOf(y,rulesMap())*n;row.counts[cid]=0;
+    });
+    if(old)times=old;
+  }
+  row.counts[id]=(row.counts[id]||0)+times;
+  // 手填过金额：按业务资费增减，保持用户手填口径
+  if(row.manual!==''){
+    const cur=Number(row.manual);
+    if(Number.isFinite(cur)){
+      row.manual=fmtNum(Math.max(0,cur+price*times-removedPrice));
+      if(row.el)row.el.cons.value=row.manual;
+    }
+  }
+  hideDropdowns();recalc();save();
+}
+function removeConsume(row,id){
+  if(!row||!row.counts)return;
+  const n=row.counts[id]||0;
+  if(n<=0)return;
+  const x=loadBizFor(row.phone).find(b=>bizId(b)===id);
+  row.counts[id]=n-1;
+  if(row.manual!==''&&x){
+    const cur=Number(row.manual);
+    if(Number.isFinite(cur)){
+      row.manual=fmtNum(Math.max(0,cur-contractOf(x,rulesMap())));
+      if(row.el)row.el.cons.value=row.manual;
+    }
+  }
+  recalc();save();
+}
+
+/* ============ 计算与档位 ============ */
+function recalc(){
+  let total=0,count=0;
+  members.forEach(row=>{
+    const auto=row.manual==='';
+    const sum=auto&&validPhone(row.phone)?rowAutoSum(row):null;
+    // 自动口径：输入框显示业务合计（0 则留空），但不覆盖正在输入的框
+    if(auto&&row.el&&document.activeElement!==row.el.cons){
+      row.el.cons.value=sum>0?fmtNum(sum):'';
+    }
+    const v=rowValue(row);
+    if(v!=null)total+=v;
+    if(validPhone(row.phone))count++;
+    renderTags(row);
+    if(row.el&&row.el.hint)row.el.hint.innerHTML=hintText(row,sum);
+  });
+  paintTotal(total,count);
+}
+function hintText(row,sum){
+  if(!validPhone(row.phone))return '填写手机号后自动带出该号码的凑单业务；也可以直接手填本月消费。';
+  const n=activeConsume(row.phone,currentMonth()).length;
+  if(!n)return '该号码在业务管理里还没有消费凑单业务，可直接手填本月消费。';
+  if(row.manual!=='')return `已开通凑单业务 ${n} 项，当前为手动金额；点右侧菜单可继续添加业务。`;
+  const hasMulti=activeConsume(row.phone,currentMonth()).some(x=>x.multi);
+  return hasMulti
+    ? `已开通凑单业务 ${n} 项，自动合计 <b>¥${money2(sum)}</b>；按 − / ＋ 调整订购次数。`
+    : `已开通凑单业务 ${n} 项，自动合计 <b>¥${money2(sum)}</b>；点击标签可开通/取消。`;
+}
+function paintTotal(total,count){
+  const s=money2(total);
+  const tv=document.getElementById('totalVal');
+  tv.textContent=s;
+  // 字号恒定不缩小；仅当数字过长、与右侧均消块距离不足 50px 时兜底缩字号，保证不覆盖右侧内容
+  const totalEl=tv.closest('.total');
+  totalEl.style.fontSize='';
+  const rightEl=document.querySelector('.total-right');
+  let fs=parseFloat(getComputedStyle(totalEl).fontSize),guard=0;
+  while(guard++<8&&rightEl&&rightEl.getBoundingClientRect().left-tv.getBoundingClientRect().right<50){
+    fs=Math.max(20,fs-4);
+    totalEl.style.fontSize=fs+'px';
+  }
+  const tierLabel=t=>`${t} 元档`;
+  const reached=TIERS.filter(t=>total>=t).pop()||null;
+  const next=TIERS.find(t=>total<t)||null;
+  const sub=document.getElementById('totalSub');
+  const cn=count==null?members.filter(r=>validPhone(r.phone)).length:count;
+  let txt=[];
+  if(cn)txt.push(`共 ${cn} 个号码`);
+  if(reached)txt.push(`已达成 <b>${tierLabel(reached)}</b>`);
+  if(next)txt.push(`${reached?'距':'距首个档位'} <b>${tierLabel(next)}</b> 还差 <b>¥${money2(next-total)}</b>`);
+  else if(reached)txt.push('已超过最高档位');
+  if(!txt.length)txt.push('填写手机号并计算当月消费');
+  sub.innerHTML=txt.join(' · ');
+
+  const max=TIERS[TIERS.length-1];
+  document.getElementById('progBar').style.width=Math.min(100,total/max*100)+'%';
+  document.getElementById('ticks').innerHTML=TICKS.map(t=>{
+    const left=Math.min(100,t/max*100);
+    const style=left>=100?'right:0;transform:none':`left:${left}%`;
+    return `<span class="${total>=t?'done':''}" style="${style}">${t}</span>`;
+  }).join('');
+}
+
+/* ============ 事件 ============ */
+listEl.addEventListener('pointerdown',e=>{
+  const it=e.target.closest('[data-add]');
+  if(it){e.preventDefault();addConsume(rowByUid(it.dataset.uid),it.dataset.add);return}
+});
+listEl.addEventListener('click',e=>{
+  const del=e.target.closest('[data-del]');
+  if(del){
+    const row=rowByUid(del.dataset.del);
+    members=members.filter(r=>r!==row);
+    if(!members.length)members=[newMember()];
+    renderCards();save();return;
+  }
+  const menu=e.target.closest('.cons-menu');
+  if(menu){
+    const row=rowByUid(menu.dataset.menu);
+    if(row.el.dd.classList.contains('hidden'))showDropdown(row);else hideDropdowns();
+    return;
+  }
+  // 多次订购=否的业务同样渲染 −/＋（＋禁用），删除走 data-dec，无整体切换分支
+  const dec=e.target.closest('[data-dec]');
+  if(dec){removeConsume(rowByUid(dec.dataset.uid),dec.dataset.dec);return}
+  const inc=e.target.closest('[data-inc]');
+  if(inc){addConsume(rowByUid(inc.dataset.uid),inc.dataset.inc);return}
+  const mid=e.target.closest('.sw-mid');
+  if(mid){
+    const tag=mid.closest('.ctag');
+    addConsume(rowByUid(tag.dataset.uid),tag.dataset.id);return;
+  }
+});
+document.addEventListener('pointerdown',e=>{
+  if(!e.target.closest('.cons-dd')&&!e.target.closest('.cons-wrap'))hideDropdowns();
+});
+document.getElementById('addBtn').addEventListener('click',()=>{
+  if(members.length>=4)return;
+  members.unshift(newMember());
+  renderCards();save();
+});
+document.getElementById('clearBtn').addEventListener('click',()=>{
+  if(!confirm('确定清空当前组合吗？'))return;
+  members=[newMember()];
+  renderCards();save();
+});
+// 其他标签页改了业务数据，回来时重算
+window.addEventListener('storage',e=>{
+  if(e.key==null||e.key==='arpu_business_v2'||e.key==='arpu_rules_v1'){
+    members.forEach(r=>{if(validPhone(r.phone))r.counts={...initCounts(r.phone),...r.counts}});
+    recalc();
+  }
+});
+window.addEventListener('pageshow',()=>{applyIdentity();recalc()});
+
+// 身份守卫：index 查询过合法手机号才可用；直接打开链接时只显示 denyView
+let booted=false;
+function applyIdentity(){
+  let cur='';
+  try{cur=localStorage.getItem('arpu_last_query')||''}catch(e){}
+  const has=/^1[3-9]\d{9}$/.test(cur);
+  document.body.classList.toggle('no-identity',!has);
+  const dv=document.getElementById('denyView');
+  if(dv)dv.style.display=has?'none':'flex';
+  if(has&&!booted){
+    booted=true;
+    loadState();
+    renderCards();
+    refreshAllA6();
+  }
+}
+applyIdentity();
+</script>
+</body>
+</html>

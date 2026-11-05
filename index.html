@@ -63,6 +63,7 @@ button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;fo
 .ctag .sw-bar{display:inline-flex;align-items:center;gap:6px}
 .ctag .sw-btn{width:18px;height:18px;margin:0;flex:0 0 auto;border:0;border-radius:50%;background:linear-gradient(180deg,#ffffff,#e6edf7);color:#4d6fa8;font-size:12px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 1px 2px rgba(32,36,42,.18),inset 0 1px 0 #fff}
 .ctag .sw-btn:active{background:linear-gradient(180deg,#dde7f4,#cbd8ea)}
+.ctag .sw-btn:disabled{opacity:.45;cursor:default;background:linear-gradient(180deg,#f2f5f9,#e6eaf0);color:#a8b0ba;box-shadow:none}
 .ctag .led{display:none;flex:0 0 auto;min-width:17px;height:17px;padding:0 4px;margin-left:1px;border-radius:999px;background:radial-gradient(circle at 32% 28%,#ff9a9a,#e5303c 58%,#a81325);color:#fff;font-size:10px;font-weight:700;line-height:17px;text-align:center;box-shadow:0 1px 2px rgba(150,15,30,.4),inset 0 1px 1px rgba(255,255,255,.55),0 0 7px rgba(217,54,62,.35)}
 .ctag .led.on{display:inline-block}
 /* 标签与下拉里业务名后的合约资费：红色 */
@@ -134,6 +135,7 @@ button{height:45px;border:0;border-radius:10px;background:#1677ff;color:white;fo
   <header data-page-node-id="1zj1lcqItJtzMU6FIUwcNb">
     <div data-page-node-id="GAOGZoBqV0xl5TCIvj1YXR"><h1 data-page-node-id="ay34tyubhpKHgxVDD9xwY7"><!--pnid:wfKw1kqhpW4mzM7DsT8YFN-->北京移动消费规划器</h1><div data-page-node-id="wHFez9Rx4ifgWFnwFxBOUl" class="sub"><!--pnid:cKyuEFHBk4yQPqQpIPG1t2-->查询历史消费，规划未来消费</div></div>
     <div data-page-node-id="WGtjZdnyfCb2jGYRWHHXln" style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end">
+      <a data-page-node-id="iXdDZeYmsxO2c09uxHCw6b" class="entry" href="lovehome.html"><!--pnid:UCk856ZmoqiamwAzHnY6le-->爱家组合方案 ›</a>
       <a data-page-node-id="LUAW0wqhsrhZPLZXpk6nxf" class="entry" href="business.html"><!--pnid:WumMrYa2iWGYrQw0jdXfLe-->资费业务管理 ›</a>
       <a data-page-node-id="KDK7Q0EKEfKEhmMdIutOOr" class="entry hidden" href="rules.html" id="rulesEntry"><!--pnid:p4GYxvnJeiV3AH3VoP7nzb-->全部资费规则 ›</a>
     </div>
@@ -684,8 +686,8 @@ function renderConsTags(){
       const x=biz.find(b=>bizId(b)===id),n=row.counts[id];
       const nm=esc(x?x.name||'':id);
       const cp=contractOf(x,rules);
-      // 多次订购=否：只能订购一次，不显示加减符号与次数灯，点击标签整体切换开通/取消
-      if(x&&!x.multi)return `<span class="ctag single" data-id="${esc(id)}" data-m="${row.m}"><span class="sw-mid">${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span></span>`;
+      // 多次订购=否：显示加减按钮，＋禁用（只能订购一次），− 删除该业务
+      if(x&&!x.multi)return `<span class="ctag single" data-id="${esc(id)}" data-m="${row.m}"><span class="sw-bar"><button class="sw-btn" data-dec="${esc(id)}" data-m="${row.m}" aria-label="删除该业务" tabindex="-1">−</button><span class="sw-mid">${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span><button class="sw-btn" data-inc="${esc(id)}" data-m="${row.m}" aria-label="多次订购=否，不可增加" tabindex="-1" disabled>＋</button></span></span>`;
       return `<span class="ctag" data-id="${esc(id)}" data-m="${row.m}"><span class="sw-bar"><button class="sw-btn" data-dec="${esc(id)}" data-m="${row.m}" aria-label="减少一次" tabindex="-1">−</button><span class="sw-mid">${nm}<b class="cam">¥${Number(cp).toFixed(2)}</b></span><button class="sw-btn" data-inc="${esc(id)}" data-m="${row.m}" aria-label="增加一次" tabindex="-1">＋</button></span>${n>1?`<span class="led on">${n}</span>`:''}</span>`;
     }).join('');
   });
@@ -799,14 +801,7 @@ planInputsEl.addEventListener('pointerdown',e=>{
 planInputsEl.addEventListener('click',e=>{
   const menu=e.target.closest('.cons-menu');
   if(menu){toggleConsDropdown(rowByMonth(menu.dataset.menu));return}
-  // 多次订购=否的业务：无加减按钮，点击标签整体切换开通/取消（只能订购一次）
-  const single=e.target.closest('.ctag.single');
-  if(single){
-    const row=rowByMonth(single.dataset.m),id=single.dataset.id;
-    if(row&&row.counts&&row.counts[id]>0)removeConsume(row,id);
-    else addConsume(row,id);
-    return;
-  }
+  // 多次订购=否的业务同样渲染 −/＋（＋禁用），删除走 data-dec，无整体切换分支
   const dec=e.target.closest('[data-dec]');
   if(dec){removeConsume(rowByMonth(dec.dataset.m),dec.dataset.dec);return}
   const inc=e.target.closest('[data-inc]');
@@ -1121,8 +1116,8 @@ function syncOwnerEntry(){
   document.getElementById('rulesEntry').classList.toggle('hidden',q!==OWNER_PHONE);
 }
 searchBtn.onclick=search;
-// 入口守卫：仅输入合法手机号后才允许打开资费业务管理
-document.querySelectorAll('a.entry[href="business.html"]').forEach(a=>a.addEventListener('click',e=>{
+// 入口守卫：仅输入合法手机号后才允许打开资费业务管理 / 爱家组合方案
+document.querySelectorAll('a.entry[href="business.html"],a.entry[href="lovehome.html"]').forEach(a=>a.addEventListener('click',e=>{
   if(!/^1[3-9]\d{9}$/.test(mobileEl.value.trim())){
     e.preventDefault();
     statusEl.className='status error';statusEl.textContent='请输入合法的手机号';
