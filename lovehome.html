@@ -138,7 +138,7 @@ body.no-identity>.wrap>header,body.no-identity>.wrap>section,body.no-identity>.w
         <div data-page-node-id="Q0D8hGt5uxBCJ7TpjKFCge" class="total"><span data-page-node-id="WEnG8ntqIfT0yj0yKAmPYp" class="cur"><!--pnid:bn65wpR0ONDkvSKfubmKkr-->¥</span><span data-page-node-id="jg7S6mesk71JBAdhc9AYUF" id="totalVal"><!--pnid:HaImZLhBcMyUl6LdMZOaU4-->0.00</span></div>
       </div>
       <div data-page-node-id="d1dVenUzf9XmO9R9iGV0ll" class="total-right">
-        <div data-page-node-id="raG2YzmRtjRPOPqCoB6xhl" class="label"><!--pnid:dlcr1XOnogxFt7uZyTJrQk-->近6月均消均值</div>
+        <div data-page-node-id="raG2YzmRtjRPOPqCoB6xhl" class="label"><!--pnid:dlcr1XOnogxFt7uZyTJrQk-->组合近6月均消合计</div>
         <div data-page-node-id="8boHlr74x6cFmQ4z9WXKMb" class="a6-avg" id="a6Avg"><!--pnid:0sM3eKhOWNUeMcGnYMzM2F-->—</div>
       </div>
     </div>
@@ -284,7 +284,7 @@ function scheduleA6(row){
 function queryA6(row){
   const phone=row.phone;
   if(!validPhone(phone))return;
-  row.a6Loading=true;paintA6(row);paintA6Avg();
+  row.a6Loading=true;paintA6(row);paintA6Sum();
   const req=typeof fetch==='function'
     ?fetch(PROXY+encodeURIComponent(buildQueryUrl(phone)),{method:'GET',cache:'no-store'})
     :Promise.reject(new Error('no fetch'));
@@ -301,7 +301,7 @@ function queryA6(row){
     .finally(()=>{
       if(row.phone!==phone)return;
       row.a6Loading=false;
-      paintA6(row);paintA6Avg();save();
+      paintA6(row);paintA6Sum();save();
     });
 }
 // 刷新所有有效号码的近6月均消（打开页面时调用，错开请求）
@@ -393,7 +393,7 @@ function renderCards(){
   document.getElementById('addBtn').disabled=members.length>=4;
   document.getElementById('addBtn').textContent=members.length>=4?'最多 4 个手机号':'＋ 添加手机号';
   recalc();
-  paintA6Avg();
+  paintA6Sum();
 }
 function rowByUid(u){return members.find(r=>r.uid===Number(u))}
 
@@ -409,15 +409,15 @@ function paintA6(row){
   row.el.a6.classList.toggle('loading',!!row.a6Loading||row.a6==null);
   row.el.a6.style.display=validPhone(row.phone)?'':'none';
 }
-// 合计卡右侧：所有有效号码近6月均消的平均值（忽略查询失败/查询中的号码，一个都没有则 —）
-function paintA6Avg(){
+// 合计卡右侧：所有有效号码近6月均消的合计值（忽略查询失败/查询中的号码，一个都没有则 —）
+function paintA6Sum(){
   const el=document.getElementById('a6Avg');
   if(!el)return;
   const vals=members.filter(r=>validPhone(r.phone)&&typeof r.a6==='number').map(r=>r.a6);
   if(!vals.length){el.innerHTML='—';el.classList.add('loading');return}
-  const avg=vals.reduce((s,v)=>s+v,0)/vals.length;
+  const sum=vals.reduce((s,v)=>s+v,0);
   el.classList.remove('loading');
-  el.innerHTML=`<span class="cur">¥</span>${Math.round(avg)}`;
+  el.innerHTML=`<span class="cur">¥</span>${Math.round(sum*100)/100}`;
 }
 
 function bindPhone(row){
@@ -433,7 +433,7 @@ function bindPhone(row){
     row.manual='';
     row.a6=null;
     if(row.el)row.el.cons.value='';
-    recalc();paintA6(row);paintA6Avg();save();
+    recalc();paintA6(row);paintA6Sum();save();
     clearTimeout(a6Timers[row.uid]);
     if(validPhone(v))scheduleA6(row);
   });
